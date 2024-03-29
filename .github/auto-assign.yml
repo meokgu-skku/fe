@@ -1,0 +1,15 @@
+addReviewers: true
+
+addAssignees: author
+
+reviewers:
+  - sinkyoungdeok
+  - jhpark223
+  - m1nse0kim
+  - sjsjmine129
+  - newlysong
+
+numberOfReviewers: 0
+
+skipKeywords:
+  - wip
