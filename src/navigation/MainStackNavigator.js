@@ -31,7 +31,6 @@ export function reset(routes) {
 
 export default function MainStackNavigator() {
   return (
-    // <SignupScreen></SignupScreen>
     <NavigationContainer theme={MyTheme} ref={navigationRef}>
       <MainStack.Navigator
         initialRouteName="signup"
