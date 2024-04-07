@@ -23,17 +23,6 @@ export default function SignupScreen() {
         style={styles.buttonTest}>
         <Text style={styles.buttonText}>bottom tab</Text>
       </AnimatedButton>
-      <AnimatedButton
-        onPress={() => {
-          console.log('PRESSED~!!');
-          navigation.navigate('BottomTab', {
-            screen: 'ListNavigator',
-            params: {screen: 'ListDetail'},
-          });
-        }}
-        style={styles.buttonTest}>
-        <Text style={styles.buttonText}>List Detail</Text>
-      </AnimatedButton>
     </View>
   );
 }

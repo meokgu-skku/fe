@@ -7,19 +7,27 @@ import {
   COLOR_PRIMARY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
+import {useNavigation} from '@react-navigation/native';
+import Header from '../../components/Header';
 
 export default function MypageScreen() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.entire}>
-      <Text style={styles.textMain}>MypageScreen</Text>
-      <AnimatedButton
-        onPress={() => {
-          console.log('PRESSED~!!');
-        }}
-        style={styles.buttonTest}>
-        <Text style={styles.buttonText}>Test Button</Text>
-      </AnimatedButton>
-    </View>
+    <>
+      <Header title={'마이 프로필'} isBackButton={false} />
+      <View style={styles.entire}>
+        <Text style={styles.textMain}>MypageScreen</Text>
+        <AnimatedButton
+          onPress={() => {
+            console.log('PRESSED~!!');
+            navigation.navigate('Signup');
+          }}
+          style={styles.buttonTest}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </AnimatedButton>
+      </View>
+    </>
   );
 }
 

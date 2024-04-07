@@ -8,30 +8,36 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
+import {SvgXml} from 'react-native-svg';
+import {svgXml} from '../../assets/svg';
+import Header from '../../components/Header';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.entire}>
-      <Text style={styles.textMain}>HomeScreen</Text>
-      <AnimatedButton
-        onPress={() => {
-          console.log('PRESSED~!!');
-          navigation.navigate('Signup');
-        }}
-        style={styles.buttonTest}>
-        <Text style={styles.buttonText}>Signup</Text>
-      </AnimatedButton>
-      <AnimatedButton
-        onPress={() => {
-          console.log('PRESSED~!!');
-          navigation.navigate('ListNavigator');
-        }}
-        style={styles.buttonTest}>
-        <Text style={styles.buttonText}>ListNavigator</Text>
-      </AnimatedButton>
-    </View>
+    <>
+      <Header title={'홈'} isBackButton={false} />
+      <View style={styles.entire}>
+        <Text style={styles.textMain}>HomeScreen</Text>
+        <AnimatedButton
+          onPress={() => {
+            console.log('PRESSED~!!');
+            navigation.navigate('Signup');
+          }}
+          style={styles.buttonTest}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </AnimatedButton>
+        <AnimatedButton
+          onPress={() => {
+            console.log('PRESSED~!!');
+            navigation.navigate('ListNavigator');
+          }}
+          style={styles.buttonTest}>
+          <Text style={styles.buttonText}>ListNavigator</Text>
+        </AnimatedButton>
+      </View>
+    </>
   );
 }
 
