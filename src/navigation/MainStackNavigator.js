@@ -7,7 +7,8 @@ import {
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {Easing, Linking, Platform, SafeAreaView, StatusBar} from 'react-native';
 import {COLOR_WHITE} from '../assets/color';
-import SignupScreen from '../screens/SignupScreen';
+import SignupScreen from '../screens/signup/SignupScreen';
+import BottomTabNavigator from './BottomTabNavigator';
 
 const MainStack = createStackNavigator();
 
@@ -33,14 +34,14 @@ export default function MainStackNavigator() {
   return (
     <NavigationContainer theme={MyTheme} ref={navigationRef}>
       <MainStack.Navigator
-        initialRouteName="signup"
+        initialRouteName="Signup"
         screenOptions={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
-        <MainStack.Screen name="signup" component={SignupScreen} />
-        {/* <MainStack.Screen
-          name="main"
+        <MainStack.Screen name="Signup" component={SignupScreen} />
+        <MainStack.Screen
+          name="BottomTab"
           component={BottomTabNavigator}
           options={{
             headerShown: false,
@@ -48,7 +49,7 @@ export default function MainStackNavigator() {
             cardOverlayEnabled: false,
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
           }}
-        /> */}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );
