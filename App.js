@@ -6,21 +6,14 @@
  */
 
 import React from 'react';
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {SafeAreaView, ScrollView, Text, View, StyleSheet} from 'react-native';
+import MainStackNavigator from './src/navigation/MainStackNavigator';
+import 'react-native-gesture-handler';
 
-function App() {
-  return (
-    <SafeAreaView style={{}}>
-      <ScrollView style={{}}>
-        <View
-          style={{
-            backgroundColor: 'white',
-          }}>
-          <Text>TEST!!!</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+export default function App() {
+  return <MainStackNavigator />;
 }
 
-export default App;
+const styles = StyleSheet.create({
+  entire: {},
+});
