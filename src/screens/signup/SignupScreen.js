@@ -8,10 +8,14 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
+// import Config from 'react-native-config';
+import {API_URL} from '@env';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
 
+  // console.log(`${Config.API_URL}/emoticons/comments/`);
+  console.log('APP_URL :: ', API_URL);
   return (
     <View style={styles.entire}>
       <Text style={styles.textMain}>SignupScreen</Text>
