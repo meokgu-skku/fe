@@ -12,6 +12,7 @@ import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
 
+
 export default function HomeScreen() {
   const navigation = useNavigation();
 

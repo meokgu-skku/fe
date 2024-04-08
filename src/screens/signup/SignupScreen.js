@@ -34,6 +34,7 @@ export default function SignupScreen() {
         }}
         style={styles.buttonTest}>
         <Text style={styles.buttonText}>Test Axios HELLO!</Text>
+
       </AnimatedButton>
     </View>
   );
