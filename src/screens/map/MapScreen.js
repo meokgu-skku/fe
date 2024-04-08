@@ -7,19 +7,35 @@ import {
   COLOR_PRIMARY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
+import Header from '../../components/Header';
+import {useNavigation} from '@react-navigation/native';
 
 export default function MapScreen() {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.entire}>
-      <Text style={styles.textMain}>MapScreen</Text>
-      <AnimatedButton
-        onPress={() => {
-          console.log('PRESSED~!!');
-        }}
-        style={styles.buttonTest}>
-        <Text style={styles.buttonText}>Test Button</Text>
-      </AnimatedButton>
-    </View>
+    <>
+      <Header title={'지도'} isBackButton={false} />
+      <View style={styles.entire}>
+        <Text style={styles.textMain}>MapScreen</Text>
+        <AnimatedButton
+          onPress={() => {
+            console.log('PRESSED~!!');
+            navigation.navigate('Signup');
+          }}
+          style={styles.buttonTest}>
+          <Text style={styles.buttonText}>Signup</Text>
+        </AnimatedButton>
+        <AnimatedButton
+          onPress={() => {
+            console.log('PRESSED~!!');
+            navigation.navigate('ListNavigator');
+          }}
+          style={styles.buttonTest}>
+          <Text style={styles.buttonText}>ListNavigator</Text>
+        </AnimatedButton>
+      </View>
+    </>
   );
 }
 

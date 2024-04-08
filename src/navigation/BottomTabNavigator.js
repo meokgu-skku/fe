@@ -31,6 +31,7 @@ import MapScreen from '../screens/map/MapScreen';
 import MypageScreen from '../screens/mypage/MypageScreen';
 
 const BottomTab = createBottomTabNavigator();
+const iconSize = 35;
 
 const customCardStyleInterpolator = ({current, next, layouts}) => {
   return {
@@ -132,93 +133,98 @@ function MypageNavigator() {
 
 export default function BottomTabNavigator() {
   return (
-    <BottomTab.Navigator
-      initialRouteName="HomeNavigator"
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          height: 56,
-          backgroundColor: COLOR_BACKGROUND,
-          // backgroundColor: 'red',
-        },
-        tabBarShowLabel: false,
-        tabBarLabelStyle: {
-          fontFamily: 'NotoSansKR-Regular',
-        },
-        tabBarActiveTintColor: COLOR_PRIMARY,
-      }}>
-      <BottomTab.Screen
-        name="HomeNavigator"
-        component={HomeNavigator}
-        options={{
+    <>
+      <StatusBar backgroundColor={COLOR_PRIMARY} />
+      <BottomTab.Navigator
+        initialRouteName="HomeNavigator"
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            height: 56,
+            backgroundColor: COLOR_BACKGROUND,
+            // backgroundColor: 'red',
+          },
           tabBarShowLabel: false,
-          tabBarLabel: '홈',
-          tabBarIcon: props => (
-            <SvgXml
-              // fill={props.focused ? '#A55FFF' : '#888888'}
-              width={28}
-              height={28}
-              xml={
-                props.focused ? svgXml.baricon.homeColor : svgXml.baricon.home
-              }
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="MapNavigator"
-        component={MapNavigator}
-        options={{
-          tabBarShowLabel: false,
-          tabBarLabel: '지도',
-          tabBarIcon: props => (
-            <SvgXml
-              // fill={props.focused ? '#A55FFF' : '#888888'}
-              width={28}
-              height={28}
-              xml={props.focused ? svgXml.baricon.mapColor : svgXml.baricon.map}
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="ListNavigator"
-        component={ListNavigator}
-        options={{
-          tabBarShowLabel: false,
-          tabBarLabel: '리스트',
-          tabBarIcon: props => (
-            <SvgXml
-              // fill={props.focused ? '#A55FFF' : '#888888'}
-              width={28}
-              height={28}
-              xml={
-                props.focused ? svgXml.baricon.listColor : svgXml.baricon.list
-              }
-            />
-          ),
-        }}
-      />
-      <BottomTab.Screen
-        name="MypageNavigator"
-        component={MypageNavigator}
-        options={{
-          tabBarShowLabel: false,
-          tabBarLabel: '프로필',
-          tabBarIcon: props => (
-            <SvgXml
-              // fill={props.focused ? '#A55FFF' : '#888888'}
-              width={28}
-              height={28}
-              xml={
-                props.focused
-                  ? svgXml.baricon.prifileColor
-                  : svgXml.baricon.prifile
-              }
-            />
-          ),
-        }}
-      />
-    </BottomTab.Navigator>
+          tabBarLabelStyle: {
+            fontFamily: 'NotoSansKR-Regular',
+          },
+          tabBarActiveTintColor: COLOR_PRIMARY,
+        }}>
+        <BottomTab.Screen
+          name="HomeNavigator"
+          component={HomeNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarLabel: '홈',
+            tabBarIcon: props => (
+              <SvgXml
+                // fill={props.focused ? '#A55FFF' : '#888888'}
+                width={iconSize}
+                height={iconSize}
+                xml={
+                  props.focused ? svgXml.baricon.homeColor : svgXml.baricon.home
+                }
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="MapNavigator"
+          component={MapNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarLabel: '지도',
+            tabBarIcon: props => (
+              <SvgXml
+                // fill={props.focused ? '#A55FFF' : '#888888'}
+                width={iconSize}
+                height={iconSize}
+                xml={
+                  props.focused ? svgXml.baricon.mapColor : svgXml.baricon.map
+                }
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="ListNavigator"
+          component={ListNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarLabel: '리스트',
+            tabBarIcon: props => (
+              <SvgXml
+                // fill={props.focused ? '#A55FFF' : '#888888'}
+                width={iconSize}
+                height={iconSize}
+                xml={
+                  props.focused ? svgXml.baricon.listColor : svgXml.baricon.list
+                }
+              />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="MypageNavigator"
+          component={MypageNavigator}
+          options={{
+            tabBarShowLabel: false,
+            tabBarLabel: '프로필',
+            tabBarIcon: props => (
+              <SvgXml
+                // fill={props.focused ? '#A55FFF' : '#888888'}
+                width={iconSize}
+                height={iconSize}
+                xml={
+                  props.focused
+                    ? svgXml.baricon.prifileColor
+                    : svgXml.baricon.prifile
+                }
+              />
+            ),
+          }}
+        />
+      </BottomTab.Navigator>
+    </>
   );
 }
