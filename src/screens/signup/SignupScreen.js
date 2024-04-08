@@ -8,14 +8,12 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
-// import Config from 'react-native-config';
 import {API_URL} from '@env';
+import axios from 'axios';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
 
-  // console.log(`${Config.API_URL}/emoticons/comments/`);
-  console.log('APP_URL :: ', API_URL);
   return (
     <View style={styles.entire}>
       <Text style={styles.textMain}>SignupScreen</Text>
@@ -26,6 +24,16 @@ export default function SignupScreen() {
         }}
         style={styles.buttonTest}>
         <Text style={styles.buttonText}>bottom tab</Text>
+      </AnimatedButton>
+      <AnimatedButton
+        onPress={async () => {
+          console.log('PRESSED~!!');
+          const response = await axios.get(`${API_URL}/hello`).then(res => {
+            console.log('res', res.data.data);
+          });
+        }}
+        style={styles.buttonTest}>
+        <Text style={styles.buttonText}>Test Axios HELLO!</Text>
       </AnimatedButton>
     </View>
   );
