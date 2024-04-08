@@ -8,6 +8,8 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
+import {API_URL} from '@env';
+import axios from 'axios';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
@@ -24,15 +26,15 @@ export default function SignupScreen() {
         <Text style={styles.buttonText}>bottom tab</Text>
       </AnimatedButton>
       <AnimatedButton
-        onPress={() => {
+        onPress={async () => {
           console.log('PRESSED~!!');
-          navigation.navigate('BottomTab', {
-            screen: 'ListNavigator',
-            params: {screen: 'ListDetail'},
+          const response = await axios.get(`${API_URL}/hello`).then(res => {
+            console.log('res', res.data.data);
           });
         }}
         style={styles.buttonTest}>
-        <Text style={styles.buttonText}>List Detail</Text>
+        <Text style={styles.buttonText}>Test Axios HELLO!</Text>
+
       </AnimatedButton>
     </View>
   );
