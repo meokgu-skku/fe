@@ -7,7 +7,11 @@ import {
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {Easing, Linking, Platform, SafeAreaView, StatusBar} from 'react-native';
 import {COLOR_WHITE} from '../assets/color';
+import SplashScreen from '../screens/signup/SplashScreen';
+import LoginScreen from '../screens/signup/LoginScreen';
+import FindPasswordScreen from '../screens/signup/FindPasswordScreen';
 import SignupScreen from '../screens/signup/SignupScreen';
+
 import BottomTabNavigator from './BottomTabNavigator';
 
 const MainStack = createStackNavigator();
@@ -34,11 +38,14 @@ export default function MainStackNavigator() {
   return (
     <NavigationContainer theme={MyTheme} ref={navigationRef}>
       <MainStack.Navigator
-        initialRouteName="Signup"
+        initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
+        <MainStack.Screen name="Splash" component={SplashScreen} />
+        <MainStack.Screen name="Login" component={LoginScreen} />
+        <MainStack.Screen name="FindPassword" component={FindPasswordScreen} />
         <MainStack.Screen name="Signup" component={SignupScreen} />
         <MainStack.Screen
           name="BottomTab"

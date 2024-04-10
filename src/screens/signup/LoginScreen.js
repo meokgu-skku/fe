@@ -26,7 +26,7 @@ import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 
-export default function SignupScreen() {
+export default function LoginScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,10 +45,9 @@ export default function SignupScreen() {
     console.log('password:', password);
   };
 
-  //TODO: 회원가입 화면
   return (
     <>
-      <HeaderWhite title={'회원가입'} isBackButton={true} />
+      <HeaderWhite title={'로그인'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
@@ -112,7 +111,7 @@ export default function SignupScreen() {
           <LongPrimaryButton text="로그인" action={login} />
           <AnimatedButton
             onPress={() => {
-              navigation.navigate('FindPassword');
+              navigation.navigate('Signup');
             }}
             style={{
               marginTop: 12,

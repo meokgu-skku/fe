@@ -1,0 +1,67 @@
+import React, {useState, useCallback, useEffect} from 'react';
+import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {
+  COLOR_WHITE,
+  COLOR_BACKGROUND,
+  COLOR_GRAY,
+  COLOR_PRIMARY,
+  COLOR_TEXT70GRAY,
+} from '../../assets/color';
+import AnimatedButton from '../../components/AnimationButton';
+import {useNavigation} from '@react-navigation/native';
+import {API_URL} from '@env';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LongPrimaryButton from '../../components/LongPrimaryButton';
+
+export default function SplashScreen() {
+  const navigation = useNavigation();
+
+  //TODO: 저장된 토큰 가져와서 로그인 시도해보는 로직
+  const getAccessToken = async () => {
+    try {
+      const value = await AsyncStorage.getItem('accessToken');
+      if (value !== null) {
+        return value;
+      }
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  const pressButton = async () => {
+    navigation.navigate('Login');
+  };
+
+  return (
+    <View style={styles.entire}>
+      <Text style={styles.textMain}>먹구스꾸</Text>
+
+      <View style={styles.buttonContainer}>
+        <LongPrimaryButton text="시작하기" action={pressButton} />
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  entire: {
+    flex: 1,
+    backgroundColor: COLOR_BACKGROUND,
+    alignItems: 'center',
+  },
+  textMain: {
+    fontSize: 35,
+    color: COLOR_TEXT70GRAY,
+    fontWeight: '500',
+    textAlign: 'center',
+    marginTop: 76,
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 110,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
