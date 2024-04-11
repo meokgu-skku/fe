@@ -41,7 +41,7 @@ export default function MainStackNavigator() {
         initialRouteName="Splash"
         screenOptions={{
           headerShown: false,
-          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
         <MainStack.Screen name="Splash" component={SplashScreen} />
         <MainStack.Screen name="Login" component={LoginScreen} />

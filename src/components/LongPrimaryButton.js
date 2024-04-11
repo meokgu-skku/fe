@@ -4,10 +4,13 @@ import {COLOR_WHITE, COLOR_PRIMARY} from '../assets/color';
 import AnimatedButton from './AnimationButton';
 
 export default function LongPrimaryButton(props) {
-  const {text, action} = props;
+  const {text, action, disable} = props;
 
   return (
-    <AnimatedButton onPress={action} style={styles.buttonTest}>
+    <AnimatedButton
+      onPress={action}
+      style={styles.buttonTest}
+      disabled={disable}>
       <Text style={styles.buttonText}>{text}</Text>
     </AnimatedButton>
   );
