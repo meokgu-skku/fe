@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {
   COLOR_WHITE,
@@ -13,9 +13,11 @@ import {API_URL} from '@env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
+import AppContext from '../../components/AppContext';
 
 export default function SplashScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
 
   //TODO: 저장된 토큰 가져와서 로그인 시도해보는 로직
   const tryAutoLogin = async () => {
@@ -39,12 +41,15 @@ export default function SplashScreen() {
       //   return;
       // }
 
+      context.setAccessTokenValue(accessToken);
+      context.setRefreshTokenValue(refreshToken);
       navigation.navigate('BottomTab');
     } catch (e) {
       console.log('error', e);
     }
   };
 
+  // run at first time
   useEffect(() => {
     tryAutoLogin();
   }, []);

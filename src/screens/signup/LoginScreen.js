@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react';
 import {
   View,
   Text,
@@ -25,6 +31,7 @@ import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
+import AppContext from '../../components/AppContext';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -35,6 +42,7 @@ export default function LoginScreen() {
 
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+  const context = useContext(AppContext);
 
   useEffect(() => {
     if (email && password) {
@@ -72,8 +80,10 @@ export default function LoginScreen() {
       // const accessToken = response.data.data.accessToken;
       // const refreshToken = response.data.data.refreshToken;
 
-      // AsyncStorage.setItem('accessToken', 'accessToken');
-      // AsyncStorage.setItem('refreshToken', 'refreshToken');
+      // context.setAccessTokenValue(accessToken);
+      // context.setRefreshTokenValue(refreshToken);
+      // AsyncStorage.setItem('accessToken', accessToken);
+      // AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
     } catch (error) {

@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react';
 import {
   View,
   Text,
@@ -26,6 +32,7 @@ import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppContext from '../../components/AppContext';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
@@ -38,6 +45,7 @@ export default function SignupScreen() {
   const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+  const context = useContext(AppContext);
 
   //state name, email, password 가 변경될 때마다 실행
   useEffect(() => {
@@ -81,8 +89,10 @@ export default function SignupScreen() {
       // const accessToken = response.data.data.accessToken;
       // const refreshToken = response.data.data.refreshToken;
 
-      // AsyncStorage.setItem('accessToken', 'accessToken');
-      // AsyncStorage.setItem('refreshToken', 'refreshToken');
+      // context.setAccessTokenValue(accessToken);
+      // context.setRefreshTokenValue(refreshToken);
+      // AsyncStorage.setItem('accessToken', accessToken);
+      // AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
     } catch (error) {
