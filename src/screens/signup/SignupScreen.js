@@ -49,9 +49,9 @@ export default function SignupScreen() {
 
   //state name, email, password 가 변경될 때마다 실행
   useEffect(() => {
-    if (name && email && password) {
+    if (name && email && password && disable) {
       setDisable(false);
-    } else {
+    } else if ((!name || !email || !password) && !disable) {
       setDisable(true);
     }
   }, [name, email, password]);

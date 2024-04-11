@@ -45,9 +45,9 @@ export default function LoginScreen() {
   const context = useContext(AppContext);
 
   useEffect(() => {
-    if (email && password) {
+    if (email && password && disable) {
       setDisable(false);
-    } else {
+    } else if ((!email || !password) && !disable) {
       setDisable(true);
     }
   }, [email, password]);

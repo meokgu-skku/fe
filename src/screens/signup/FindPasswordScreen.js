@@ -1,5 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useContext,
+} from 'react';
 import {
   View,
   Text,
@@ -24,77 +30,50 @@ import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
+import AppContext from '../../components/AppContext';
 
 //TODO: 비밀번호 찾기 화면
 export default function FindPasswordScreen() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordShow, setPasswordShow] = useState(false);
+  const [disable, setDisable] = useState(true);
+
+  useEffect(() => {
+    if (email && disable) {
+      setDisable(false);
+    } else if (!email && !disable) {
+      setDisable(true);
+    }
+  }, [email]);
 
   return (
     <>
-      <HeaderWhite title={'비밀번호 찾기 - 아직 안만듬'} isBackButton={true} />
-      <Pressable
-        onPress={() => {
-          console.log('Pressable');
-        }}
-        // accessible={false}
-        style={styles.entire}>
-        <View style={styles.container}>
-          <View style={styles.textAndInput}>
-            <Text style={styles.samllText}>이메일 주소</Text>
-            <TextInput
-              // onSubmitEditing={actions.onSearchButtonPressed}
-              placeholderTextColor={COLOR_GRAY}
-              onChangeText={value => {
-                setEmail(value);
-              }}
-              value={email}
-              style={styles.textinputBox}
-            />
-          </View>
-          <View style={{height: 15}} />
-          <View style={styles.textAndInput}>
-            <Text style={styles.samllText}>비밀 번호</Text>
-            <AnimatedButton
-              style={styles.showButton}
-              onPress={() => {
-                setPasswordShow(!passwordShow);
-              }}>
-              <SvgXml
-                width={20}
-                height={13}
-                xml={
-                  passwordShow
-                    ? svgXml.button.passwordShow
-                    : svgXml.button.passwordNotShow
-                }
+      <HeaderWhite title={'비밀번호 찾기'} isBackButton={true} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+        <View style={styles.entire}>
+          <View style={styles.container}>
+            <View style={styles.textAndInput}>
+              <Text style={styles.samllText}>이메일 주소</Text>
+              <TextInput
+                // onSubmitEditing={actions.onSearchButtonPressed}
+                placeholderTextColor={COLOR_GRAY}
+                onChangeText={value => {
+                  setEmail(value);
+                }}
+                value={email}
+                style={styles.textinputBox}
               />
-            </AnimatedButton>
-            <TextInput
-              // onSubmitEditing={actions.onSearchButtonPressed}
-              placeholderTextColor={COLOR_GRAY}
-              onChangeText={value => {
-                setPassword(value);
-              }}
-              value={password}
-              style={styles.textinputBox}
-            />
+            </View>
           </View>
 
-          <AnimatedButton
-            onPress={() => {
-              console.log('Go to find password screen');
-            }}
-            style={{marginTop: 7, padding: 3}}>
-            <Text style={styles.samllText}>비밀번호 찾기</Text>
-          </AnimatedButton>
+          <View style={{height: 20}} />
+          <LongPrimaryButton
+            text="비밀번호 초기화"
+            action={() => {}}
+            disable={disable}
+          />
         </View>
-
-        <View style={{height: 20}} />
-        <LongPrimaryButton text="로그인" action={() => {}} />
-      </Pressable>
+      </TouchableWithoutFeedback>
     </>
   );
 }
