@@ -18,16 +18,36 @@ export default function SplashScreen() {
   const navigation = useNavigation();
 
   //TODO: 저장된 토큰 가져와서 로그인 시도해보는 로직
-  const getAccessToken = async () => {
+  const tryAutoLogin = async () => {
     try {
-      const value = await AsyncStorage.getItem('accessToken');
-      if (value !== null) {
-        return value;
+      const accessToken = await AsyncStorage.getItem('accessToken');
+      const refreshToken = await AsyncStorage.getItem('refreshToken');
+
+      if (accessToken == null || refreshToken == null) {
+        return;
       }
+
+      //TODO: 토큰 로그인 API확인
+      //토큰으로 로그인 하는  부분
+      // const response = await axios.get(
+      //   `${API_URL}/hello/security-test`
+      // );
+      // console.log('response:', response.data.data);
+
+      // if (!response.data.data) {
+      //   console.log('Error: No return data');
+      //   return;
+      // }
+
+      navigation.navigate('BottomTab');
     } catch (e) {
       console.log('error', e);
     }
   };
+
+  useEffect(() => {
+    tryAutoLogin();
+  }, []);
 
   const pressButton = async () => {
     navigation.navigate('Login');

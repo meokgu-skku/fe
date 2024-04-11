@@ -54,8 +54,8 @@ export default function LoginScreen() {
     console.log('password:', password);
 
     try {
-      //TODO: 회원가입 API확인
-      //회원가입 하고 토큰 저장하는 부분
+      //TODO: 로그인 API확인
+      //로그인 하고 토큰 저장하는 부분
       // const response = await axios.post(
       //   `${API_URL}/v1/users/email/sign-in`,
       //   {
