@@ -39,7 +39,7 @@ export default function SignupScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordShow, setPasswordShow] = useState(false);
+  const [passwordShow, setPasswordShow] = useState(true);
   const [disable, setDisable] = useState(true);
 
   const nameInputRef = useRef(null);
