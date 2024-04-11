@@ -31,9 +31,18 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordShow, setPasswordShow] = useState(true);
+  const [disable, setDisable] = useState(true);
 
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+
+  useEffect(() => {
+    if (email && password) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [email, password]);
 
   const endEmailInput = () => {
     passwordInputRef.current.focus();
@@ -43,6 +52,33 @@ export default function LoginScreen() {
     //TODO: 로그인 API 호출 & 토큰 저장
     console.log('email:', email);
     console.log('password:', password);
+
+    try {
+      //TODO: 회원가입 API확인
+      //회원가입 하고 토큰 저장하는 부분
+      // const response = await axios.post(
+      //   `${API_URL}/v1/users/email/sign-in`,
+      //   {
+      //     email: email,
+      //     password: password,
+      //   },
+      // );
+      // console.log('response:', response.data.data);
+
+      // if (!response.data.data) {
+      //   console.log('Error: No return data');
+      //   return;
+      // }
+      // const accessToken = response.data.data.accessToken;
+      // const refreshToken = response.data.data.refreshToken;
+
+      // AsyncStorage.setItem('accessToken', 'accessToken');
+      // AsyncStorage.setItem('refreshToken', 'refreshToken');
+
+      navigation.navigate('BottomTab');
+    } catch (error) {
+      console.log('Error:', error);
+    }
   };
 
   return (
@@ -108,7 +144,7 @@ export default function LoginScreen() {
           </View>
 
           <View style={{height: 20}} />
-          <LongPrimaryButton text="로그인" action={login} />
+          <LongPrimaryButton text="로그인" action={login} disable={disable} />
           <AnimatedButton
             onPress={() => {
               navigation.navigate('Signup');
