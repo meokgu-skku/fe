@@ -31,52 +31,43 @@ import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 
-export default function SignupScreen() {
+export default function LoginScreen() {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordShow, setPasswordShow] = useState(true);
   const [disable, setDisable] = useState(true);
 
-  const nameInputRef = useRef(null);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const context = useContext(AppContext);
 
-  //state name, email, password 가 변경될 때마다 실행
   useEffect(() => {
-    if (name && email && password && disable) {
+    if (email && password && disable) {
       setDisable(false);
-    } else if ((!name || !email || !password) && !disable) {
+    } else if ((!email || !password) && !disable) {
       setDisable(true);
     }
-  }, [name, email, password]);
+  }, [email, password]);
 
   const endEmailInput = () => {
     passwordInputRef.current.focus();
   };
 
-  const endNameInput = () => {
-    emailInputRef.current.focus();
-  };
-
-  const signUp = async () => {
-    console.log('name:', name);
+  const login = async () => {
+    //TODO: 로그인 API 호출 & 토큰 저장
     console.log('email:', email);
     console.log('password:', password);
 
     try {
-      //TODO: 회원가입 API확인
-      //회원가입 하고 토큰 저장하는 부분
+      //TODO: 로그인 API확인
+      //로그인 하고 토큰 저장하는 부분
       // const response = await axios.post(
-      //   `${API_URL}​/v1​/users​/email​/sign-up`,
+      //   `${API_URL}/v1/users/email/sign-in`,
       //   {
       //     email: email,
-      //     nickname: name,
       //     password: password,
       //   },
       // );
@@ -102,27 +93,10 @@ export default function SignupScreen() {
 
   return (
     <>
-      <HeaderWhite title={'회원가입'} isBackButton={true} />
+      <HeaderWhite title={'로그인'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
-            <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>이름</Text>
-              <TextInput
-                ref={nameInputRef}
-                onSubmitEditing={endNameInput}
-                autoCapitalize="none"
-                placeholderTextColor={COLOR_GRAY}
-                onChangeText={value => {
-                  setName(value);
-                }}
-                value={name}
-                style={styles.textinputBox}
-              />
-            </View>
-
-            <View style={{height: 15}} />
-
             <View style={styles.textAndInput}>
               <Text style={styles.samllText}>이메일 주소</Text>
               <TextInput
@@ -138,9 +112,7 @@ export default function SignupScreen() {
                 style={styles.textinputBox}
               />
             </View>
-
             <View style={{height: 15}} />
-
             <View style={styles.textAndInput}>
               <Text style={styles.samllText}>비밀 번호</Text>
               <AnimatedButton
@@ -160,7 +132,7 @@ export default function SignupScreen() {
               </AnimatedButton>
               <TextInput
                 ref={passwordInputRef}
-                onSubmitEditing={signUp}
+                onSubmitEditing={login}
                 secureTextEntry={passwordShow}
                 autoCapitalize="none"
                 placeholderTextColor={COLOR_GRAY}
@@ -171,26 +143,31 @@ export default function SignupScreen() {
                 style={styles.textinputBox}
               />
             </View>
+
+            <AnimatedButton
+              onPress={() => {
+                navigation.navigate('FindPassword');
+              }}
+              style={{marginTop: 7, padding: 3}}>
+              <Text style={styles.samllText}>비밀번호 찾기</Text>
+            </AnimatedButton>
           </View>
 
           <View style={{height: 20}} />
-          <LongPrimaryButton
-            text="회원가입"
-            action={signUp}
-            disable={disable}
-          />
-          <View
+          <LongPrimaryButton text="로그인" action={login} disable={disable} />
+          <AnimatedButton
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}
             style={{
               marginTop: 12,
               padding: 4,
             }}>
-            <Text style={styles.samllText}>
-              {'가입하시면 이용약관 및 개인정보 보호정책에'}
-            </Text>
-            <Text style={[styles.samllText, {marginTop: -5}]}>
-              {'자동으로 동의하게 됩니다.'}
-            </Text>
-          </View>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={styles.samllText}>{'계정이 없으신가요?'}</Text>
+              <Text style={styles.samllTextColor}>{'회원가입'}</Text>
+            </View>
+          </AnimatedButton>
         </View>
       </TouchableWithoutFeedback>
     </>
@@ -208,7 +185,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 140,
+    marginTop: 160,
     marginHorizontal: 16,
   },
   textAndInput: {
@@ -219,6 +196,14 @@ const styles = StyleSheet.create({
   },
   samllText: {
     color: COLOR_TEXT70GRAY,
+    fontSize: 12,
+    fontWeight: 'normal',
+    textAlign: 'center',
+    paddingVertical: 4,
+  },
+  samllTextColor: {
+    marginLeft: 60,
+    color: COLOR_SECONDARY,
     fontSize: 12,
     fontWeight: 'normal',
     textAlign: 'center',
