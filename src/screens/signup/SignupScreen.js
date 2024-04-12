@@ -70,29 +70,25 @@ export default function SignupScreen() {
     console.log('password:', password);
 
     try {
-      //TODO: 회원가입 API확인
       //회원가입 하고 토큰 저장하는 부분
-      // const response = await axios.post(
-      //   `${API_URL}​/v1​/users​/email​/sign-up`,
-      //   {
-      //     email: email,
-      //     nickname: name,
-      //     password: password,
-      //   },
-      // );
-      // console.log('response:', response.data.data);
+      const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
+        email: email,
+        nickname: name,
+        password: password,
+      });
+      console.log('response:', response.data.data);
 
-      // if (!response.data.data) {
-      //   console.log('Error: No return data');
-      //   return;
-      // }
-      // const accessToken = response.data.data.accessToken;
-      // const refreshToken = response.data.data.refreshToken;
+      if (!response.data.data) {
+        console.log('Error: No return data');
+        return;
+      }
+      const accessToken = response.data.data.token.accessToken;
+      const refreshToken = response.data.data.token.refreshToken;
 
-      // context.setAccessTokenValue(accessToken);
-      // context.setRefreshTokenValue(refreshToken);
-      // AsyncStorage.setItem('accessToken', accessToken);
-      // AsyncStorage.setItem('refreshToken', refreshToken);
+      context.setAccessTokenValue(accessToken);
+      context.setRefreshTokenValue(refreshToken);
+      AsyncStorage.setItem('accessToken', accessToken);
+      AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
     } catch (error) {
@@ -160,7 +156,9 @@ export default function SignupScreen() {
               </AnimatedButton>
               <TextInput
                 ref={passwordInputRef}
-                onSubmitEditing={signUp}
+                onSubmitEditing={async () => {
+                  await signUp();
+                }}
                 secureTextEntry={passwordShow}
                 autoCapitalize="none"
                 placeholderTextColor={COLOR_GRAY}
