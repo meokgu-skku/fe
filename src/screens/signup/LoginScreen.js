@@ -36,15 +36,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
+
+  //state 선언 -> UI에 영향을 미치는 변수들 만약 이게 바뀌었을때 화면이 바뀌어야하면 state로 선언
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordShow, setPasswordShow] = useState(true);
   const [disable, setDisable] = useState(true);
 
+  //ref 선언 -> 요소를 직접 제어할때 사용
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
+
+  // 앱내부에서 전역변수로 사용하는 것 쓰고싶으면 선언한다
   const context = useContext(AppContext);
 
+  // [ ] 안의 State가 변경될 때마다 실행된다. 여기서는 email, password가 변경될 때마다 실행되서 로그인 버튼이 활성화 될지 비활성화 될지 결정한다.
   useEffect(() => {
     if (email && password && disable) {
       setDisable(false);
@@ -53,31 +59,41 @@ export default function LoginScreen() {
     }
   }, [email, password]);
 
+  // 이메일 입력이 끝나면 패스워드 입력으로 커서를 이동시키는 함수
   const endEmailInput = () => {
     passwordInputRef.current.focus();
   };
 
+  // 로그인 하는 함수 -> 버튼 누르면 & 입력하고 엔터 누르면 작동
   const login = async () => {
     console.log('email:', email);
     console.log('password:', password);
 
     try {
-      //로그인 하고 토큰 저장하는 부분
+      // 백엔드 요청 -> 아직 로그인 전인 백엔드 요청이라 토큰이 필요없다.
       const response = await axios.post(`${API_URL}/v1/users/email/sign-in`, {
         email: email,
         password: password,
       });
+
+      //출력
       console.log('response:', response.data.data);
 
+      //백엔드에서 받은 데이터가 없으면 에러 출력
       if (!response.data.data) {
         console.log('Error: No return data');
         return;
       }
+
+      //백엔드에서 받은 토큰을 저장하고 화면 이동
       const accessToken = response.data.data.token.accessToken;
       const refreshToken = response.data.data.token.refreshToken;
 
+      //전역 변수에 저장
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);
+
+      //디바이스에 저장
       AsyncStorage.setItem('accessToken', accessToken);
       AsyncStorage.setItem('refreshToken', refreshToken);
 

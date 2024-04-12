@@ -21,42 +21,50 @@ export default function SplashScreen() {
 
   const tryAutoLogin = async () => {
     try {
+      // AsyncStorage(=디바이스에 저장하는 데이터)에 저장된 토큰을 가져온다.
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
 
+      //없으면 그만
       console.log('accessToken:', accessToken);
       if (accessToken == null) {
         return;
       }
-      //토큰으로 로그인 하는  부분
+
+      //토큰이 맞는지 확인 -> 헤더에 토큰 넣어서 백엔드 요청
       const response = await axios.get(`${API_URL}/hello/security-test`, {
         headers: {Authorization: `Bearer ${accessToken}`},
       });
       console.log('response:', response.data.data);
 
+      //토큰이 맞지 않으면 그만
       if (!response.data.data) {
         console.log('Error: No return data');
         return;
       }
 
+      //토큰이 맞으면 context에 저장하고 화면 이동
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);
 
+      //화면 이동
       navigation.navigate('BottomTab');
     } catch (e) {
       console.log('error', e);
     }
   };
 
-  // run at first time
+  // [] 에 state를 넣으면 state가 변경될 때마다 실행된다. 근데 아무것도 없으면 처음 로딩될때만 작동 = 초기화용
   useEffect(() => {
     tryAutoLogin();
   }, []);
 
+  //버튼 눌렀을 때의 작동함수
   const pressButton = async () => {
     navigation.navigate('Login');
   };
 
+  //이 함수형 컴포넌트가 화면에 보여지는 부분
   return (
     <View style={styles.entire}>
       <Text style={styles.textMain}>먹구스꾸</Text>
