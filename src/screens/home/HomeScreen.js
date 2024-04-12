@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 import {
   COLOR_WHITE,
@@ -11,10 +11,30 @@ import {useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
-
+import AppContext from '../../components/AppContext';
+import axios from 'axios';
+import {API_URL} from '@env';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
+
+  const helloAPI = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/hello/security-test`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
+
+      console.log('response:', response.data.data);
+
+      if (!response.data.data) {
+        console.log('Error: No return data');
+        return;
+      }
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
 
   return (
     <>
@@ -31,11 +51,10 @@ export default function HomeScreen() {
         </AnimatedButton>
         <AnimatedButton
           onPress={() => {
-            console.log('PRESSED~!!');
-            navigation.navigate('ListNavigator');
+            helloAPI();
           }}
           style={styles.buttonTest}>
-          <Text style={styles.buttonText}>ListNavigator</Text>
+          <Text style={styles.buttonText}>Hello API Check</Text>
         </AnimatedButton>
       </View>
     </>

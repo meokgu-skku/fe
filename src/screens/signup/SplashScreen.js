@@ -25,13 +25,13 @@ export default function SplashScreen() {
       const refreshToken = await AsyncStorage.getItem('refreshToken');
 
       console.log('accessToken:', accessToken);
-      if (accessToken == null || refreshToken == null) {
+      if (accessToken == null) {
         return;
       }
-
-      //TODO: 토큰 로그인 API확인
       //토큰으로 로그인 하는  부분
-      const response = await axios.get(`${API_URL}/hello/security-test`);
+      const response = await axios.get(`${API_URL}/hello/security-test`, {
+        headers: {Authorization: `Bearer ${accessToken}`},
+      });
       console.log('response:', response.data.data);
 
       if (!response.data.data) {
@@ -41,6 +41,7 @@ export default function SplashScreen() {
 
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);
+
       navigation.navigate('BottomTab');
     } catch (e) {
       console.log('error', e);
