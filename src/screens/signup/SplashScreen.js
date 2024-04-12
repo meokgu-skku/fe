@@ -19,27 +19,25 @@ export default function SplashScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
-  //TODO: 저장된 토큰 가져와서 로그인 시도해보는 로직
   const tryAutoLogin = async () => {
     try {
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
 
+      console.log('accessToken:', accessToken);
       if (accessToken == null || refreshToken == null) {
         return;
       }
 
       //TODO: 토큰 로그인 API확인
       //토큰으로 로그인 하는  부분
-      // const response = await axios.get(
-      //   `${API_URL}/hello/security-test`
-      // );
-      // console.log('response:', response.data.data);
+      const response = await axios.get(`${API_URL}/hello/security-test`);
+      console.log('response:', response.data.data);
 
-      // if (!response.data.data) {
-      //   console.log('Error: No return data');
-      //   return;
-      // }
+      if (!response.data.data) {
+        console.log('Error: No return data');
+        return;
+      }
 
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);

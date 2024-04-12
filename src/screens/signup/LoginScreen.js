@@ -32,6 +32,7 @@ import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AppContext from '../../components/AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -57,33 +58,28 @@ export default function LoginScreen() {
   };
 
   const login = async () => {
-    //TODO: 로그인 API 호출 & 토큰 저장
     console.log('email:', email);
     console.log('password:', password);
 
     try {
-      //TODO: 로그인 API확인
       //로그인 하고 토큰 저장하는 부분
-      // const response = await axios.post(
-      //   `${API_URL}/v1/users/email/sign-in`,
-      //   {
-      //     email: email,
-      //     password: password,
-      //   },
-      // );
-      // console.log('response:', response.data.data);
+      const response = await axios.post(`${API_URL}/v1/users/email/sign-in`, {
+        email: email,
+        password: password,
+      });
+      console.log('response:', response.data.data);
 
-      // if (!response.data.data) {
-      //   console.log('Error: No return data');
-      //   return;
-      // }
-      // const accessToken = response.data.data.accessToken;
-      // const refreshToken = response.data.data.refreshToken;
+      if (!response.data.data) {
+        console.log('Error: No return data');
+        return;
+      }
+      const accessToken = response.data.data.token.accessToken;
+      const refreshToken = response.data.data.token.refreshToken;
 
-      // context.setAccessTokenValue(accessToken);
-      // context.setRefreshTokenValue(refreshToken);
-      // AsyncStorage.setItem('accessToken', accessToken);
-      // AsyncStorage.setItem('refreshToken', refreshToken);
+      context.setAccessTokenValue(accessToken);
+      context.setRefreshTokenValue(refreshToken);
+      AsyncStorage.setItem('accessToken', accessToken);
+      AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
     } catch (error) {
