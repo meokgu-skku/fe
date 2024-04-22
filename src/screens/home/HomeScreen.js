@@ -1,4 +1,10 @@
-import React, {useState, useCallback, useEffect, useContext} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 import {
   View,
   Text,
@@ -6,6 +12,8 @@ import {
   ScrollView,
   StyleSheet,
   Image,
+  TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -22,37 +30,56 @@ import Header from '../../components/Header';
 import AppContext from '../../components/AppContext';
 import axios from 'axios';
 import {API_URL} from '@env';
+import {Dimensions} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 export default function HomeScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
-  const [todaysPick, setTodaysPick] = useState({
-    name: '율천회관',
-    category: '한식',
-    menu: '육회비빔밥',
-    image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-  });
+  const scrollViewRef = useRef();
 
-  const [image, setImage] = useState(
-    'https://d2da4yi19up8sp.cloudfront.net/product/loed4.png',
-  );
+  const [todaysPick, setTodaysPick] = useState([
+    {
+      name: '율천회관',
+      category: '한식',
+      menu: '육회비빔밥',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
+    },
+    {
+      name: '무대뽀 핫도그',
+      category: '술집',
+      menu: '핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+    },
+    {
+      name: '무대뽀 핫도그',
+      category: '술집',
+      menu: '핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+    },
+    {
+      name: '무대뽀 핫도그',
+      category: '술집',
+      menu: '핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+    },
+    {
+      name: '무대뽀 핫도그',
+      category: '술집',
+      menu: '핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+    },
+  ]);
 
-  const helloAPI = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/hello/security-test`, {
-        headers: {Authorization: `Bearer ${context.accessToken}`},
-      });
-
-      console.log('response:', response.data.data);
-
-      if (!response.data.data) {
-        console.log('Error: No return data');
-        return;
-      }
-    } catch (e) {
-      console.log('error', e);
-    }
+  const handleScroll = event => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    // console.log('offsetX', event.nativeEvent.layoutMeasurement.width);
+    const pageWidth = event.nativeEvent.layoutMeasurement.width;
+    const currentPage = Math.floor(offsetX / pageWidth + 0.5);
+    // setCurrentPage(currentPage);
+    // setCurrentDetailText(currentPage);
   };
 
   return (
@@ -62,20 +89,48 @@ export default function HomeScreen() {
         {/* 먹구스꾸 오늘의 픽 */}
         <View style={styles.todayPick}>
           <Text style={styles.todayPickTitle}>먹구스꾸's 오늘의 픽</Text>
-          {console.log('todaysPick:', todaysPick.image)}
           <View style={{flexDirection: 'row', marginTop: 10}}>
-            <Image
-              source={{
-                uri: 'https://picsum.photos/seed/picsum/200/300',
-              }}
-              resizeMode="cover"
-              style={{
-                width: 300,
-                height: 300,
-                borderRadius: 16,
-                backgroundColor: 'red',
-              }}
-            />
+            <ScrollView
+              // showsVerticalScrollIndicator={false}
+              // showsHorizontalScrollIndicator={true}
+              style={
+                {
+                  // width: 325,
+                }
+              }
+              horizontal
+              pagingEnabled
+              onScroll={handleScroll}
+              // scrollEventThrottle={16} // 조정 가능한 값으로, 스크롤 이벤트의 빈도를 조절합니다.
+              ref={scrollViewRef}>
+              {/* {todaysPick.map((pickData, index) => {
+                return (
+                  <View
+                    key={index.toString()}
+                    style={{
+                      width: 325,
+                      backgroundColor: '#e0e0e0',
+                    }}
+                    onPress={() => {
+                      console.log(index);
+                    }}>
+                    <Image
+                      source={{
+                        uri: pickData.image,
+                      }}
+                      resizeMode="cover"
+                      style={{
+                        width: 115,
+                        height: 132,
+                        borderRadius: 16,
+                        // backgroundColor: 'red',
+                      }}
+                    />
+                    <Text>{pickData.name}</Text>
+                  </View>
+                );
+              })} */}
+            </ScrollView>
           </View>
         </View>
       </View>
@@ -108,7 +163,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   todayPick: {
-    width: '95%',
+    width: windowWidth - 32,
     padding: 12,
     paddingHorizontal: 10,
     backgroundColor: COLOR_WHITE,
