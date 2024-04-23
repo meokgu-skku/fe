@@ -64,7 +64,7 @@ export default function StoreCompo(props) {
           style={{
             width: windowWidth / 3,
             height: windowWidth / 3,
-            borderRadius: 16,
+            borderRadius: 10,
           }}
         />
         <View
@@ -157,4 +157,11 @@ export default function StoreCompo(props) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  line: {
+    marginVertical: 8,
+    height: 0.5,
+    backgroundColor: '#D9D9D9', // Change color as needed
+    width: '100%', // Adjust width as needed
+  },
+});

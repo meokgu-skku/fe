@@ -86,6 +86,24 @@ export default function HomeScreen() {
     },
   ]);
 
+  const [kingoPassData, setkingoPassData] = useState([
+    {
+      name: '율천회관',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+    },
+    {
+      name: '무대뽀 핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
+      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+    },
+    {
+      name: '무대뽀 핫도그',
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
+      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+    },
+  ]);
+
   return (
     <>
       <Header title={'홈'} isBackButton={false} />
@@ -93,7 +111,8 @@ export default function HomeScreen() {
         {/* 먹구스꾸 오늘의 픽 */}
         <TodayPick todaysPick={todaysPick} />
         <FoodCategory />
-        <KingoPass todaysPick={todaysPick} />
+        <KingoPass passData={kingoPassData} />
+        <View style={{height: 100}} />
       </ScrollView>
     </>
   );

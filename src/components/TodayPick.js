@@ -117,10 +117,4 @@ const styles = StyleSheet.create({
     color: COLOR_TEXT70GRAY,
     fontWeight: '700',
   },
-  line: {
-    marginVertical: 8,
-    height: 0.5,
-    backgroundColor: '#D9D9D9', // Change color as needed
-    width: '100%', // Adjust width as needed
-  },
 });
