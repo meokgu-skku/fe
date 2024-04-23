@@ -35,6 +35,7 @@ import axios from 'axios';
 import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
 import TodayPick from '../../components/TodayPick';
+import FoodCategory from '../../components/FoodCategory';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -87,6 +88,7 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.entire}>
         {/* 먹구스꾸 오늘의 픽 */}
         <TodayPick todaysPick={todaysPick} />
+        <FoodCategory todaysPick={todaysPick} />
       </ScrollView>
     </>
   );
