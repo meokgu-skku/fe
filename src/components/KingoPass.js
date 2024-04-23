@@ -38,7 +38,7 @@ import StoreCompo from './StoreCompo';
 
 const windowWidth = Dimensions.get('window').width;
 
-export default function TodayPick(props) {
+export default function KingoPass(props) {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 

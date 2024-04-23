@@ -36,6 +36,7 @@ import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
 import TodayPick from '../../components/TodayPick';
 import FoodCategory from '../../components/FoodCategory';
+import KingoPass from '../../components/KingoPass';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -51,6 +52,7 @@ export default function HomeScreen() {
       image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
       score: 4.5,
       reviewCount: 100,
+      heartCount: 20,
       firstReview: {
         reviewer: '엄승주',
         body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
@@ -63,6 +65,7 @@ export default function HomeScreen() {
       image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
       score: 4.5,
       reviewCount: 100,
+      heartCount: 20,
       firstReview: {
         reviewer: '엄승주',
         body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
@@ -75,6 +78,7 @@ export default function HomeScreen() {
       image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
       score: 4.5,
       reviewCount: 100,
+      heartCount: 20,
       firstReview: {
         reviewer: '엄승주',
         body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
@@ -88,7 +92,8 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.entire}>
         {/* 먹구스꾸 오늘의 픽 */}
         <TodayPick todaysPick={todaysPick} />
-        <FoodCategory todaysPick={todaysPick} />
+        <FoodCategory />
+        <KingoPass todaysPick={todaysPick} />
       </ScrollView>
     </>
   );
@@ -96,7 +101,6 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   entire: {
-    flex: 1,
     backgroundColor: COLOR_BACKGROUND,
     // justifyContent: 'center',
     alignItems: 'center',
