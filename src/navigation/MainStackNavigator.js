@@ -52,7 +52,7 @@ export default function MainStackNavigator() {
           component={BottomTabNavigator}
           options={{
             headerShown: false,
-            gestureEnabled: true,
+            gestureEnabled: false,
             cardOverlayEnabled: false,
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
           }}
