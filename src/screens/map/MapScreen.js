@@ -9,6 +9,7 @@ import {
 import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/native';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 
 export default function MapScreen() {
   const navigation = useNavigation();
@@ -17,23 +18,16 @@ export default function MapScreen() {
     <>
       <Header title={'지도'} isBackButton={false} />
       <View style={styles.entire}>
-        <Text style={styles.textMain}>MapScreen</Text>
-        <AnimatedButton
-          onPress={() => {
-            console.log('PRESSED~!!');
-            navigation.navigate('Signup');
+        <MapView
+          style={{width: '100%', height: '100%'}}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.0,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
           }}
-          style={styles.buttonTest}>
-          <Text style={styles.buttonText}>Signup</Text>
-        </AnimatedButton>
-        <AnimatedButton
-          onPress={() => {
-            console.log('PRESSED~!!');
-            navigation.navigate('ListNavigator');
-          }}
-          style={styles.buttonTest}>
-          <Text style={styles.buttonText}>ListNavigator</Text>
-        </AnimatedButton>
+        />
       </View>
     </>
   );
