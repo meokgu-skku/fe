@@ -67,4 +67,4 @@ yarn-error.log
 node_modules
 
 # 
-/android/app/src/main/AndroidManifest.xml
+android/app/src/main/AndroidManifest.xml
