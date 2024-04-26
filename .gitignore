@@ -66,5 +66,3 @@ yarn-error.log
 /coverage
 node_modules
 
-
-android/app/src/main/AndroidManifest.xml
