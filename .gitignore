@@ -66,4 +66,4 @@ yarn-error.log
 /coverage
 node_modules
 
-app/src/main/AndroidMainfest.xml
+.env
