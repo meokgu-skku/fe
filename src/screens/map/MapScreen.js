@@ -16,6 +16,7 @@ import {
   COLOR_PRIMARY,
   COLOR_TEXT_BLACK,
   COLOR_TEXT70GRAY,
+  COLOR_TEXT60GRAY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
@@ -25,44 +26,85 @@ import {BlurView} from '@react-native-community/blur';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
+import Modal from 'react-native-modal';
 import {Dimensions} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
+import StoreCompo from '../../components/StoreCompo';
+
 const windowWidth = Dimensions.get('window').width;
 
 export default function MapScreen() {
   const navigation = useNavigation();
 
   const [searchText, setSearchText] = useState('');
-
   const [isEnabled, setIsEnabled] = useState(false);
+  const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [storeModalVisible, setStoreModalVisible] = useState(false);
+  const [storeData, setStoreData] = useState({});
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   };
+
+  const closeStoreModalVisible = () => {
+    setStoreModalVisible(false);
+  };
+
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
   const [storeDartDatas, setStoreDartDatas] = useState([
     {
-      name: '옥집',
-      type: '한식',
+      name: '율천회관',
+      category: '한식',
+      menu: '육회비빔밥',
       latitude: 37.296736,
       longitude: 126.970762,
-      rating: 4.3,
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
+      score: 4.5,
+      reviewCount: 100,
+      heartCount: 20,
+      firstReview: {
+        reviewer: '엄승주',
+        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+      },
     },
     {
       name: '자스민',
-      type: '아시안',
+      category: '아시안',
+      menu: '월남쌈',
       latitude: 37.298612,
       longitude: 126.972889,
-      rating: 4.5,
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+      score: 4.5,
+      reviewCount: 100,
+      heartCount: 20,
+      firstReview: {
+        reviewer: '엄승주',
+        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+      },
     },
     {
       name: '키와마루아지',
-      type: '일식',
+      category: '일식',
+      menu: '라멘',
       latitude: 37.29693,
       longitude: 126.968718,
-      rating: 4.2,
+      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
+      score: 4.5,
+      reviewCount: 100,
+      heartCount: 20,
+      firstReview: {
+        reviewer: '엄승주',
+        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
+      },
     },
   ]);
+
+  const catrgory = [
+    ['한식', '양식', '일식', '중식'],
+    ['분식', '치킨', '피자', '버거'],
+    ['아시안', '카페', '전체', ''],
+  ];
 
   //TODO: 검색어를 받아와서 검색하는 함수
   function searchStore(inputString) {
@@ -85,7 +127,13 @@ export default function MapScreen() {
             longitudeDelta: 0.01,
           }}>
           {storeDartDatas.map((data, index) => (
-            <MapDart data={data} />
+            <MapDart
+              data={data}
+              onPress={() => {
+                setStoreModalVisible(true);
+                setStoreData(data);
+              }}
+            />
           ))}
         </MapView>
 
@@ -135,10 +183,6 @@ export default function MapScreen() {
                 autoCapitalize="none"
                 autoComplete="off"
                 autoCorrect={false}
-                // onContentSizeChange={e => {
-                //   setKBsize(e.nativeEvent.contentSize.height);
-                // }}
-                // ref={inputRef}
                 numberOfLines={1}
               />
             </View>
@@ -158,6 +202,7 @@ export default function MapScreen() {
               style={styles.filterButton}
               onPress={() => {
                 console.log('press 카테고리');
+                setCategoryModalVisible(true);
               }}>
               <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
               <Text style={styles.filterText}>{'카테고리'}</Text>
@@ -211,7 +256,7 @@ export default function MapScreen() {
           <SvgXml xml={svgXml.icon.compass} width="30" height="30" />
         </AnimatedButton>
 
-        {/* 나침반 버튼*/}
+        {/* gps 버튼*/}
         <AnimatedButton
           style={[styles.cornerButton, {right: 16}]}
           onPress={() => {
@@ -220,7 +265,104 @@ export default function MapScreen() {
           <SvgXml xml={svgXml.icon.gps} width="24" height="24" />
         </AnimatedButton>
       </View>
+
+      {/* 카테고리 모달 */}
+      <Modal
+        isVisible={categoryModalVisible}
+        hasBackdrop={true}
+        backdropOpacity={0}
+        onSwipeComplete={() => setCategoryModalVisible(false)}
+        swipeDirection={'down'}
+        onBackdropPress={() => setCategoryModalVisible(false)}
+        // coverScreen={false}
+        onBackButtonPress={() => setCategoryModalVisible(false)}
+        onModalHide={() => {
+          setCategoryModalVisible(false);
+        }}
+        style={{justifyContent: 'flex-end', margin: 0}}
+        animationIn="slideInUp"
+        animationOut="slideOutDown">
+        <View style={styles.modalContent}>
+          {/* 모달의 제목 부분 */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}>
+            <Text style={styles.modalTitle}>카테고리</Text>
+            <AnimatedButton
+              style={{padding: 4}}
+              onPress={() => {
+                console.log('새로고침');
+              }}>
+              <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
+            </AnimatedButton>
+          </View>
+
+          {/* 카테고리 버튼들 */}
+          <View style={{marginTop: 12}}>
+            {catrgory.map(cateLine => {
+              return (
+                <View style={styles.categoryLine}>
+                  {cateLine.map((name, index) => (
+                    <CategoryButton
+                      name={name}
+                      onPress={setSelectedCategory}
+                      selected={selectedCategory}
+                    />
+                  ))}
+                </View>
+              );
+            })}
+          </View>
+        </View>
+      </Modal>
+
+      {/* 가게 모달 */}
+      <Modal
+        isVisible={storeModalVisible}
+        hasBackdrop={true}
+        backdropOpacity={0}
+        onSwipeComplete={closeStoreModalVisible}
+        swipeDirection={'down'}
+        onBackdropPress={closeStoreModalVisible}
+        // coverScreen={false}
+        onBackButtonPress={closeStoreModalVisible}
+        onModalHide={closeStoreModalVisible}
+        style={{justifyContent: 'flex-end', margin: 0}}
+        animationIn="slideInUp"
+        animationOut="slideOutDown">
+        <View style={styles.modalContent}>
+          <StoreCompo storeData={storeData} index={1} />
+        </View>
+      </Modal>
     </>
+  );
+}
+
+function CategoryButton(props) {
+  const {name, onPress, selected} = props;
+
+  return (
+    <AnimatedButton
+      style={
+        selected === name
+          ? styles.categoryModalButtonSelected
+          : styles.categoryModalButton
+      }
+      onPress={() => {
+        onPress(name);
+      }}>
+      <Text
+        style={
+          selected === name
+            ? styles.categoryModalButtonTextSelected
+            : styles.categoryModalButtonText
+        }>
+        {name}
+      </Text>
+    </AnimatedButton>
   );
 }
 
@@ -290,5 +432,47 @@ const styles = StyleSheet.create({
     elevation: 4,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 16,
+    borderRadius: 16,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  modalTitle: {
+    fontSize: 20,
+    color: COLOR_TEXT70GRAY,
+    fontWeight: '700',
+  },
+  categoryModalButton: {
+    borderWidth: 0.5,
+    borderColor: '#D9D9D9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    flex: 1,
+  },
+  categoryModalButtonSelected: {
+    borderWidth: 0.5,
+    borderColor: '#D9D9D9',
+    backgroundColor: '#D9D9D9',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    flex: 1,
+  },
+  categoryModalButtonText: {
+    fontSize: 16,
+    color: COLOR_TEXT60GRAY,
+  },
+  categoryModalButtonTextSelected: {
+    fontSize: 16,
+    color: COLOR_TEXT70GRAY,
+    fontWeight: 'bold',
+  },
+  categoryLine: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
   },
 });

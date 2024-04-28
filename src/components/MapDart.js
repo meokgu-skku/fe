@@ -19,18 +19,18 @@ import {svgXml} from '../assets/svg';
 export default function MapDart(props) {
   //TODO: 눌렀을 때 상세 페이지로 이동해야함
   const navigation = useNavigation();
-  const {data} = props;
+  const {data, onPress} = props;
 
   return (
     <Marker
       coordinate={{latitude: data.latitude, longitude: data.longitude}}
-      anchor={{x: 0, y: 1}}>
+      anchor={{x: 0, y: 1}}
+      onPress={() => {
+        onPress(data);
+        console.log('marker pressed', data.name);
+      }}>
       <View>
-        <AnimatedButton
-          style={styles.dart}
-          onPress={() => {
-            console.log('pressDart', data.name);
-          }}>
+        <View style={styles.dart}>
           <Text style={styles.dartText}>{data.name}</Text>
 
           <View
@@ -51,7 +51,7 @@ export default function MapDart(props) {
               {data.rating}
             </Text>
           </View>
-        </AnimatedButton>
+        </View>
         <View style={styles.triangle} />
       </View>
     </Marker>
