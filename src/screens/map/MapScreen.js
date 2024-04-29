@@ -113,6 +113,8 @@ export default function MapScreen() {
 
   //TODO: 카테고리별로 필터링하는 함수
 
+  //TODO: 본인 위치 받아오는 함수
+
   return (
     <>
       <Header title={'지도'} isBackButton={false} />

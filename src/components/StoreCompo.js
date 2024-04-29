@@ -49,7 +49,7 @@ export default function StoreCompo(props) {
     <Pressable
       key={index.toString()}
       style={{
-        width: windowWidth - 52,
+        width: windowWidth - 32,
       }}
       //TODO: 가게 상세 페이지로 이동
       onPress={() => {
