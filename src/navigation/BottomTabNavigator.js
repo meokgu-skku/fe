@@ -29,6 +29,7 @@ import ListMainScreen from '../screens/list/ListMainScreen';
 import ListDetailScreen from '../screens/list/ListDetailScreen';
 import MapScreen from '../screens/map/MapScreen';
 import MypageScreen from '../screens/mypage/MypageScreen';
+import SearchScreen from '../screens/map/SearchScreen';
 
 const BottomTab = createBottomTabNavigator();
 const iconSize = 35;
@@ -92,6 +93,7 @@ function MapNavigator() {
         cardStyleInterpolator: customCardStyleInterpolator,
       }}>
       <MapStack.Screen name="Map" component={MapScreen} />
+      <MapStack.Screen name="Search" component={SearchScreen} />
     </MapStack.Navigator>
   );
 }

@@ -36,7 +36,6 @@ const windowWidth = Dimensions.get('window').width;
 export default function MapScreen() {
   const navigation = useNavigation();
 
-  const [searchText, setSearchText] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('전체');
@@ -106,11 +105,6 @@ export default function MapScreen() {
     ['아시안', '카페', '전체', ''],
   ];
 
-  //TODO: 검색어를 받아와서 검색하는 함수
-  function searchStore(inputString) {
-    console.log('검색어:', inputString);
-  }
-
   //TODO: 카테고리별로 필터링하는 함수
 
   //TODO: 본인 위치 받아오는 함수
@@ -149,7 +143,7 @@ export default function MapScreen() {
 
         <View style={{position: 'absolute', top: 6, alignItems: 'center'}}>
           {/* 검색창 */}
-          <View
+          <AnimatedButton
             style={{
               width: windowWidth - 32,
               backgroundColor: 'white',
@@ -158,45 +152,24 @@ export default function MapScreen() {
               paddingHorizontal: 8,
               elevation: 4,
               justifyContent: 'center',
+            }}
+            onPress={() => {
+              navigation.navigate('Search');
             }}>
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
               }}>
-              <AnimatedButton
-                onPress={() => {
-                  searchStore(searchText);
-                }}
+              <View
                 style={{
                   padding: 8,
                 }}>
                 <SvgXml xml={svgXml.icon.search} width="24" height="24" />
-              </AnimatedButton>
-              <TextInput
-                onFocus={() => {}}
-                placeholder={'율전의 맛집은 과연 어디?'}
-                placeholderTextColor={'#888888'}
-                style={styles.textInput}
-                onChangeText={text => {
-                  setSearchText(text);
-                }}
-                blurOnSubmit={false}
-                maxLength={200}
-                value={searchText}
-                onSubmitEditing={() => {
-                  console.log('검색 제출');
-                  searchStore(searchText);
-                }}
-                // multiline={true}
-                textAlignVertical="center"
-                autoCapitalize="none"
-                autoComplete="off"
-                autoCorrect={false}
-                numberOfLines={1}
-              />
+              </View>
+              <Text style={styles.textInput}>{'율전의 맛집은 과연 어디?'}</Text>
             </View>
-          </View>
+          </AnimatedButton>
 
           {/* 필터 버튼들*/}
           <View
@@ -407,7 +380,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     fontSize: 12,
-    color: COLOR_TEXT_BLACK,
+    color: '#888888',
     padding: 0,
   },
   filterButton: {
