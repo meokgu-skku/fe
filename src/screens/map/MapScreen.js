@@ -128,15 +128,23 @@ export default function MapScreen() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}>
-          {storeDartDatas.map((data, index) => (
-            <MapDart
-              data={data}
-              onPress={() => {
-                setStoreModalVisible(true);
-                setStoreData(data);
-              }}
-            />
-          ))}
+          {storeDartDatas.map((data, index) => {
+            if (
+              selectedCategory !== '전체' &&
+              data.category !== selectedCategory
+            ) {
+              return null;
+            }
+            return (
+              <MapDart
+                data={data}
+                onPress={() => {
+                  setStoreModalVisible(true);
+                  setStoreData(data);
+                }}
+              />
+            );
+          })}
         </MapView>
 
         <View style={{position: 'absolute', top: 6, alignItems: 'center'}}>
