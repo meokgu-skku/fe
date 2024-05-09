@@ -45,7 +45,7 @@ export default function SearchScreen() {
 
   return (
     <>
-      <Header title={'검색'} isBackButton={false} />
+      <Header title={'검색'} isBackButton={true} />
       <View style={styles.entire}>
         <View style={{alignItems: 'center'}}>
           {/* 검색창 */}

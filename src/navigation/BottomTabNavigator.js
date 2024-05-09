@@ -30,6 +30,8 @@ import ListDetailScreen from '../screens/list/ListDetailScreen';
 import MapScreen from '../screens/map/MapScreen';
 import MypageScreen from '../screens/mypage/MypageScreen';
 import SearchScreen from '../screens/map/SearchScreen';
+import StoreDetailScreen from '../screens/detail/StoreDetailScreen';
+import ReviewWriteScreen from '../screens/detail/ReviewWriteScreen';
 
 const BottomTab = createBottomTabNavigator();
 const iconSize = 35;
