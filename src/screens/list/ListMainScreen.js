@@ -392,6 +392,12 @@ export default function ListMainScreen() {
             ListFooterComponent={() => <View style={{height: 16}} />}
             ListHeaderComponent={() => <FilterButtons />}
             renderItem={({item, index}) => {
+              if (
+                selectedCategory !== '전체' &&
+                item.category !== selectedCategory
+              ) {
+                return null;
+              }
               return (
                 <View style={{alignItems: 'center'}}>
                   <View style={{height: 16}} />
