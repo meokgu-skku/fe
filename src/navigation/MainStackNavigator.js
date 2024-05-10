@@ -11,6 +11,8 @@ import SplashScreen from '../screens/signup/SplashScreen';
 import LoginScreen from '../screens/signup/LoginScreen';
 import FindPasswordScreen from '../screens/signup/FindPasswordScreen';
 import SignupScreen from '../screens/signup/SignupScreen';
+import StoreDetailScreen from '../screens/detail/StoreDetailScreen';
+import ReviewWriteScreen from '../screens/detail/ReviewWriteScreen';
 
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -57,6 +59,8 @@ export default function MainStackNavigator() {
             cardStyleInterpolator: CardStyleInterpolators.forFadeFromCenter,
           }}
         />
+        <MainStack.Screen name="StoreDetail" component={StoreDetailScreen} />
+        <MainStack.Screen name="ReviewWrite" component={ReviewWriteScreen} />
       </MainStack.Navigator>
     </NavigationContainer>
   );
