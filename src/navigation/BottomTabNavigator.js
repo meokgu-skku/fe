@@ -26,9 +26,10 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import HomeScreen from '../screens/home/HomeScreen';
 import ListMainScreen from '../screens/list/ListMainScreen';
-import ListDetailScreen from '../screens/list/ListDetailScreen';
 import MapScreen from '../screens/map/MapScreen';
 import MypageScreen from '../screens/mypage/MypageScreen';
+import SearchScreen from '../screens/map/SearchScreen';
+import UserDataChangeScreen from '../screens/mypage/UserDataChangeScreen';
 
 const BottomTab = createBottomTabNavigator();
 const iconSize = 35;
@@ -92,6 +93,7 @@ function MapNavigator() {
         cardStyleInterpolator: customCardStyleInterpolator,
       }}>
       <MapStack.Screen name="Map" component={MapScreen} />
+      <MapStack.Screen name="Search" component={SearchScreen} />
     </MapStack.Navigator>
   );
 }
@@ -109,7 +111,6 @@ function ListNavigator() {
         cardStyleInterpolator: customCardStyleInterpolator,
       }}>
       <ListStack.Screen name="ListMain" component={ListMainScreen} />
-      <ListStack.Screen name="ListDetail" component={ListDetailScreen} />
     </ListStack.Navigator>
   );
 }
@@ -127,6 +128,10 @@ function MypageNavigator() {
         cardStyleInterpolator: customCardStyleInterpolator,
       }}>
       <MypageStack.Screen name="Mypage" component={MypageScreen} />
+      <MypageStack.Screen
+        name="UserDataChange"
+        component={UserDataChangeScreen}
+      />
     </MypageStack.Navigator>
   );
 }

@@ -54,6 +54,7 @@ export default function StoreCompo(props) {
       //TODO: 가게 상세 페이지로 이동
       onPress={() => {
         console.log('가게 상세 페이지로 이동');
+        navigation.navigate('StoreDetail', {data: storeData});
       }}>
       <View style={{flexDirection: 'row'}}>
         <Image

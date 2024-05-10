@@ -20,11 +20,10 @@ export default function MypageScreen() {
         <Text style={styles.textMain}>MypageScreen</Text>
         <AnimatedButton
           onPress={() => {
-            console.log('PRESSED~!!');
-            navigation.navigate('Signup');
+            navigation.navigate('UserDataChange');
           }}
           style={styles.buttonTest}>
-          <Text style={styles.buttonText}>Signup</Text>
+          <Text style={styles.buttonText}>프로필 정보 수정 페이지 이동</Text>
         </AnimatedButton>
       </View>
     </>
