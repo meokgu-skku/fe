@@ -85,7 +85,9 @@ export default function TodayPick(props) {
         scrollEventThrottle={16}
         ref={scrollViewRef}>
         {todaysPick.map((pickData, index) => {
-          return <StoreCompo storeData={pickData} index={index} />;
+          return (
+            <StoreCompo storeData={pickData} index={index} addPadding={10} />
+          );
         })}
       </ScrollView>
       <View
