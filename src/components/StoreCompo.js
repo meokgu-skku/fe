@@ -43,19 +43,22 @@ export default function StoreCompo(props) {
 
   const scrollViewRef = useRef();
 
-  const {storeData, index} = props;
+  const {storeData, index, addPadding} = props;
 
   return (
     <Pressable
       key={index.toString()}
       style={{
-        width: windowWidth - 32,
+        width: addPadding
+          ? windowWidth - 32 - 2 * addPadding
+          : windowWidth - 32,
+        // backgroundColor: 'blue',
       }}
-      //TODO: 가게 상세 페이지로 이동
       onPress={() => {
         console.log('가게 상세 페이지로 이동');
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
+      {console.log('addPadding: ', addPadding)}
       <View style={{flexDirection: 'row'}}>
         <Image
           source={{
