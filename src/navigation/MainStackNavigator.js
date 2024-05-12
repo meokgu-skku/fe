@@ -13,6 +13,7 @@ import FindPasswordScreen from '../screens/signup/FindPasswordScreen';
 import SignupScreen from '../screens/signup/SignupScreen';
 import StoreDetailScreen from '../screens/detail/StoreDetailScreen';
 import ReviewWriteScreen from '../screens/detail/ReviewWriteScreen';
+import CheckEmailScreen from '../screens/signup/CheckEmailScreen';
 
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -49,6 +50,7 @@ export default function MainStackNavigator() {
         <MainStack.Screen name="Login" component={LoginScreen} />
         <MainStack.Screen name="FindPassword" component={FindPasswordScreen} />
         <MainStack.Screen name="Signup" component={SignupScreen} />
+        <MainStack.Screen name="CheckEmail" component={CheckEmailScreen} />
         <MainStack.Screen
           name="BottomTab"
           component={BottomTabNavigator}
