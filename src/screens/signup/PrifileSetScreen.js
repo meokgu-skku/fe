@@ -22,6 +22,7 @@ import {
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_SECONDARY,
+  COLOR_NAVY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
@@ -39,7 +40,7 @@ export default function PrifileSetScreen(props) {
   const {route} = props;
   const signUpData = route.params;
 
-  const [checkNum, setCheckNum] = useState('');
+  const [nickname, setNickname] = useState('');
   const [disable, setDisable] = useState(true);
 
   const signUp = async () => {
@@ -75,18 +76,25 @@ export default function PrifileSetScreen(props) {
   };
 
   useEffect(() => {
-    if (checkNum.length == 6 && disable) {
+    if (nickname.length == 6 && disable) {
       setDisable(false);
-    } else if (checkNum.length != 6 && !disable) {
+    } else if (nickname.length != 6 && !disable) {
       setDisable(true);
     }
-  }, [checkNum]);
+  }, [nickname]);
 
   return (
     <>
       <HeaderWhite title={'프로필 설정'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
+          <AnimatedButton
+            style={styles.profile}
+            onPress={() => {
+              console.log('프로필 사진 변경');
+            }}>
+            <SvgXml width={104} height={102} xml={svgXml.icon.camera} />
+          </AnimatedButton>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
               <Text style={styles.samllText}>닉네임</Text>
@@ -95,15 +103,15 @@ export default function PrifileSetScreen(props) {
                 autoCapitalize="none"
                 placeholderTextColor={COLOR_GRAY}
                 onChangeText={value => {
-                  setCheckNum(value);
+                  setNickname(value);
                 }}
-                value={checkNum}
+                value={nickname}
                 style={styles.textinputBox}
               />
             </View>
           </View>
 
-          <View style={{height: 20}} />
+          <View style={{height: 80}} />
           <LongPrimaryButton
             text={'회원가입'}
             action={signUp}
@@ -168,6 +176,16 @@ const styles = StyleSheet.create({
     bottom: 8,
     padding: 5,
     // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profile: {
+    width: 150,
+    height: 150,
+    borderRadius: 75,
+    borderWidth: 0.7,
+    borderColor: COLOR_NAVY,
+    marginBottom: 60,
     justifyContent: 'center',
     alignItems: 'center',
   },
