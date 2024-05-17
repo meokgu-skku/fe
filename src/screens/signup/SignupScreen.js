@@ -26,7 +26,7 @@ import {
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
@@ -91,29 +91,23 @@ export default function SignupScreen() {
     console.log('password:', password);
 
     try {
-      //회원가입 하고 토큰 저장하는 부분
-      const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
+      const response = await axios.post(`${API_URL}/v1/users/email/send`, {
         email: email,
-        nickname: name,
-        password: password,
+        sendType: 'SIGN_UP',
       });
-      console.log('response:', response.data.data);
 
-      if (!response.data.data) {
-        console.log('Error: No return data');
-        return;
+      console.log('response:', response.data);
+
+      if (response.data.result === 'SUCCESS') {
+        navigation.navigate('CheckEmail', {
+          name: name,
+          email: email,
+          password: password,
+        });
       }
-      const accessToken = response.data.data.token.accessToken;
-      const refreshToken = response.data.data.token.refreshToken;
-
-      context.setAccessTokenValue(accessToken);
-      context.setRefreshTokenValue(refreshToken);
-      AsyncStorage.setItem('accessToken', accessToken);
-      AsyncStorage.setItem('refreshToken', refreshToken);
-
-      navigation.navigate('BottomTab');
     } catch (error) {
-      console.log('Error:', error);
+      const errorResponse = AxiosError.response;
+      console.log(errorResponse);
     }
   };
 

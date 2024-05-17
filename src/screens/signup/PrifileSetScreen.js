@@ -34,7 +34,7 @@ import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 
-export default function CheckEmailScreen(props) {
+export default function PrifileSetScreen(props) {
   const navigation = useNavigation();
   const {name, email, password} = props;
 
