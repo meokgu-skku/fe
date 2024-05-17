@@ -36,32 +36,37 @@ import AppContext from '../../components/AppContext';
 
 export default function CheckEmailScreen(props) {
   const navigation = useNavigation();
-  const {name, email, password} = props;
+  const {route} = props;
+  const signUpData = route.params;
 
   const [checkNumShow, setCheckNumShow] = useState(true);
   const [checkNum, setCheckNum] = useState('');
   const [disable, setDisable] = useState(true);
 
-  const signUp = async () => {
-    console.log('name:', name);
-    console.log('email:', email);
-    console.log('password:', password);
+  const validate = async () => {
+    console.log('name:', signUpData.name);
+    console.log('email:', signUpData.email);
+    console.log('password:', signUpData.password);
 
     try {
       //회원가입 하고 토큰 저장하는 부분
       const response = await axios.post(`${API_URL}/v1/users/email/validate`, {
         code: checkNum,
-        email: email,
+        email: signUpData.email,
         sendType: 'SIGN_UP',
       });
-      console.log('response:', response.data.token);
+      console.log('response:', response.data);
 
-      if (!response.data.data) {
+      if (!response.data) {
         console.log('Error: No return data');
         return;
       }
 
-      navigation.navigate('BottomTab');
+      navigation.navigate('PrifileSet', {
+        name: signUpData.name,
+        email: signUpData.email,
+        password: signUpData.password,
+      });
     } catch (error) {
       console.log('Error:', error);
     }
@@ -115,7 +120,7 @@ export default function CheckEmailScreen(props) {
           <View style={{height: 20}} />
           <LongPrimaryButton
             text={'인증번호 확인'}
-            action={signUp}
+            action={validate}
             disable={disable}
           />
           <View
