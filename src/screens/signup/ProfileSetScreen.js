@@ -14,6 +14,7 @@ import {
   StyleSheet,
   Keyboard,
   Pressable,
+  Image,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -34,6 +35,7 @@ import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default function ProfileSetScreen(props) {
   const navigation = useNavigation();
@@ -42,6 +44,8 @@ export default function ProfileSetScreen(props) {
 
   const [nickname, setNickname] = useState('');
   const [disable, setDisable] = useState(true);
+
+  const [profileImage, setProfileImage] = useState('');
 
   const signUp = async () => {
     console.log('name:', signUpData.name);
@@ -76,9 +80,9 @@ export default function ProfileSetScreen(props) {
   };
 
   useEffect(() => {
-    if (nickname.length == 6 && disable) {
+    if (nickname && disable) {
       setDisable(false);
-    } else if (nickname.length != 6 && !disable) {
+    } else if (!nickname && !disable) {
       setDisable(true);
     }
   }, [nickname]);
@@ -92,8 +96,23 @@ export default function ProfileSetScreen(props) {
             style={styles.profile}
             onPress={() => {
               console.log('프로필 사진 변경');
+              ImagePicker.openPicker({
+                width: 400,
+                height: 400,
+                cropping: true,
+                cropperCircleOverlay: true,
+              }).then(image => {
+                setProfileImage(image);
+              });
             }}>
-            <SvgXml width={104} height={102} xml={svgXml.icon.camera} />
+            {profileImage ? (
+              <Image
+                source={{uri: profileImage.path}}
+                style={{width: 150, height: 150, borderRadius: 75}}
+              />
+            ) : (
+              <SvgXml width={104} height={102} xml={svgXml.icon.camera} />
+            )}
           </AnimatedButton>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
