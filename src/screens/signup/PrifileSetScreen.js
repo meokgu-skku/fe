@@ -36,30 +36,37 @@ import AppContext from '../../components/AppContext';
 
 export default function PrifileSetScreen(props) {
   const navigation = useNavigation();
-  const {name, email, password} = props;
+  const {route} = props;
+  const signUpData = route.params;
 
-  const [checkNumShow, setCheckNumShow] = useState(true);
   const [checkNum, setCheckNum] = useState('');
   const [disable, setDisable] = useState(true);
 
   const signUp = async () => {
-    console.log('name:', name);
-    console.log('email:', email);
-    console.log('password:', password);
+    console.log('name:', signUpData.name);
+    console.log('email:', signUpData.email);
+    console.log('password:', signUpData.password);
 
     try {
       //회원가입 하고 토큰 저장하는 부분
-      const response = await axios.post(`${API_URL}/v1/users/email/validate`, {
-        code: checkNum,
-        email: email,
-        sendType: 'SIGN_UP',
+      const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
+        email: signUpData.email,
+        nickname: signUpData.name,
+        password: signUpData.password,
       });
-      console.log('response:', response.data.token);
+      console.log('response:', response.data.data);
 
       if (!response.data.data) {
         console.log('Error: No return data');
         return;
       }
+      const accessToken = response.data.data.token.accessToken;
+      const refreshToken = response.data.data.token.refreshToken;
+
+      // context.setAccessTokenValue(accessToken);
+      // context.setRefreshTokenValue(refreshToken);
+      AsyncStorage.setItem('accessToken', accessToken);
+      AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
     } catch (error) {
@@ -77,15 +84,14 @@ export default function PrifileSetScreen(props) {
 
   return (
     <>
-      <HeaderWhite title={'인증번호 확인'} isBackButton={true} />
+      <HeaderWhite title={'프로필 설정'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>인증번호 입력</Text>
+              <Text style={styles.samllText}>닉네임</Text>
               <TextInput
                 // onSubmitEditing={endPasswordInput}
-                secureTextEntry={checkNumShow}
                 autoCapitalize="none"
                 placeholderTextColor={COLOR_GRAY}
                 onChangeText={value => {
@@ -94,27 +100,12 @@ export default function PrifileSetScreen(props) {
                 value={checkNum}
                 style={styles.textinputBox}
               />
-              <AnimatedButton
-                style={styles.showButton}
-                onPress={() => {
-                  setCheckNumShow(!checkNumShow);
-                }}>
-                <SvgXml
-                  width={20}
-                  height={20}
-                  xml={
-                    checkNumShow
-                      ? svgXml.button.passwordShow
-                      : svgXml.button.passwordNotShow
-                  }
-                />
-              </AnimatedButton>
             </View>
           </View>
 
           <View style={{height: 20}} />
           <LongPrimaryButton
-            text={'인증번호 확인'}
+            text={'회원가입'}
             action={signUp}
             disable={disable}
           />
