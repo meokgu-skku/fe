@@ -62,7 +62,7 @@ export default function CheckEmailScreen(props) {
         return;
       }
 
-      navigation.navigate('PrifileSet', {
+      navigation.navigate('ProfileSet', {
         name: signUpData.name,
         email: signUpData.email,
         password: signUpData.password,

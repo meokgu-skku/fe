@@ -35,7 +35,7 @@ import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 
-export default function PrifileSetScreen(props) {
+export default function ProfileSetScreen(props) {
   const navigation = useNavigation();
   const {route} = props;
   const signUpData = route.params;
