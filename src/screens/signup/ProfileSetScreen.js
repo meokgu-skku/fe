@@ -101,7 +101,6 @@ export default function ProfileSetScreen(props) {
       });
       console.log('response:', response.data);
 
-      //test
       if (response.data.result != 'SUCCESS') {
         console.log('Error: No return data');
         return;
