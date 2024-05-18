@@ -95,7 +95,7 @@ export default function ProfileSetScreen(props) {
           <AnimatedButton
             style={styles.profile}
             onPress={() => {
-              console.log('프로필 사진 변경');
+              console.log('프로필 사진 변경', profileImage);
               ImagePicker.openPicker({
                 width: 400,
                 height: 400,

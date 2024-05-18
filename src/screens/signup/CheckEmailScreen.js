@@ -98,6 +98,7 @@ export default function CheckEmailScreen(props) {
                 }}
                 value={checkNum}
                 style={styles.textinputBox}
+                keyboardType="number-pad"
               />
               <AnimatedButton
                 style={styles.showButton}
