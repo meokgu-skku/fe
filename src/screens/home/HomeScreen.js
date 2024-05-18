@@ -109,6 +109,28 @@ export default function HomeScreen() {
       <Header title={'홈'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
         {/* 먹구스꾸 오늘의 픽 */}
+        {/* <AnimatedButton
+          style={{width: windowWidth, height: 200, backgroundColor: 'red'}}
+          onPress={async () => {
+            try {
+              const response = await axios.get(
+                `${API_URL}/hello/security-test`,
+                {
+                  headers: {Authorization: `Bearer ${context.accessToken}`},
+                },
+              );
+
+              console.log('response:', response.data.data);
+
+              if (!response.data.data) {
+                console.log('Error: No return data');
+                return;
+              }
+            } catch (e) {
+              console.log('error', e);
+            }
+          }}
+        /> */}
         <TodayPick todaysPick={todaysPick} />
         <FoodCategory />
         <KingoPass passData={kingoPassData} />

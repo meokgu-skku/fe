@@ -36,9 +36,11 @@ import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 import ImagePicker from 'react-native-image-crop-picker';
+import RNFS from 'react-native-fs';
 
 export default function ProfileSetScreen(props) {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
   const {route} = props;
   const signUpData = route.params;
 
@@ -58,6 +60,7 @@ export default function ProfileSetScreen(props) {
         email: signUpData.email,
         nickname: signUpData.name,
         password: signUpData.password,
+        profileImageUrl: profileImage,
       });
       console.log('response:', response.data.data);
 
@@ -68,12 +71,48 @@ export default function ProfileSetScreen(props) {
       const accessToken = response.data.data.token.accessToken;
       const refreshToken = response.data.data.token.refreshToken;
 
-      // context.setAccessTokenValue(accessToken);
-      // context.setRefreshTokenValue(refreshToken);
+      context.setAccessTokenValue(accessToken);
+      context.setRefreshTokenValue(refreshToken);
       AsyncStorage.setItem('accessToken', accessToken);
       AsyncStorage.setItem('refreshToken', refreshToken);
 
       navigation.navigate('BottomTab');
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
+  const uploadImage = async image => {
+    let imageData = '';
+    await RNFS.readFile(image.path, 'base64')
+      .then(data => {
+        // console.log('encoded', data);
+        imageData = data;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    console.log('token:', signUpData.token);
+    try {
+      const response = await axios.post(
+        `https://utdyfn3jhj.execute-api.ap-northeast-2.amazonaws.com/v1/upload-image`,
+        {
+          imageData: imageData,
+          location: 'test',
+        },
+        {
+          headers: {Authorization: `Bearer ${signUpData.token}`},
+        },
+      );
+      console.log('response:', response.data);
+
+      if (response.data.result != 'SUCCESS') {
+        console.log('Error: No return data');
+        return;
+      }
+
+      setProfileImage(response.data.data.imageUrl);
     } catch (error) {
       console.log('Error:', error);
     }
@@ -95,19 +134,19 @@ export default function ProfileSetScreen(props) {
           <AnimatedButton
             style={styles.profile}
             onPress={() => {
-              console.log('프로필 사진 변경', profileImage);
+              // console.log('프로필 사진 변경', profileImage);
               ImagePicker.openPicker({
                 width: 400,
                 height: 400,
                 cropping: true,
                 cropperCircleOverlay: true,
               }).then(image => {
-                setProfileImage(image);
+                uploadImage(image);
               });
             }}>
             {profileImage ? (
               <Image
-                source={{uri: profileImage.path}}
+                source={{uri: profileImage}}
                 style={{width: 150, height: 150, borderRadius: 75}}
               />
             ) : (

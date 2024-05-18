@@ -49,7 +49,6 @@ export default function CheckEmailScreen(props) {
     console.log('password:', signUpData.password);
 
     try {
-      //회원가입 하고 토큰 저장하는 부분
       const response = await axios.post(`${API_URL}/v1/users/email/validate`, {
         code: checkNum,
         email: signUpData.email,
@@ -66,6 +65,7 @@ export default function CheckEmailScreen(props) {
         name: signUpData.name,
         email: signUpData.email,
         password: signUpData.password,
+        token: response.data.data.token,
       });
     } catch (error) {
       console.log('Error:', error);
