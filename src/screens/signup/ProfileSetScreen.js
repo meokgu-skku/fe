@@ -119,7 +119,7 @@ export default function ProfileSetScreen(props) {
       setDisable(true);
     }
   }, [nickname]);
-
+  //check
   return (
     <>
       <HeaderWhite title={'프로필 설정'} isBackButton={true} />
