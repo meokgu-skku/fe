@@ -27,7 +27,7 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
-import {API_URL} from '@env';
+import {API_URL, IMG_URL} from '@env';
 import axios, {AxiosError} from 'axios';
 import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
@@ -95,16 +95,10 @@ export default function ProfileSetScreen(props) {
 
     console.log('token:', signUpData.token);
     try {
-      const response = await axios.post(
-        `https://utdyfn3jhj.execute-api.ap-northeast-2.amazonaws.com/v1/upload-image`,
-        {
-          imageData: imageData,
-          location: 'test',
-        },
-        {
-          headers: {Authorization: `Bearer ${signUpData.token}`},
-        },
-      );
+      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
+        imageDatas: [imageData],
+        location: 'test',
+      });
       console.log('response:', response.data);
 
       if (response.data.result != 'SUCCESS') {
