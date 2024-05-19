@@ -96,17 +96,22 @@ export default function ProfileSetScreen(props) {
     console.log('token:', signUpData.token);
     try {
       const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
-        imageDatas: [imageData],
-        location: 'test',
+        images: [
+          {
+            imageData: imageData,
+            location: 'test',
+          },
+        ],
       });
-      console.log('response:', response.data);
+
+      console.log('response image:', response.data);
 
       if (response.data.result != 'SUCCESS') {
         console.log('Error: No return data');
         return;
       }
 
-      setProfileImage(response.data.data.imageUrl);
+      setProfileImage(response.data.data[0].imageUrl);
     } catch (error) {
       console.log('Error:', error);
     }
