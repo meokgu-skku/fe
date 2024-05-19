@@ -60,7 +60,6 @@ export default function StoreCompo(props) {
         console.log('가게 상세 페이지로 이동');
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
-      {console.log('addPadding: ', addPadding)}
       <View style={{flexDirection: 'row'}}>
         <ImageModal
           swipeToDismiss={true}

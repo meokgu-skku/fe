@@ -67,6 +67,7 @@ export default function KingoPass(props) {
               // TODO: 킹고패스 페이지로 이동
               onPress={() => {
                 console.log('킹고패스 페이지로 이동');
+                navigation.navigate('StoreDetail', {data: data});
               }}>
               <Image
                 source={{

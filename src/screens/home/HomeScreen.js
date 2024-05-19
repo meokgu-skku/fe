@@ -104,33 +104,37 @@ export default function HomeScreen() {
     },
   ]);
 
+  const initKingoPassData = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/v1/restaurants/kingo-pass`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
+
+      console.log('response:', response.data);
+
+      //TODO: kingoPassData에 response.data를 넣어주세요.
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  const initTodayPickData = async () => {
+    try {
+      //TODO: 백엔드 연결
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  useEffect(() => {
+    initKingoPassData();
+  }, []);
+
   return (
     <>
       <Header title={'홈'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
         {/* 먹구스꾸 오늘의 픽 */}
-        {/* <AnimatedButton
-          style={{width: windowWidth, height: 200, backgroundColor: 'red'}}
-          onPress={async () => {
-            try {
-              const response = await axios.get(
-                `${API_URL}/hello/security-test`,
-                {
-                  headers: {Authorization: `Bearer ${context.accessToken}`},
-                },
-              );
-
-              console.log('response:', response.data.data);
-
-              if (!response.data.data) {
-                console.log('Error: No return data');
-                return;
-              }
-            } catch (e) {
-              console.log('error', e);
-            }
-          }}
-        /> */}
         <TodayPick todaysPick={todaysPick} />
         <FoodCategory />
         <KingoPass passData={kingoPassData} />
