@@ -105,7 +105,6 @@ export default function LoginScreen() {
 
   return (
     <>
-      <HeaderWhite title={'로그인'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
@@ -127,21 +126,6 @@ export default function LoginScreen() {
             <View style={{height: 15}} />
             <View style={styles.textAndInput}>
               <Text style={styles.samllText}>비밀 번호</Text>
-              <AnimatedButton
-                style={styles.showButton}
-                onPress={() => {
-                  setPasswordShow(!passwordShow);
-                }}>
-                <SvgXml
-                  width={20}
-                  height={13}
-                  xml={
-                    passwordShow
-                      ? svgXml.button.passwordShow
-                      : svgXml.button.passwordNotShow
-                  }
-                />
-              </AnimatedButton>
               <TextInput
                 ref={passwordInputRef}
                 onSubmitEditing={login}
@@ -154,32 +138,56 @@ export default function LoginScreen() {
                 value={password}
                 style={styles.textinputBox}
               />
+              <AnimatedButton
+                style={styles.showButton}
+                onPress={() => {
+                  setPasswordShow(!passwordShow);
+                }}>
+                <SvgXml
+                  width={20}
+                  height={20}
+                  xml={
+                    passwordShow
+                      ? svgXml.button.passwordShow
+                      : svgXml.button.passwordNotShow
+                  }
+                />
+              </AnimatedButton>
             </View>
-
-            <AnimatedButton
-              onPress={() => {
-                navigation.navigate('FindPassword');
-              }}
-              style={{marginTop: 7, padding: 3}}>
-              <Text style={styles.samllText}>비밀번호 찾기</Text>
-            </AnimatedButton>
           </View>
 
-          <View style={{height: 20}} />
+          <View style={{height: 50}} />
           <LongPrimaryButton text="로그인" action={login} disable={disable} />
-          <AnimatedButton
-            onPress={() => {
-              navigation.navigate('Signup');
-            }}
+          <View
             style={{
               marginTop: 12,
               padding: 4,
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Text style={styles.samllText}>{'계정이 없으신가요?'}</Text>
-              <Text style={styles.samllTextColor}>{'회원가입'}</Text>
+              <AnimatedButton
+                onPress={() => {
+                  navigation.navigate('FindPassword');
+                }}
+                style={{
+                  // backgroundColor: 'blue',
+                  padding: 30,
+                  paddingVertical: 0,
+                }}>
+                <Text style={styles.samllText}>비밀번호 찾기</Text>
+              </AnimatedButton>
+              <AnimatedButton
+                onPress={() => {
+                  navigation.navigate('Signup');
+                }}
+                style={{
+                  // backgroundColor: 'red',
+                  padding: 30,
+                  paddingVertical: 0,
+                }}>
+                <Text style={styles.samllTextColor}>{'회원가입'}</Text>
+              </AnimatedButton>
             </View>
-          </AnimatedButton>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </>
@@ -191,13 +199,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     width: '90%',
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 160,
+    // marginTop: 200,
     marginHorizontal: 16,
   },
   textAndInput: {
@@ -214,7 +223,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   samllTextColor: {
-    marginLeft: 60,
     color: COLOR_SECONDARY,
     fontSize: 12,
     fontWeight: 'normal',
@@ -232,7 +240,7 @@ const styles = StyleSheet.create({
   showButton: {
     position: 'absolute',
     right: 0,
-    top: 0,
+    bottom: 8,
     padding: 5,
     // backgroundColor: 'red',
     justifyContent: 'center',

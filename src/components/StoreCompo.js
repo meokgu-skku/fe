@@ -34,6 +34,7 @@ import AppContext from './AppContext';
 import axios from 'axios';
 import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
+import ImageModal from 'react-native-image-modal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -43,29 +44,38 @@ export default function StoreCompo(props) {
 
   const scrollViewRef = useRef();
 
-  const {storeData, index} = props;
+  const {storeData, index, addPadding} = props;
 
   return (
     <Pressable
       key={index.toString()}
       style={{
-        width: windowWidth - 32,
+        width: addPadding
+          ? windowWidth - 32 - 2 * addPadding
+          : windowWidth - 32,
+        height: windowWidth / 3,
+        // backgroundColor: 'blue',
       }}
-      //TODO: 가게 상세 페이지로 이동
       onPress={() => {
         console.log('가게 상세 페이지로 이동');
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
+      {console.log('addPadding: ', addPadding)}
       <View style={{flexDirection: 'row'}}>
-        <Image
-          source={{
-            uri: storeData.image,
-          }}
+        <ImageModal
+          swipeToDismiss={true}
+          modalImageResizeMode="contain"
+          // resizeMode="contain"
+          imageBackgroundColor="transparent"
+          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
           resizeMode="cover"
           style={{
             width: windowWidth / 3,
             height: windowWidth / 3,
             borderRadius: 10,
+          }}
+          source={{
+            uri: storeData.image,
           }}
         />
         <View

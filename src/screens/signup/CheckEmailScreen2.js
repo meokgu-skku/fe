@@ -21,6 +21,7 @@ import {
   COLOR_GRAY,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
+  COLOR_SECONDARY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
@@ -30,70 +31,93 @@ import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 
-//TODO: 비밀번호 찾기 화면
-export default function FindPasswordScreen() {
+export default function CheckEmailScreen2(props) {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
+  const {route} = props;
+  const signUpData = route.params;
+
+  const [checkNumShow, setCheckNumShow] = useState(true);
+  const [checkNum, setCheckNum] = useState('');
   const [disable, setDisable] = useState(true);
 
-  const emailSend = async () => {
-    console.log('email:', email);
+  const validate = async () => {
+    console.log('email:', signUpData.email);
 
     try {
-      const response = await axios.post(`${API_URL}/v1/users/email/send`, {
-        email: email,
+      const response = await axios.post(`${API_URL}/v1/users/email/validate`, {
+        code: checkNum,
+        email: signUpData.email,
         sendType: 'RESET_PASSWORD',
       });
-
       console.log('response:', response.data);
 
-      if (response.data.result === 'SUCCESS') {
-        navigation.navigate('CheckEmail2', {
-          email: email,
-        });
+      if (!response.data) {
+        console.log('Error: No return data');
+        return;
       }
+
+      navigation.navigate('ResetPassword', {
+        email: signUpData.email,
+        token: response.data.data.token,
+      });
     } catch (error) {
-      const errorResponse = AxiosError.response;
-      console.log(errorResponse);
+      console.log('Error:', error);
     }
   };
 
   useEffect(() => {
-    if (email && disable) {
+    if (checkNum.length == 6 && disable) {
       setDisable(false);
-    } else if (!email && !disable) {
+    } else if (checkNum.length != 6 && !disable) {
       setDisable(true);
     }
-  }, [email]);
+  }, [checkNum]);
 
   return (
     <>
-      <HeaderWhite title={'비밀번호 찾기'} isBackButton={true} />
+      <HeaderWhite title={'인증번호 확인'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>이메일 주소</Text>
+              <Text style={styles.samllText}>인증번호 입력</Text>
               <TextInput
-                // onSubmitEditing={actions.onSearchButtonPressed}
-                placeholderTextColor={COLOR_GRAY}
+                // onSubmitEditing={endPasswordInput}
+                secureTextEntry={checkNumShow}
                 autoCapitalize="none"
-                keyboardType="email-address"
+                placeholderTextColor={COLOR_GRAY}
                 onChangeText={value => {
-                  setEmail(value);
+                  setCheckNum(value);
                 }}
-                value={email}
+                value={checkNum}
                 style={styles.textinputBox}
+                keyboardType="number-pad"
               />
+              <AnimatedButton
+                style={styles.showButton}
+                onPress={() => {
+                  setCheckNumShow(!checkNumShow);
+                }}>
+                <SvgXml
+                  width={20}
+                  height={20}
+                  xml={
+                    checkNumShow
+                      ? svgXml.button.passwordShow
+                      : svgXml.button.passwordNotShow
+                  }
+                />
+              </AnimatedButton>
             </View>
           </View>
 
           <View style={{height: 20}} />
           <LongPrimaryButton
-            text="비밀번호 초기화 메일 발송"
-            action={emailSend}
+            text={'인증번호 확인'}
+            action={validate}
             disable={disable}
           />
         </View>
@@ -107,13 +131,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     width: '90%',
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 160,
     marginHorizontal: 16,
   },
   textAndInput: {
@@ -140,7 +164,7 @@ const styles = StyleSheet.create({
   showButton: {
     position: 'absolute',
     right: 0,
-    top: 0,
+    bottom: 8,
     padding: 5,
     // backgroundColor: 'red',
     justifyContent: 'center',

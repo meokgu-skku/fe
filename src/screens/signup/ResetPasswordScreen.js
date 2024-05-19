@@ -34,126 +34,67 @@ import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 
-export default function SignupScreen() {
+export default function ResetPasswordScreen(props) {
   const navigation = useNavigation();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const {route} = props;
+  const signUpData = route.params;
+
   const [password, setPassword] = useState('');
   const [passwordShow, setPasswordShow] = useState(true);
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordCheckShow, setPasswordCheckShow] = useState(true);
   const [disable, setDisable] = useState(true);
 
-  const nameInputRef = useRef(null);
-  const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const passwordCheckInputRef = useRef(null);
   const context = useContext(AppContext);
 
   //state name, email, password 가 변경될 때마다 실행
   useEffect(() => {
-    if (
-      name &&
-      email &&
-      password &&
-      disable &&
-      passwordCheck &&
-      password === passwordCheck
-    ) {
+    if (password && disable && passwordCheck && password === passwordCheck) {
       setDisable(false);
     } else if (
-      (!name ||
-        !email ||
-        !password ||
-        !passwordCheck ||
-        password !== passwordCheck) &&
+      (!password || !passwordCheck || password !== passwordCheck) &&
       !disable
     ) {
       setDisable(true);
     }
-  }, [name, email, password, passwordCheck]);
-
-  const endEmailInput = () => {
-    passwordInputRef.current.focus();
-  };
-
-  const endNameInput = () => {
-    emailInputRef.current.focus();
-  };
+  }, [password, passwordCheck]);
 
   const endPasswordInput = () => {
     passwordCheckInputRef.current.focus();
   };
 
-  const emailSend = async () => {
-    console.log('name:', name);
-    console.log('email:', email);
+  const resetPassword = async () => {
+    console.log('email:', signUpData.email);
+    console.log('token:', signUpData.token);
     console.log('password:', password);
 
     try {
-      const response = await axios.post(`${API_URL}/v1/users/email/send`, {
-        email: email,
-        sendType: 'SIGN_UP',
+      const response = await axios.patch(`${API_URL}/v1/users/password`, {
+        email: signUpData.email,
+        password: password,
+        token: signUpData.token,
       });
 
-      console.log('response:', response.data);
+      console.log('response2:', response.data);
 
       if (response.data.result === 'SUCCESS') {
-        navigation.navigate('CheckEmail', {
-          name: name,
-          email: email,
-          password: password,
-        });
+        navigation.navigate('Login');
       }
     } catch (error) {
-      const errorResponse = AxiosError.response;
-      console.log(errorResponse);
+      console.log('error:', error);
     }
   };
 
   return (
     <>
-      <HeaderWhite title={'회원가입'} isBackButton={true} />
+      <HeaderWhite title={'비밀번호 재설정'} isBackButton={true} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>이름</Text>
-              <TextInput
-                ref={nameInputRef}
-                onSubmitEditing={endNameInput}
-                autoCapitalize="none"
-                placeholderTextColor={COLOR_GRAY}
-                onChangeText={value => {
-                  setName(value);
-                }}
-                value={name}
-                style={styles.textinputBox}
-              />
-            </View>
-
-            <View style={{height: 15}} />
-
-            <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>이메일 주소</Text>
-              <TextInput
-                ref={emailInputRef}
-                onSubmitEditing={endEmailInput}
-                keyboardType="email-address"
-                autoCapitalize="none"
-                placeholderTextColor={COLOR_GRAY}
-                onChangeText={value => {
-                  setEmail(value);
-                }}
-                value={email}
-                style={styles.textinputBox}
-              />
-            </View>
-
-            <View style={{height: 15}} />
-
-            <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>비밀번호</Text>
+              <Text style={styles.samllText}>새 비밀번호</Text>
               <TextInput
                 ref={passwordInputRef}
                 onSubmitEditing={endPasswordInput}
@@ -220,24 +161,12 @@ export default function SignupScreen() {
           <LongPrimaryButton
             text={
               password === passwordCheck
-                ? '회원가입'
+                ? '비밀번호 재설정'
                 : '비밀번호가 일치하지 않습니다'
             }
-            action={emailSend}
+            action={resetPassword}
             disable={disable}
           />
-          <View
-            style={{
-              marginTop: 12,
-              padding: 4,
-            }}>
-            <Text style={styles.samllText}>
-              {'가입하시면 이용약관 및 개인정보 보호정책에'}
-            </Text>
-            <Text style={[styles.samllText, {marginTop: -5}]}>
-              {'자동으로 동의하게 됩니다.'}
-            </Text>
-          </View>
         </View>
       </TouchableWithoutFeedback>
     </>
