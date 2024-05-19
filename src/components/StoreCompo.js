@@ -34,6 +34,7 @@ import AppContext from './AppContext';
 import axios from 'axios';
 import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
+import ImageModal from 'react-native-image-modal';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -52,6 +53,7 @@ export default function StoreCompo(props) {
         width: addPadding
           ? windowWidth - 32 - 2 * addPadding
           : windowWidth - 32,
+        height: windowWidth / 3,
         // backgroundColor: 'blue',
       }}
       onPress={() => {
@@ -60,15 +62,20 @@ export default function StoreCompo(props) {
       }}>
       {console.log('addPadding: ', addPadding)}
       <View style={{flexDirection: 'row'}}>
-        <Image
-          source={{
-            uri: storeData.image,
-          }}
+        <ImageModal
+          swipeToDismiss={true}
+          modalImageResizeMode="contain"
+          // resizeMode="contain"
+          imageBackgroundColor="transparent"
+          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
           resizeMode="cover"
           style={{
             width: windowWidth / 3,
             height: windowWidth / 3,
             borderRadius: 10,
+          }}
+          source={{
+            uri: storeData.image,
           }}
         />
         <View
