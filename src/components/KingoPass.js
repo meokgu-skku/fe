@@ -71,7 +71,7 @@ export default function KingoPass(props) {
               }}>
               <Image
                 source={{
-                  uri: data.image,
+                  uri: data.representativeImageUrl,
                 }}
                 resizeMode="cover"
                 style={{
@@ -117,7 +117,7 @@ export default function KingoPass(props) {
                     fontWeight: 'bold',
                     margin: 10,
                   }}>
-                  {data.body}
+                  {data.discountContent}
                 </Text>
               </View>
             </AnimatedButton>

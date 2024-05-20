@@ -23,6 +23,7 @@ import {
   COLOR_PRIMARY,
 } from '../assets/color';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 import HomeScreen from '../screens/home/HomeScreen';
 import ListMainScreen from '../screens/list/ListMainScreen';
@@ -137,6 +138,7 @@ function MypageNavigator() {
 }
 
 export default function BottomTabNavigator() {
+  changeNavigationBarColor(COLOR_WHITE);
   return (
     <>
       <StatusBar backgroundColor={COLOR_PRIMARY} />
@@ -146,7 +148,7 @@ export default function BottomTabNavigator() {
           headerShown: false,
           tabBarStyle: {
             height: 56,
-            backgroundColor: COLOR_BACKGROUND,
+            backgroundColor: COLOR_WHITE,
             // backgroundColor: 'red',
           },
           tabBarShowLabel: false,

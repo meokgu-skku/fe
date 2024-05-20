@@ -71,7 +71,7 @@ export default function FoodCategory(props) {
         {categroyList1.map((categroy, index) => {
           return (
             <AnimatedButton
-              key={index}
+              style={styles.buttonSet}
               onPress={async () => {
                 console.log(categroy, '누름');
                 await AsyncStorage.setItem('category', categroy);
@@ -83,18 +83,20 @@ export default function FoodCategory(props) {
                     },
                   ],
                 });
-              }}
-              style={styles.categroyButton}>
+              }}>
+              <View key={index} style={styles.categroyButton} />
               <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
         })}
       </View>
+
+      <View style={{height: 13}} />
       <View style={styles.buttonLine}>
         {categroyList2.map((categroy, index) => {
           return (
             <AnimatedButton
-              key={index}
+              style={styles.buttonSet}
               onPress={async () => {
                 console.log(categroy, '누름');
                 await AsyncStorage.setItem('category', categroy);
@@ -106,20 +108,9 @@ export default function FoodCategory(props) {
                     },
                   ],
                 });
-              }}
-              style={styles.categroyButton}>
-              {categroy.length > 2 ? (
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: COLOR_WHITE,
-                    fontWeight: 'bold',
-                  }}>
-                  {categroy}
-                </Text>
-              ) : (
-                <Text style={styles.categroyText2}>{categroy}</Text>
-              )}
+              }}>
+              <View key={index} style={styles.categroyButton} />
+              <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
         })}
@@ -163,15 +154,20 @@ const styles = StyleSheet.create({
   categroyButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 34,
+    marginBottom: 3,
     width: 50,
     height: 50,
     backgroundColor: COLOR_PRIMARY,
     borderRadius: 20,
   },
   categroyText2: {
-    fontSize: 20,
-    color: COLOR_WHITE,
+    fontSize: 15,
+    color: COLOR_TEXT_BLACK,
     fontWeight: 'bold',
+  },
+  buttonSet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 0,
   },
 });
