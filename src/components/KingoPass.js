@@ -67,10 +67,11 @@ export default function KingoPass(props) {
               // TODO: 킹고패스 페이지로 이동
               onPress={() => {
                 console.log('킹고패스 페이지로 이동');
+                navigation.navigate('StoreDetail', {data: data});
               }}>
               <Image
                 source={{
-                  uri: data.image,
+                  uri: data.representativeImageUrl,
                 }}
                 resizeMode="cover"
                 style={{
@@ -116,7 +117,7 @@ export default function KingoPass(props) {
                     fontWeight: 'bold',
                     margin: 10,
                   }}>
-                  {data.body}
+                  {data.discountContent}
                 </Text>
               </View>
             </AnimatedButton>

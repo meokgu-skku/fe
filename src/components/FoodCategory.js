@@ -26,6 +26,7 @@ import {
   COLOR_TEXT_BLACK,
   COLOR_TEXT60GRAY,
 } from '../assets/color';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../assets/svg';
@@ -35,6 +36,7 @@ import axios from 'axios';
 import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
 import AnimatedButton from './AnimationButton';
+import {astToReact} from 'react-native-svg/lib/typescript/xml';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -54,10 +56,13 @@ export default function FoodCategory(props) {
           marginBottom: 14,
         }}>
         <Text style={styles.todayPickTitle}>카테고리</Text>
-        {/* TODO: 기능 구현 */}
         <AnimatedButton
-          onPress={() => {
+          onPress={async () => {
             console.log('카테고리로 넘어가기');
+            await AsyncStorage.setItem('category', '');
+            navigation.navigate('ListNavigator', {
+              screen: 'ListMainScreen',
+            });
           }}>
           <SvgXml xml={svgXml.button.goForward} />
         </AnimatedButton>
@@ -66,39 +71,46 @@ export default function FoodCategory(props) {
         {categroyList1.map((categroy, index) => {
           return (
             <AnimatedButton
-              key={index}
-              // {/* TODO: 기능 구현 */}
-              onPress={() => {
+              style={styles.buttonSet}
+              onPress={async () => {
                 console.log(categroy, '누름');
-              }}
-              style={styles.categroyButton}>
+                await AsyncStorage.setItem('category', categroy);
+                navigation.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'ListNavigator',
+                    },
+                  ],
+                });
+              }}>
+              <View key={index} style={styles.categroyButton} />
               <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
         })}
       </View>
+
+      <View style={{height: 13}} />
       <View style={styles.buttonLine}>
         {categroyList2.map((categroy, index) => {
           return (
             <AnimatedButton
-              key={index}
-              // {/* TODO: 기능 구현 */}
-              onPress={() => {
+              style={styles.buttonSet}
+              onPress={async () => {
                 console.log(categroy, '누름');
-              }}
-              style={styles.categroyButton}>
-              {categroy.length > 2 ? (
-                <Text
-                  style={{
-                    fontSize: 16,
-                    color: COLOR_WHITE,
-                    fontWeight: 'bold',
-                  }}>
-                  {categroy}
-                </Text>
-              ) : (
-                <Text style={styles.categroyText2}>{categroy}</Text>
-              )}
+                await AsyncStorage.setItem('category', categroy);
+                navigation.reset({
+                  index: 0,
+                  routes: [
+                    {
+                      name: 'ListNavigator',
+                    },
+                  ],
+                });
+              }}>
+              <View key={index} style={styles.categroyButton} />
+              <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
         })}
@@ -142,15 +154,20 @@ const styles = StyleSheet.create({
   categroyButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 34,
+    marginBottom: 3,
     width: 50,
     height: 50,
     backgroundColor: COLOR_PRIMARY,
     borderRadius: 20,
   },
   categroyText2: {
-    fontSize: 20,
-    color: COLOR_WHITE,
+    fontSize: 15,
+    color: COLOR_TEXT_BLACK,
     fontWeight: 'bold',
+  },
+  buttonSet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 0,
   },
 });

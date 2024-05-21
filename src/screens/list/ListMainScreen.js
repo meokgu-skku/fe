@@ -22,7 +22,7 @@ import StoreCompo from '../../components/StoreCompo';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import {Dimensions} from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const windowWidth = Dimensions.get('window').width;
 
 export default function ListMainScreen() {
@@ -274,6 +274,20 @@ export default function ListMainScreen() {
     },
   ]);
 
+  const checkCategory = async () => {
+    const srcCategory = await AsyncStorage.getItem('category');
+    if (srcCategory) {
+      setSelectedCategory(srcCategory);
+      await AsyncStorage.setItem('category', '');
+    } else {
+      setSelectedCategory('전체');
+    }
+  };
+
+  useEffect(() => {
+    checkCategory();
+  }, []);
+
   //TODO: 필터링 하는 함수
 
   //리스트 위에 필터 버튼들
@@ -289,7 +303,7 @@ export default function ListMainScreen() {
         <AnimatedButton
           style={styles.filterButton}
           onPress={() => {
-            console.log('정렬 버튼 누름');
+            console.log('정렬 버튼 누름', selectedCategory);
           }}>
           <View style={{flexDirection: 'row'}}>
             <SvgXml xml={svgXml.icon.filter} width="20" height="20" />

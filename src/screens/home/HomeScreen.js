@@ -31,7 +31,7 @@ import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
 import AppContext from '../../components/AppContext';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
 import TodayPick from '../../components/TodayPick';
@@ -86,51 +86,50 @@ export default function HomeScreen() {
     },
   ]);
 
-  const [kingoPassData, setkingoPassData] = useState([
-    {
-      name: '율천회관',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-    },
-    {
-      name: '무대뽀 핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-    },
-    {
-      name: '무대뽀 핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-      body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-    },
-  ]);
+  const [kingoPassData, setkingoPassData] = useState([]);
+
+  const initKingoPassData = async () => {
+    try {
+      console.log('context.accessToken:', context.accessToken);
+
+      const params = {
+        discountForSkku: true,
+      };
+
+      const queryString = new URLSearchParams(params).toString();
+
+      const response = await axios.get(
+        `${API_URL}/v1/restaurants?${queryString}`,
+        {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
+      );
+
+      console.log('response:', response.data.data.restaurants[0]);
+
+      setkingoPassData(response.data.data.restaurants);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  const initTodayPickData = async () => {
+    try {
+      //TODO: 백엔드 연결
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  useEffect(() => {
+    initKingoPassData();
+  }, []);
 
   return (
     <>
       <Header title={'홈'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
         {/* 먹구스꾸 오늘의 픽 */}
-        {/* <AnimatedButton
-          style={{width: windowWidth, height: 200, backgroundColor: 'red'}}
-          onPress={async () => {
-            try {
-              const response = await axios.get(
-                `${API_URL}/hello/security-test`,
-                {
-                  headers: {Authorization: `Bearer ${context.accessToken}`},
-                },
-              );
-
-              console.log('response:', response.data.data);
-
-              if (!response.data.data) {
-                console.log('Error: No return data');
-                return;
-              }
-            } catch (e) {
-              console.log('error', e);
-            }
-          }}
-        /> */}
         <TodayPick todaysPick={todaysPick} />
         <FoodCategory />
         <KingoPass passData={kingoPassData} />
