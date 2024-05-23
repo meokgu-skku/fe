@@ -90,7 +90,7 @@ export default function HomeScreen() {
 
   const initKingoPassData = async () => {
     try {
-      console.log('context.accessToken:', context.accessToken);
+      // console.log('context.accessToken:', context.accessToken);
 
       const params = {
         discountForSkku: true,
@@ -105,9 +105,9 @@ export default function HomeScreen() {
         },
       );
 
-      console.log('response:', response.data.data.restaurants[0]);
+      // console.log('response:', response.data.data.restaurants.content[0]);
 
-      setkingoPassData(response.data.data.restaurants);
+      setkingoPassData(response.data.data.restaurants.content);
     } catch (e) {
       console.log('error', e);
     }
@@ -115,7 +115,15 @@ export default function HomeScreen() {
 
   const initTodayPickData = async () => {
     try {
-      //TODO: 백엔드 연결
+      // console.log('context.accessToken:', context.accessToken);
+
+      const response = await axios.get(`${API_URL}/v1/restaurants/recommend`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
+
+      console.log('response:', response.data);
+
+      // setTodaysPick(response.data.data.restaurants.content);
     } catch (e) {
       console.log('error', e);
     }
@@ -123,6 +131,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     initKingoPassData();
+    initTodayPickData();
   }, []);
 
   return (
