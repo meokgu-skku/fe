@@ -30,6 +30,8 @@ import Modal from 'react-native-modal';
 import {Dimensions} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import StoreCompo from '../../components/StoreCompo';
+import Geolocation from 'react-native-geolocation-service';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -40,6 +42,7 @@ export default function MapScreen() {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [storeModalVisible, setStoreModalVisible] = useState(false);
+  const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0}); // [latitude, longitude]
   const [storeData, setStoreData] = useState({});
 
   const toggleSwitch = () => {
@@ -48,6 +51,38 @@ export default function MapScreen() {
 
   const closeStoreModalVisible = () => {
     setStoreModalVisible(false);
+  };
+
+  const getMyLocation = async () => {
+    if (myLocation.latitude !== 0) {
+      setMyLocation({latitude: 0, longitude: 0});
+      return;
+    }
+
+    const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+    try {
+      let result = await request(platformPermissions);
+      console.log(result);
+    } catch (err) {
+      console.warn(err);
+    }
+
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(position.coords.latitude, position.coords.longitude);
+        const {latitude, longitude} = position.coords;
+
+        setMyLocation({
+          latitude: latitude,
+          longitude: longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
   };
 
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
@@ -139,6 +174,14 @@ export default function MapScreen() {
               />
             );
           })}
+          {myLocation.latitude !== 0 ? (
+            <Marker
+              coordinate={{
+                latitude: myLocation.latitude,
+                longitude: myLocation.longitude,
+              }}
+            />
+          ) : null}
         </MapView>
 
         <View style={{position: 'absolute', top: 6, alignItems: 'center'}}>
@@ -244,6 +287,7 @@ export default function MapScreen() {
           style={[styles.cornerButton, {right: 16}]}
           onPress={() => {
             console.log('press gps');
+            getMyLocation();
           }}>
           <SvgXml xml={svgXml.icon.gps} width="24" height="24" />
         </AnimatedButton>
