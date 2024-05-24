@@ -419,7 +419,6 @@ export default function MapScreen() {
           </ScrollView>
         </View>
 
-        {/*TODO: 나침반 버튼, gps버튼 기능 추가*/}
         {/* 나침반 버튼*/}
         {/* <AnimatedButton
           style={[styles.cornerButton, {left: 16}]}
