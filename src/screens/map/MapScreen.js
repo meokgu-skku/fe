@@ -36,6 +36,7 @@ import axios, {AxiosError} from 'axios';
 import {API_URL} from '@env';
 import AppContext from '../../components/AppContext';
 import ListModal from '../../components/ListModal';
+import CategoryButton from '../../components/CategoryButton';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -43,13 +44,13 @@ export default function MapScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
-  const [isEnabled, setIsEnabled] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
   const [replyNumModalVisible, setReplyNumModalVisible] = useState(false);
   const [priceRangeModalVisible, setPriceRangeModalVisible] = useState(false);
   const [storeModalVisible, setStoreModalVisible] = useState(false);
-  const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0}); // [latitude, longitude]
+
+  const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0});
   const [storeData, setStoreData] = useState({});
 
   const [selectedCategory, setSelectedCategory] = useState('전체');
@@ -59,10 +60,6 @@ export default function MapScreen() {
 
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
-
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
-  };
 
   const closeStoreModalVisible = () => {
     setStoreModalVisible(false);
@@ -549,31 +546,6 @@ export default function MapScreen() {
         </View>
       </Modal>
     </>
-  );
-}
-
-function CategoryButton(props) {
-  const {name, onPress, selected} = props;
-
-  return (
-    <AnimatedButton
-      style={
-        selected === name
-          ? styles.categoryModalButtonSelected
-          : styles.categoryModalButton
-      }
-      onPress={() => {
-        onPress(name);
-      }}>
-      <Text
-        style={
-          selected === name
-            ? styles.categoryModalButtonTextSelected
-            : styles.categoryModalButtonText
-        }>
-        {name}
-      </Text>
-    </AnimatedButton>
   );
 }
 

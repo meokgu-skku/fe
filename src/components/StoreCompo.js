@@ -74,7 +74,7 @@ export default function StoreCompo(props) {
             borderRadius: 10,
           }}
           source={{
-            uri: storeData.image,
+            uri: storeData.representativeImageUrl,
           }}
         />
         <View
@@ -107,7 +107,7 @@ export default function StoreCompo(props) {
                 alignSelf: 'center',
                 marginLeft: 7,
               }}>
-              {storeData.score + ' (' + storeData.reviewCount + ')'}
+              {storeData.ratingAvg + ' (' + storeData.reviewCount + ')'}
             </Text>
             {/* TODO: 줄이 길어서 화면 밖으로 나감 */}
             <SvgXml
@@ -124,43 +124,48 @@ export default function StoreCompo(props) {
                 alignSelf: 'center',
                 marginLeft: 7,
               }}>
-              {storeData.heartCount}
+              {storeData.likeCount}
             </Text>
           </View>
 
-          <Text
-            style={{
-              fontSize: 13,
-              color: COLOR_GRAY,
-            }}>
-            {storeData.category}
-          </Text>
-
+          {storeData.categories ? (
+            <Text
+              style={{
+                fontSize: 13,
+                color: COLOR_GRAY,
+              }}>
+              {storeData.categories.length ? storeData.categories[0] : '기타'}
+            </Text>
+          ) : null}
           <Text
             style={{
               fontSize: 13,
               color: COLOR_TEXT_BLACK,
             }}>
-            {storeData.menu}
+            {storeData.representativeMenu?.name}
           </Text>
 
           <View style={styles.line} />
 
-          <Text
-            style={{
-              fontSize: 11,
-              color: COLOR_TEXT70GRAY,
-            }}>
-            {storeData.firstReview.reviewer + ' 님'}
-          </Text>
-          <Text
-            numberOfLines={2}
-            style={{
-              fontSize: 11,
-              color: COLOR_TEXT60GRAY,
-            }}>
-            {storeData.firstReview.body}
-          </Text>
+          {storeData.representativeReviewContent ? (
+            <>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: COLOR_TEXT70GRAY,
+                }}>
+                {storeData.firstReview.reviewer + ' 님'}
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: 11,
+                  color: COLOR_TEXT60GRAY,
+                }}>
+                {storeData.firstReview.body}
+              </Text>
+            </>
+          ) : null}
         </View>
       </View>
     </Pressable>
