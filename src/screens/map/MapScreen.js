@@ -23,7 +23,7 @@ import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {BlurView} from '@react-native-community/blur';
-import {SvgXml} from 'react-native-svg';
+import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
 import Modal from 'react-native-modal';
@@ -47,6 +47,7 @@ export default function MapScreen() {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
   const [replyNumModalVisible, setReplyNumModalVisible] = useState(false);
+  const [priceRangeModalVisible, setPriceRangeModalVisible] = useState(false);
   const [storeModalVisible, setStoreModalVisible] = useState(false);
   const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0}); // [latitude, longitude]
   const [storeData, setStoreData] = useState({});
@@ -54,7 +55,7 @@ export default function MapScreen() {
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [storeScore, setStoreScore] = useState('전체');
   const [replyNum, setReplyNum] = useState('전체');
-  const [priceRange, setPriceRange] = useState('');
+  const [priceRange, setPriceRange] = useState('전체');
 
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
@@ -258,7 +259,7 @@ export default function MapScreen() {
             horizontal
             showsHorizontalScrollIndicator={false}
             style={{marginTop: 16}}>
-            <View style={{width: 8}} />
+            <View style={{width: 16}} />
 
             <AnimatedButton
               style={
@@ -270,11 +271,18 @@ export default function MapScreen() {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
               }}>
-              <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
               {selectedCategory === '전체' ? (
-                <Text style={styles.filterText}>{'카테고리'}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
+                  <Text style={styles.filterText}>{'카테고리'}</Text>
+                </>
               ) : (
-                <Text style={styles.filterTextActive}>{selectedCategory}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.shopColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>
+                    {selectedCategory}
+                  </Text>
+                </>
               )}
             </AnimatedButton>
 
@@ -286,11 +294,20 @@ export default function MapScreen() {
                 console.log('press 성대생 할인');
                 setSelectSale(!selectSale);
               }}>
-              <SvgXml xml={svgXml.icon.persent} width="20" height="20" />
               {!selectSale ? (
-                <Text style={styles.filterText}>{'성대생 할인'}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.persent} width="20" height="20" />
+                  <Text style={styles.filterText}>{'성대생 할인'}</Text>
+                </>
               ) : (
-                <Text style={styles.filterTextActive}>{'성대생 할인'}</Text>
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.presentColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{'성대생 할인'}</Text>
+                </>
               )}
             </AnimatedButton>
 
@@ -302,11 +319,20 @@ export default function MapScreen() {
                 console.log('press 찜');
                 setLikedStore(!likedStore);
               }}>
-              <SvgXml xml={svgXml.icon.emptyHeart} width="20" height="20" />
               {!likedStore ? (
-                <Text style={styles.filterText}>{'찜'}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.emptyHeart} width="20" height="20" />
+                  <Text style={styles.filterText}>{'찜'}</Text>
+                </>
               ) : (
-                <Text style={styles.filterTextActive}>{'찜'}</Text>
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyHeartColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{'찜'}</Text>
+                </>
               )}
             </AnimatedButton>
 
@@ -322,11 +348,20 @@ export default function MapScreen() {
                 console.log('press 평점');
                 setStoreScoreModalVisible(true);
               }}>
-              <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
               {storeScore === '전체' ? (
-                <Text style={styles.filterText}>{'평점'}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+                  <Text style={styles.filterText}>{'평점'}</Text>
+                </>
               ) : (
-                <Text style={styles.filterTextActive}>{storeScore}</Text>
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyStarColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{storeScore}</Text>
+                </>
               )}
             </AnimatedButton>
 
@@ -342,15 +377,45 @@ export default function MapScreen() {
                 console.log('press 댓글수');
                 setReplyNumModalVisible(true);
               }}>
-              <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
               {replyNum === '전체' ? (
-                <Text style={styles.filterText}>{'댓글수'}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
+                  <Text style={styles.filterText}>{'댓글수'}</Text>
+                </>
               ) : (
-                <Text style={styles.filterTextActive}>{replyNum}</Text>
+                <>
+                  <SvgXml xml={svgXml.icon.replyColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{replyNum}</Text>
+                </>
               )}
             </AnimatedButton>
 
             <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={
+                priceRangeModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton
+              }
+              onPress={() => {
+                console.log('press 댓글수');
+                setPriceRangeModalVisible(true);
+              }}>
+              {priceRange === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.price} width="20" height="20" />
+                  <Text style={styles.filterText}>{'가격'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.priceColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{priceRange}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 16}} />
           </ScrollView>
         </View>
 
@@ -448,6 +513,22 @@ export default function MapScreen() {
         value={replyNum}
         setValue={setReplyNum}
         valueList={['전체', '10 이상', '30 이상', '50 이상', '100 이상']}
+      />
+
+      {/* 가격 모달 */}
+      <ListModal
+        visible={priceRangeModalVisible}
+        setVisible={setPriceRangeModalVisible}
+        title={'가격'}
+        value={priceRange}
+        setValue={setPriceRange}
+        valueList={[
+          '전체',
+          '1만원 미만',
+          '1만원 ~ 2만원',
+          '2만원 ~ 3만원',
+          '3만원 이상',
+        ]}
       />
 
       {/* 가게 모달 */}
