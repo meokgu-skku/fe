@@ -1,6 +1,6 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -32,18 +32,32 @@ import {TextInput} from 'react-native-gesture-handler';
 import StoreCompo from '../../components/StoreCompo';
 import Geolocation from 'react-native-geolocation-service';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import axios, {AxiosError} from 'axios';
+import {API_URL} from '@env';
+import AppContext from '../../components/AppContext';
+import ListModal from '../../components/ListModal';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function MapScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
 
   const [isEnabled, setIsEnabled] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
+  const [replyNumModalVisible, setReplyNumModalVisible] = useState(false);
   const [storeModalVisible, setStoreModalVisible] = useState(false);
   const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0}); // [latitude, longitude]
   const [storeData, setStoreData] = useState({});
+
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [storeScore, setStoreScore] = useState('전체');
+  const [replyNum, setReplyNum] = useState('전체');
+  const [priceRange, setPriceRange] = useState('');
+
+  const [selectSale, setSelectSale] = useState(false);
+  const [likedStore, setLikedStore] = useState(false);
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
@@ -140,9 +154,34 @@ export default function MapScreen() {
     ['아시안', '카페', '전체', ''],
   ];
 
+  //TODO: 백엔드 업데이트 되면 사용
+  const loadStoreDatas = async () => {
+    try {
+      // console.log('context.accessToken:', context.accessToken);
+
+      const params = {
+        discountForSkku: true,
+      };
+
+      const queryString = new URLSearchParams(params).toString();
+
+      const response = await axios.get(`${API_URL}/v1/restaurants`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
+
+      console.log('response:', response.data.data.restaurants.content[0]);
+
+      setStoreDartDatas(response.data.data.restaurants.content);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
   //TODO: 카테고리별로 필터링하는 함수
 
-  //TODO: 본인 위치 받아오는 함수
+  useEffect(() => {
+    // loadStoreDatas();
+  }, []);
 
   return (
     <>
@@ -215,72 +254,115 @@ export default function MapScreen() {
           </AnimatedButton>
 
           {/* 필터 버튼들*/}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              marginTop: 6,
-              justifyContent: 'space-between',
-              alignItems: 'stretch',
-              width: windowWidth - 32,
-            }}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{marginTop: 16}}>
+            <View style={{width: 8}} />
+
             <AnimatedButton
-              style={styles.filterButton}
+              style={
+                categoryModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton
+              }
               onPress={() => {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
               }}>
               <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
-              <Text style={styles.filterText}>{'카테고리'}</Text>
+              {selectedCategory === '전체' ? (
+                <Text style={styles.filterText}>{'카테고리'}</Text>
+              ) : (
+                <Text style={styles.filterTextActive}>{selectedCategory}</Text>
+              )}
             </AnimatedButton>
+
+            <View style={{width: 8}} />
 
             <AnimatedButton
               style={styles.filterButton}
               onPress={() => {
                 console.log('press 성대생 할인');
+                setSelectSale(!selectSale);
               }}>
               <SvgXml xml={svgXml.icon.persent} width="20" height="20" />
-              <Text style={styles.filterText}>{'성대생 할인'}</Text>
+              {!selectSale ? (
+                <Text style={styles.filterText}>{'성대생 할인'}</Text>
+              ) : (
+                <Text style={styles.filterTextActive}>{'성대생 할인'}</Text>
+              )}
             </AnimatedButton>
+
+            <View style={{width: 8}} />
 
             <AnimatedButton
               style={styles.filterButton}
               onPress={() => {
                 console.log('press 찜');
+                setLikedStore(!likedStore);
               }}>
               <SvgXml xml={svgXml.icon.emptyHeart} width="20" height="20" />
-              <Text style={styles.filterText}>{'찜'}</Text>
+              {!likedStore ? (
+                <Text style={styles.filterText}>{'찜'}</Text>
+              ) : (
+                <Text style={styles.filterTextActive}>{'찜'}</Text>
+              )}
             </AnimatedButton>
 
-            {/* 임시로 만들어 둔 UI 입니다. 추후에 수정이 필요합니다. 피그마 대로 하려면 좀 걸릴거 같습니다. */}
-            <View style={styles.filterButton}>
-              <Text
-                style={!isEnabled ? styles.filterText : styles.filterTextFade}>
-                {'식당'}
-              </Text>
-              <Switch
-                trackColor={{false: COLOR_PRIMARY, true: COLOR_PRIMARY}}
-                thumbColor={'#D4EBFF'}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-              <Text
-                style={isEnabled ? styles.filterText : styles.filterTextFade}>
-                {'카페'}
-              </Text>
-            </View>
-          </View>
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={
+                storeScoreModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton
+              }
+              onPress={() => {
+                console.log('press 평점');
+                setStoreScoreModalVisible(true);
+              }}>
+              <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+              {storeScore === '전체' ? (
+                <Text style={styles.filterText}>{'평점'}</Text>
+              ) : (
+                <Text style={styles.filterTextActive}>{storeScore}</Text>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={
+                replyNumModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton
+              }
+              onPress={() => {
+                console.log('press 댓글수');
+                setReplyNumModalVisible(true);
+              }}>
+              <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+              {replyNum === '전체' ? (
+                <Text style={styles.filterText}>{'댓글수'}</Text>
+              ) : (
+                <Text style={styles.filterTextActive}>{replyNum}</Text>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+          </ScrollView>
         </View>
 
         {/*TODO: 나침반 버튼, gps버튼 기능 추가*/}
         {/* 나침반 버튼*/}
-        <AnimatedButton
+        {/* <AnimatedButton
           style={[styles.cornerButton, {left: 16}]}
           onPress={() => {
             console.log('press compass');
           }}>
           <SvgXml xml={svgXml.icon.compass} width="30" height="30" />
-        </AnimatedButton>
+        </AnimatedButton> */}
 
         {/* gps 버튼*/}
         <AnimatedButton
@@ -322,6 +404,8 @@ export default function MapScreen() {
               style={{padding: 4}}
               onPress={() => {
                 console.log('새로고침');
+                setSelectedCategory('전체');
+                setCategoryModalVisible(false);
               }}>
               <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
             </AnimatedButton>
@@ -345,6 +429,26 @@ export default function MapScreen() {
           </View>
         </View>
       </Modal>
+
+      {/* 평점 모달 */}
+      <ListModal
+        visible={storeScoreModalVisible}
+        setVisible={setStoreScoreModalVisible}
+        title={'평점'}
+        value={storeScore}
+        setValue={setStoreScore}
+        valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
+      />
+
+      {/* 댓글수 모달 */}
+      <ListModal
+        visible={replyNumModalVisible}
+        setVisible={setReplyNumModalVisible}
+        title={'댓글수'}
+        value={replyNum}
+        setValue={setReplyNum}
+        valueList={['전체', '10 이상', '30 이상', '50 이상', '100 이상']}
+      />
 
       {/* 가게 모달 */}
       <Modal
@@ -437,10 +541,26 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     elevation: 4,
   },
+  filterButtonSelected: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    paddingHorizontal: 7,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 15,
+    elevation: 4,
+  },
   filterText: {
     marginLeft: 1,
     fontSize: 12,
     color: COLOR_TEXT_BLACK,
+    fontWeight: 'bold',
+  },
+  filterTextActive: {
+    marginLeft: 1,
+    fontSize: 12,
+    color: '#A4D65E',
     fontWeight: 'bold',
   },
   filterTextFade: {
