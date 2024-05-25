@@ -159,7 +159,7 @@ export const svgXml = {
     <path d="M5.93782 15.5C5.16735 14.1655 4.85875 12.6141 5.05989 11.0863C5.26102 9.55856 5.96064 8.13986 7.05025 7.05025C8.13986 5.96064 9.55856 5.26102 11.0863 5.05989C12.6141 4.85875 14.1655 5.16735 15.5 5.93782C16.8345 6.70829 17.8775 7.89757 18.4672 9.32122C19.0568 10.7449 19.1603 12.3233 18.7615 13.8117C18.3627 15.3002 17.4838 16.6154 16.2613 17.5535C15.0388 18.4915 13.5409 19 12 19" stroke="#535353" stroke-width="2" stroke-linecap="round"/>
     </svg>
     `,
-    filter: `
+    Color: `
     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.31873 5.83325H11.4278" stroke="black" stroke-width="2" stroke-linecap="round"/>
     <path d="M5.31873 10H11.4278" stroke="black" stroke-width="2" stroke-linecap="round"/>
@@ -228,6 +228,22 @@ export const svgXml = {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="3.33331" y="4.16675" width="13.3333" height="4.16667" rx="1" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
     <rect x="3.33331" y="11.6667" width="13.3333" height="4.16667" rx="1" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+    `,
+    filterColor: `
+    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.3187 5.8335H11.4278" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5.3187 10H11.4278" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5.3187 14.167H11.4278" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M17.5369 16.6668L20.1551 14.1668M17.5369 16.6668L14.9187 14.1668M17.5369 16.6668L17.5369 3.3335M17.5369 3.3335L14.9187 5.8335M17.5369 3.3335L20.1551 5.8335" stroke="white" stroke-width="2"/>
+    </svg>    
+    `,
+    filter: `
+    <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.3187 5.8335H11.4278" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5.3187 10H11.4278" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    <path d="M5.3187 14.167H11.4278" stroke="black" stroke-width="2" stroke-linecap="round"/>
+    <path d="M17.5369 16.6668L20.1551 14.1668M17.5369 16.6668L14.9187 14.1668M17.5369 16.6668L17.5369 3.3335M17.5369 3.3335L14.9187 5.8335M17.5369 3.3335L20.1551 5.8335" stroke="black" stroke-width="2"/>
     </svg>
     `,
   },

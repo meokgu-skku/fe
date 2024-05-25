@@ -76,9 +76,10 @@ export default function ListMainScreen() {
   };
 
   //TODO: 필터링 하는 함수
-  const getStoreDatas = async () => {
+  const getStoreDatas = async p => {
     try {
       // console.log('context.accessToken:', context.accessToken);
+      setPageNumber(p + 1);
 
       let discountForSkku = false;
       if (selectSale) {
@@ -90,12 +91,12 @@ export default function ListMainScreen() {
         like = true;
       }
 
-      let sort = 'BASIC';
+      //TODO: 필터 조건 추가하기
 
       const params = {
         discountForSkku: discountForSkku,
         like: like,
-        sort: sort,
+        sort: 'BASIC',
         paged: true,
         pageNumber: pageNumber,
         pageSize: 20,
@@ -105,9 +106,52 @@ export default function ListMainScreen() {
         params.categories = [selectedCategory];
       }
 
-      //TODO: 평점, 댓글수, 가격대 조건 추가하기
+      switch (storeScore) {
+        case '5.0점':
+          params.ratingAvg = 5.0;
+          break;
+        case '4.5점 이상':
+          params.ratingAvg = 4.5;
+          break;
+        case '4.0점 이상':
+          params.ratingAvg = 4.0;
+          break;
+        case '3.5점 이상':
+          params.ratingAvg = 3.5;
+          break;
+      }
 
-      setPageNumber(pageNumber + 1);
+      switch (replyNum) {
+        case '10 이상':
+          params.reviewCount = 10;
+          break;
+        case '30 이상':
+          params.reviewCount = 30;
+          break;
+        case '50 이상':
+          params.reviewCount = 50;
+          break;
+        case '100 이상':
+          params.reviewCount = 100;
+          break;
+      }
+
+      switch (priceRange) {
+        case '1만원 미만':
+          params.priceMax = 10000;
+          break;
+        case '1만원 ~ 2만원':
+          params.priceMin = 10000;
+          params.priceMax = 20000;
+          break;
+        case '2만원 ~ 3만원':
+          params.priceMin = 20000;
+          params.priceMax = 30000;
+          break;
+        case '3만원 이상':
+          params.priceMin = 30000;
+          break;
+      }
 
       const queryString = new URLSearchParams(params).toString();
 
@@ -120,10 +164,22 @@ export default function ListMainScreen() {
 
       console.log('response:', response.data.data.restaurants.content[0]);
 
-      setStoreDartDatas(response.data.data.restaurants.content);
+      if (p == 0) {
+        setStoreDartDatas(response.data.data.restaurants.content);
+      } else {
+        setStoreDartDatas([
+          ...storeDartDatas,
+          ...response.data.data.restaurants.content,
+        ]);
+      }
     } catch (e) {
       console.log('error', e);
     }
+  };
+
+  const onEndReached = () => {
+    console.log('onEndReached', pageNumber);
+    getStoreDatas(pageNumber);
   };
 
   useEffect(() => {
@@ -131,8 +187,8 @@ export default function ListMainScreen() {
   }, []);
 
   useEffect(() => {
-    setPageNumber(0);
-    getStoreDatas();
+    setStoreDartDatas([]);
+    getStoreDatas(0);
   }, [
     selectedCategory,
     storeScore,
@@ -140,6 +196,7 @@ export default function ListMainScreen() {
     priceRange,
     selectSale,
     likedStore,
+    sort,
   ]);
 
   const listHeader = () => {
@@ -216,6 +273,43 @@ export default function ListMainScreen() {
                   <Text style={styles.filterTextActive}>
                     {selectedCategory}
                   </Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                sortModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    sort !== '기본 순'
+                      ? COLOR_PRIMARY
+                      : sortModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 정렬');
+                setSortModalVisible(true);
+              }}>
+              {sort === '기본 순' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.filter} width="20" height="20" />
+                  <Text style={styles.filterText}>{'기본 순'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.filterColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{sort}</Text>
                 </>
               )}
             </AnimatedButton>
@@ -405,6 +499,8 @@ export default function ListMainScreen() {
             style={{flex: 1, width: windowWidth}}
             ListHeaderComponent={listHeader}
             ListFooterComponent={() => <View style={{height: 16}} />}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={0.4}
             renderItem={({item, index}) => {
               return (
                 <View style={{alignItems: 'center'}}>
@@ -480,6 +576,22 @@ export default function ListMainScreen() {
         value={storeScore}
         setValue={setStoreScore}
         valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
+      />
+
+      {/* 정렬 모달 */}
+      <ListModal
+        visible={sortModalVisible}
+        setVisible={setSortModalVisible}
+        title={'정렬'}
+        value={sort}
+        setValue={setSort}
+        valueList={[
+          '기본 순',
+          '가까운 순',
+          '평점 높은 순',
+          '댓글 많은 순',
+          '찜 많은 순',
+        ]}
       />
 
       {/* 댓글수 모달 */}

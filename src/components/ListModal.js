@@ -45,7 +45,7 @@ export default function ListModal(props) {
     <Modal
       isVisible={visible}
       hasBackdrop={true}
-      backdropOpacity={0}
+      backdropOpacity={0.5}
       onSwipeComplete={() => setVisible(false)}
       swipeDirection={'down'}
       onBackdropPress={() => setVisible(false)}
@@ -70,7 +70,7 @@ export default function ListModal(props) {
             style={{padding: 4}}
             onPress={() => {
               console.log('새로고침');
-              setValue('전체');
+              setValue(valueList[0]);
               setVisible(false);
             }}>
             <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
