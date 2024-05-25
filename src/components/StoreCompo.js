@@ -83,22 +83,17 @@ export default function StoreCompo(props) {
             marginLeft: 12,
             // backgroundColor: 'green',
           }}>
+          <Text
+            style={{
+              fontSize: 17,
+              color: COLOR_TEXT_BLACK,
+              fontWeight: 'bold',
+              alignSelf: 'flex-start',
+            }}>
+            {storeData.name}
+          </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text
-              style={{
-                fontSize: 17,
-                color: COLOR_TEXT_BLACK,
-                fontWeight: 'bold',
-                alignSelf: 'center',
-              }}>
-              {storeData.name}
-            </Text>
-            <SvgXml
-              xml={svgXml.icon.star}
-              width="15"
-              height="15"
-              style={{marginLeft: 7}}
-            />
+            <SvgXml xml={svgXml.icon.star} width="15" height="15" style={{}} />
             <Text
               style={{
                 fontSize: 12,
@@ -109,7 +104,6 @@ export default function StoreCompo(props) {
               }}>
               {storeData.ratingAvg + ' (' + storeData.reviewCount + ')'}
             </Text>
-            {/* TODO: 줄이 길어서 화면 밖으로 나감 */}
             <SvgXml
               xml={svgXml.icon.heart}
               width="15"
@@ -129,21 +123,26 @@ export default function StoreCompo(props) {
           </View>
 
           {storeData.categories ? (
+            storeData.categories.length ? (
+              <Text
+                style={{
+                  fontSize: 13,
+                  color: COLOR_GRAY,
+                }}>
+                {storeData.categories[0]}
+              </Text>
+            ) : null
+          ) : null}
+
+          {storeData.representativeMenu ? (
             <Text
               style={{
                 fontSize: 13,
-                color: COLOR_GRAY,
+                color: COLOR_TEXT_BLACK,
               }}>
-              {storeData.categories.length ? storeData.categories[0] : '기타'}
+              {storeData.representativeMenu.name}
             </Text>
           ) : null}
-          <Text
-            style={{
-              fontSize: 13,
-              color: COLOR_TEXT_BLACK,
-            }}>
-            {storeData.representativeMenu?.name}
-          </Text>
 
           <View style={styles.line} />
 
@@ -157,7 +156,7 @@ export default function StoreCompo(props) {
                 {storeData.firstReview.reviewer + ' 님'}
               </Text>
               <Text
-                numberOfLines={2}
+                numberOfLines={4}
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
@@ -165,7 +164,25 @@ export default function StoreCompo(props) {
                 {storeData.firstReview.body}
               </Text>
             </>
-          ) : null}
+          ) : (
+            <>
+              <Text
+                style={{
+                  fontSize: 11,
+                  color: COLOR_TEXT70GRAY,
+                }}>
+                {'아직 작성된 리뷰가 없어요!'}
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={{
+                  fontSize: 11,
+                  color: COLOR_TEXT60GRAY,
+                }}>
+                {`먹구스꾸에서 ${storeData.name} 리뷰 쓰고 첫 리뷰의 주인공이 되어보세요!`}
+              </Text>
+            </>
+          )}
         </View>
       </View>
     </Pressable>
