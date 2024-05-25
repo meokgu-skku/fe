@@ -1,3 +1,4 @@
+/* eslint-disable no-sparse-arrays */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback, useEffect, useContext} from 'react';
@@ -152,20 +153,88 @@ export default function MapScreen() {
     ['아시안', '카페', '전체', ''],
   ];
 
-  //TODO: 백엔드 업데이트 되면 사용
-  const loadStoreDatas = async () => {
+  //TODO: 필터링 하는 함수
+  const getStoreDatas = async () => {
     try {
       // console.log('context.accessToken:', context.accessToken);
 
+      let discountForSkku = false;
+      if (selectSale) {
+        discountForSkku = true;
+      }
+
+      let like = false;
+      if (likedStore) {
+        like = true;
+      }
+
+      //TODO: 필터 조건 추가하기
+
       const params = {
-        discountForSkku: true,
+        discountForSkku: discountForSkku,
+        like: like,
+        sort: 'BASIC',
       };
+
+      if (selectedCategory !== '전체') {
+        params.categories = [selectedCategory];
+      }
+
+      switch (storeScore) {
+        case '5.0점':
+          params.ratingAvg = 5.0;
+          break;
+        case '4.5점 이상':
+          params.ratingAvg = 4.5;
+          break;
+        case '4.0점 이상':
+          params.ratingAvg = 4.0;
+          break;
+        case '3.5점 이상':
+          params.ratingAvg = 3.5;
+          break;
+      }
+
+      switch (replyNum) {
+        case '10 이상':
+          params.reviewCount = 10;
+          break;
+        case '30 이상':
+          params.reviewCount = 30;
+          break;
+        case '50 이상':
+          params.reviewCount = 50;
+          break;
+        case '100 이상':
+          params.reviewCount = 100;
+          break;
+      }
+
+      switch (priceRange) {
+        case '1만원 미만':
+          params.priceMax = 10000;
+          break;
+        case '1만원 ~ 2만원':
+          params.priceMin = 10000;
+          params.priceMax = 20000;
+          break;
+        case '2만원 ~ 3만원':
+          params.priceMin = 20000;
+          params.priceMax = 30000;
+          break;
+        case '3만원 이상':
+          params.priceMin = 30000;
+          break;
+      }
 
       const queryString = new URLSearchParams(params).toString();
 
-      const response = await axios.get(`${API_URL}/v1/restaurants`, {
-        headers: {Authorization: `Bearer ${context.accessToken}`},
-      });
+      const response = await axios.get(
+        `${API_URL}/v1/restaurants?${queryString}`,
+        {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
+      );
 
       console.log('response:', response.data.data.restaurants.content[0]);
 
@@ -175,11 +244,16 @@ export default function MapScreen() {
     }
   };
 
-  //TODO: 카테고리별로 필터링하는 함수
-
   useEffect(() => {
-    // loadStoreDatas();
-  }, []);
+    getStoreDatas();
+  }, [
+    selectedCategory,
+    storeScore,
+    replyNum,
+    priceRange,
+    selectSale,
+    likedStore,
+  ]);
 
   return (
     <>
@@ -195,12 +269,6 @@ export default function MapScreen() {
             longitudeDelta: 0.01,
           }}>
           {storeDartDatas.map((data, index) => {
-            if (
-              selectedCategory !== '전체' &&
-              data.category !== selectedCategory
-            ) {
-              return null;
-            }
             return (
               <MapDart
                 data={data}
@@ -574,7 +642,7 @@ export default function MapScreen() {
       <Modal
         isVisible={storeModalVisible}
         hasBackdrop={true}
-        backdropOpacity={0}
+        backdropOpacity={0.5}
         onSwipeComplete={closeStoreModalVisible}
         swipeDirection={'down'}
         onBackdropPress={closeStoreModalVisible}
