@@ -97,9 +97,7 @@ export default function ListMainScreen() {
         discountForSkku: discountForSkku,
         like: like,
         sort: 'BASIC',
-        paged: true,
-        pageNumber: pageNumber,
-        pageSize: 20,
+        page: pageNumber,
       };
 
       if (selectedCategory !== '전체') {

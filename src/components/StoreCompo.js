@@ -174,7 +174,7 @@ export default function StoreCompo(props) {
                 {'아직 작성된 리뷰가 없어요!'}
               </Text>
               <Text
-                numberOfLines={2}
+                numberOfLines={1}
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
