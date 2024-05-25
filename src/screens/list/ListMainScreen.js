@@ -42,13 +42,20 @@ export default function ListMainScreen() {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
   const [replyNumModalVisible, setReplyNumModalVisible] = useState(false);
+  const [storeScoreNaverModalVisible, setStoreScoreNaverModalVisible] =
+    useState(false);
+  const [replyNumNaverModalVisible, setReplyNaverNumModalVisible] =
+    useState(false);
+
   const [priceRangeModalVisible, setPriceRangeModalVisible] = useState(false);
   const [sortModalVisible, setSortModalVisible] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState('전체');
   const [storeScore, setStoreScore] = useState('전체');
+  const [storeScoreNaver, setStoreScoreNaver] = useState('전체');
   const [replyNum, setReplyNum] = useState('전체');
   const [priceRange, setPriceRange] = useState('전체');
+  const [replyNumNaver, setReplyNumNaver] = useState('전체');
   const [sort, setSort] = useState('기본 순');
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
@@ -119,6 +126,21 @@ export default function ListMainScreen() {
           break;
       }
 
+      switch (storeScoreNaver) {
+        case '5.0점':
+          params.naverRatingAvg = 5.0;
+          break;
+        case '4.5점 이상':
+          params.naverRatingAvg = 4.5;
+          break;
+        case '4.0점 이상':
+          params.naverRatingAvg = 4.0;
+          break;
+        case '3.5점 이상':
+          params.naverRatingAvg = 3.5;
+          break;
+      }
+
       switch (replyNum) {
         case '10개 이상':
           params.reviewCount = 10;
@@ -131,6 +153,21 @@ export default function ListMainScreen() {
           break;
         case '100개 이상':
           params.reviewCount = 100;
+          break;
+      }
+
+      switch (replyNumNaver) {
+        case '10개 이상':
+          params.naverReviewCount = 10;
+          break;
+        case '30개 이상':
+          params.naverReviewCount = 30;
+          break;
+        case '50개 이상':
+          params.naverReviewCount = 50;
+          break;
+        case '100개 이상':
+          params.naverReviewCount = 100;
           break;
       }
 
@@ -195,6 +232,8 @@ export default function ListMainScreen() {
     selectSale,
     likedStore,
     sort,
+    storeScoreNaver,
+    replyNumNaver,
   ]);
 
   const listHeader = () => {
@@ -413,6 +452,43 @@ export default function ListMainScreen() {
 
             <AnimatedButton
               style={[
+                storeScoreNaverModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    storeScoreNaver !== '전체'
+                      ? COLOR_PRIMARY
+                      : storeScoreNaverModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 평점');
+                setStoreScoreNaverModalVisible(true);
+              }}>
+              {storeScoreNaver === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+                  <Text style={styles.filterText}>{'네이버 평점'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyStarColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{storeScoreNaver}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
                 replyNumModalVisible
                   ? styles.filterButtonSelected
                   : styles.filterButton,
@@ -438,6 +514,39 @@ export default function ListMainScreen() {
                 <>
                   <SvgXml xml={svgXml.icon.replyColor} width="20" height="20" />
                   <Text style={styles.filterTextActive}>{replyNum}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                replyNumNaverModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    replyNumNaver !== '전체'
+                      ? COLOR_PRIMARY
+                      : replyNumNaverModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 네이버 댓글수');
+                setReplyNaverNumModalVisible(true);
+              }}>
+              {replyNumNaver === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
+                  <Text style={styles.filterText}>{'네이버 리뷰수'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.replyColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{replyNumNaver}</Text>
                 </>
               )}
             </AnimatedButton>
@@ -576,6 +685,16 @@ export default function ListMainScreen() {
         valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
       />
 
+      {/* 네이버 평점 모달 */}
+      <ListModal
+        visible={storeScoreNaverModalVisible}
+        setVisible={setStoreScoreNaverModalVisible}
+        title={'네이버 평점'}
+        value={storeScoreNaver}
+        setValue={setStoreScoreNaver}
+        valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
+      />
+
       {/* 정렬 모달 */}
       <ListModal
         visible={sortModalVisible}
@@ -599,6 +718,22 @@ export default function ListMainScreen() {
         title={'댓글수'}
         value={replyNum}
         setValue={setReplyNum}
+        valueList={[
+          '전체',
+          '10개 이상',
+          '30개 이상',
+          '50개 이상',
+          '100개 이상',
+        ]}
+      />
+
+      {/* 댓글수 모달 */}
+      <ListModal
+        visible={replyNumNaverModalVisible}
+        setVisible={setReplyNaverNumModalVisible}
+        title={'네이버 리뷰수'}
+        value={replyNumNaver}
+        setValue={setReplyNumNaver}
         valueList={[
           '전체',
           '10개 이상',
