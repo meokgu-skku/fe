@@ -1,3 +1,4 @@
+/* eslint-disable no-sparse-arrays */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback, useEffect, useContext} from 'react';
@@ -27,12 +28,12 @@ import {Dimensions} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {AxiosError} from 'axios';
 import {API_URL} from '@env';
-import AppContext from '../../components/AppContext';
 import CategoryButton from '../../components/CategoryButton';
 import ListModal from '../../components/ListModal';
 import Modal from 'react-native-modal';
-
 const windowWidth = Dimensions.get('window').width;
+
+import AppContext from '../../components/AppContext';
 
 export default function ListMainScreen() {
   const navigation = useNavigation();
@@ -78,11 +79,6 @@ export default function ListMainScreen() {
   const getStoreDatas = async () => {
     try {
       // console.log('context.accessToken:', context.accessToken);
-      const catrgories = [];
-
-      if (selectedCategory !== '전체') {
-        catrgories.push(selectedCategory);
-      }
 
       let discountForSkku = false;
       if (selectSale) {
@@ -97,7 +93,6 @@ export default function ListMainScreen() {
       let sort = 'BASIC';
 
       const params = {
-        categories: catrgories,
         discountForSkku: discountForSkku,
         like: like,
         sort: sort,
@@ -105,6 +100,12 @@ export default function ListMainScreen() {
         pageNumber: pageNumber,
         pageSize: 20,
       };
+
+      if (selectedCategory !== '전체') {
+        params.categories = [selectedCategory];
+      }
+
+      //TODO: 평점, 댓글수, 가격대 조건 추가하기
 
       setPageNumber(pageNumber + 1);
 
@@ -186,11 +187,20 @@ export default function ListMainScreen() {
             <View style={{width: 16}} />
 
             <AnimatedButton
-              style={
+              style={[
                 categoryModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                ,
+                {
+                  backgroundColor:
+                    selectedCategory !== '전체'
+                      ? COLOR_PRIMARY
+                      : categoryModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
@@ -213,7 +223,12 @@ export default function ListMainScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: selectSale ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 성대생 할인');
                 setSelectSale(!selectSale);
@@ -238,7 +253,12 @@ export default function ListMainScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: likedStore ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 찜');
                 setLikedStore(!likedStore);
@@ -263,11 +283,19 @@ export default function ListMainScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 storeScoreModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    storeScore !== '전체'
+                      ? COLOR_PRIMARY
+                      : storeScoreModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 평점');
                 setStoreScoreModalVisible(true);
@@ -292,11 +320,19 @@ export default function ListMainScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 replyNumModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    replyNum !== '전체'
+                      ? COLOR_PRIMARY
+                      : replyNumModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 댓글수');
                 setReplyNumModalVisible(true);
@@ -317,11 +353,19 @@ export default function ListMainScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 priceRangeModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    priceRange !== '전체'
+                      ? COLOR_PRIMARY
+                      : priceRangeModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 댓글수');
                 setPriceRangeModalVisible(true);
@@ -377,7 +421,7 @@ export default function ListMainScreen() {
       <Modal
         isVisible={categoryModalVisible}
         hasBackdrop={true}
-        backdropOpacity={0}
+        backdropOpacity={0.5}
         onSwipeComplete={() => setCategoryModalVisible(false)}
         swipeDirection={'down'}
         onBackdropPress={() => setCategoryModalVisible(false)}
@@ -487,7 +531,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingHorizontal: 7,
-    backgroundColor: 'white',
     borderRadius: 15,
     // elevation: 4,
   },
@@ -497,7 +540,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingHorizontal: 7,
-    backgroundColor: '#D9D9D9',
     borderRadius: 15,
     // elevation: 4,
   },
@@ -510,7 +552,7 @@ const styles = StyleSheet.create({
   filterTextActive: {
     marginLeft: 1,
     fontSize: 12,
-    color: '#A4D65E',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   filterTextFade: {

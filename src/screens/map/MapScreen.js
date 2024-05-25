@@ -255,15 +255,24 @@ export default function MapScreen() {
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{marginTop: 16}}>
+            style={{paddingTop: 16}}>
             <View style={{width: 16}} />
 
             <AnimatedButton
-              style={
+              style={[
                 categoryModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                ,
+                {
+                  backgroundColor:
+                    selectedCategory !== '전체'
+                      ? COLOR_PRIMARY
+                      : categoryModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
@@ -286,7 +295,12 @@ export default function MapScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: selectSale ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 성대생 할인');
                 setSelectSale(!selectSale);
@@ -311,7 +325,12 @@ export default function MapScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: likedStore ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 찜');
                 setLikedStore(!likedStore);
@@ -336,11 +355,19 @@ export default function MapScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 storeScoreModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    storeScore !== '전체'
+                      ? COLOR_PRIMARY
+                      : storeScoreModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 평점');
                 setStoreScoreModalVisible(true);
@@ -365,11 +392,19 @@ export default function MapScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 replyNumModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    replyNum !== '전체'
+                      ? COLOR_PRIMARY
+                      : replyNumModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 댓글수');
                 setReplyNumModalVisible(true);
@@ -390,11 +425,19 @@ export default function MapScreen() {
             <View style={{width: 8}} />
 
             <AnimatedButton
-              style={
+              style={[
                 priceRangeModalVisible
                   ? styles.filterButtonSelected
-                  : styles.filterButton
-              }
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    priceRange !== '전체'
+                      ? COLOR_PRIMARY
+                      : priceRangeModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 댓글수');
                 setPriceRangeModalVisible(true);
@@ -589,7 +632,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingHorizontal: 7,
-    backgroundColor: 'white',
     borderRadius: 15,
     elevation: 4,
   },
@@ -599,7 +641,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingHorizontal: 7,
-    backgroundColor: '#D9D9D9',
     borderRadius: 15,
     elevation: 4,
   },
@@ -612,7 +653,7 @@ const styles = StyleSheet.create({
   filterTextActive: {
     marginLeft: 1,
     fontSize: 12,
-    color: '#A4D65E',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   filterTextFade: {
