@@ -111,6 +111,14 @@ export default function SignupScreen() {
     }
   };
 
+  function containsAll(text) {
+    const hasAlphabet = /[a-zA-Z]/.test(text);
+    const hasNumber = /\d/.test(text);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(text);
+
+    return hasAlphabet && hasNumber && hasSpecial;
+  }
+
   return (
     <>
       <HeaderWhite title={'회원가입'} isBackButton={true} />
@@ -220,7 +228,9 @@ export default function SignupScreen() {
           <LongPrimaryButton
             text={
               password === passwordCheck
-                ? '회원가입'
+                ? containsAll(password)
+                  ? '회원가입'
+                  : '영어, 숫자, 특수문자가 포함되어야 합니다.'
                 : '비밀번호가 일치하지 않습니다'
             }
             action={emailSend}

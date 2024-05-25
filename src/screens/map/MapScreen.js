@@ -1,6 +1,13 @@
+/* eslint-disable no-sparse-arrays */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 import {
   View,
   Text,
@@ -22,82 +29,89 @@ import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {BlurView} from '@react-native-community/blur';
-import {SvgXml} from 'react-native-svg';
+import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
 import Modal from 'react-native-modal';
 import {Dimensions} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
 import StoreCompo from '../../components/StoreCompo';
+import Geolocation from 'react-native-geolocation-service';
+import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
+import axios, {AxiosError} from 'axios';
+import {API_URL} from '@env';
+import AppContext from '../../components/AppContext';
+import ListModal from '../../components/ListModal';
+import CategoryButton from '../../components/CategoryButton';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function MapScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
 
-  const [isEnabled, setIsEnabled] = useState(false);
+  const mapRef = useRef(null);
+
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
+  const [replyNumModalVisible, setReplyNumModalVisible] = useState(false);
+  const [priceRangeModalVisible, setPriceRangeModalVisible] = useState(false);
   const [storeModalVisible, setStoreModalVisible] = useState(false);
+  const [storeScoreNaverModalVisible, setStoreScoreNaverModalVisible] =
+    useState(false);
+  const [replyNumNaverModalVisible, setReplyNaverNumModalVisible] =
+    useState(false);
+
+  const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0});
   const [storeData, setStoreData] = useState({});
 
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState);
-  };
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [storeScore, setStoreScore] = useState('전체');
+  const [replyNum, setReplyNum] = useState('전체');
+  const [priceRange, setPriceRange] = useState('전체');
+  const [storeScoreNaver, setStoreScoreNaver] = useState('전체');
+  const [replyNumNaver, setReplyNumNaver] = useState('전체');
+
+  const [selectSale, setSelectSale] = useState(false);
+  const [likedStore, setLikedStore] = useState(false);
 
   const closeStoreModalVisible = () => {
     setStoreModalVisible(false);
   };
 
+  const getMyLocation = async () => {
+    if (myLocation.latitude !== 0) {
+      setMyLocation({latitude: 0, longitude: 0});
+      return;
+    }
+
+    const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+    try {
+      let result = await request(platformPermissions);
+      console.log(result);
+    } catch (err) {
+      console.warn(err);
+    }
+
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(position.coords.latitude, position.coords.longitude);
+        const {latitude, longitude} = position.coords;
+
+        setMyLocation({
+          latitude: latitude,
+          longitude: longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
+
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
-  const [storeDartDatas, setStoreDartDatas] = useState([
-    {
-      name: '율천회관',
-      category: '한식',
-      menu: '육회비빔밥',
-      latitude: 37.296736,
-      longitude: 126.970762,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '자스민',
-      category: '아시안',
-      menu: '월남쌈',
-      latitude: 37.298612,
-      longitude: 126.972889,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '키와마루아지',
-      category: '일식',
-      menu: '라멘',
-      latitude: 37.29693,
-      longitude: 126.968718,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-  ]);
+  const [storeDartDatas, setStoreDartDatas] = useState([]);
 
   const catrgory = [
     ['한식', '양식', '일식', '중식'],
@@ -105,30 +119,160 @@ export default function MapScreen() {
     ['아시안', '카페', '전체', ''],
   ];
 
-  //TODO: 카테고리별로 필터링하는 함수
+  //TODO: 필터링 하는 함수
+  const getStoreDatas = async () => {
+    try {
+      // console.log('context.accessToken:', context.accessToken);
 
-  //TODO: 본인 위치 받아오는 함수
+      let discountForSkku = false;
+      if (selectSale) {
+        discountForSkku = true;
+      }
+
+      let like = false;
+      if (likedStore) {
+        like = true;
+      }
+
+      //TODO: 필터 조건 추가하기
+
+      const params = {
+        discountForSkku: discountForSkku,
+        like: like,
+        sort: 'BASIC',
+        size: 30,
+      };
+
+      if (selectedCategory !== '전체') {
+        params.categories = [selectedCategory];
+      }
+
+      switch (storeScore) {
+        case '5.0점':
+          params.ratingAvg = 5.0;
+          break;
+        case '4.5점 이상':
+          params.ratingAvg = 4.5;
+          break;
+        case '4.0점 이상':
+          params.ratingAvg = 4.0;
+          break;
+        case '3.5점 이상':
+          params.ratingAvg = 3.5;
+          break;
+      }
+
+      switch (storeScoreNaver) {
+        case '5.0점':
+          params.naverRatingAvg = 5.0;
+          break;
+        case '4.5점 이상':
+          params.naverRatingAvg = 4.5;
+          break;
+        case '4.0점 이상':
+          params.naverRatingAvg = 4.0;
+          break;
+        case '3.5점 이상':
+          params.naverRatingAvg = 3.5;
+          break;
+      }
+
+      switch (replyNum) {
+        case '10개 이상':
+          params.reviewCount = 10;
+          break;
+        case '30개 이상':
+          params.reviewCount = 30;
+          break;
+        case '50개 이상':
+          params.reviewCount = 50;
+          break;
+        case '100개 이상':
+          params.reviewCount = 100;
+          break;
+      }
+
+      switch (replyNumNaver) {
+        case '10개 이상':
+          params.naverReviewCount = 10;
+          break;
+        case '30개 이상':
+          params.naverReviewCount = 30;
+          break;
+        case '50개 이상':
+          params.naverReviewCount = 50;
+          break;
+        case '100개 이상':
+          params.naverReviewCount = 100;
+          break;
+      }
+
+      switch (priceRange) {
+        case '1만원 미만':
+          params.priceMax = 10000;
+          break;
+        case '1만원 ~ 2만원':
+          params.priceMin = 10000;
+          params.priceMax = 20000;
+          break;
+        case '2만원 ~ 3만원':
+          params.priceMin = 20000;
+          params.priceMax = 30000;
+          break;
+        case '3만원 이상':
+          params.priceMin = 30000;
+          break;
+      }
+
+      const queryString = new URLSearchParams(params).toString();
+
+      const response = await axios.get(
+        `${API_URL}/v1/restaurants?${queryString}`,
+        {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
+      );
+
+      console.log('response:', response.data.data.restaurants.content[0]);
+
+      setStoreDartDatas(response.data.data.restaurants.content);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  const alignToNorth = () => {
+    mapRef.current.animateCamera({heading: 0});
+  };
+
+  useEffect(() => {
+    getStoreDatas();
+  }, [
+    selectedCategory,
+    storeScore,
+    replyNum,
+    priceRange,
+    selectSale,
+    likedStore,
+    storeScoreNaver,
+    replyNumNaver,
+  ]);
 
   return (
     <>
       <Header title={'지도'} isBackButton={false} />
       <View style={styles.entire}>
         <MapView
+          ref={mapRef}
           style={{flex: 1, width: windowWidth}}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
             latitude: 37.297861,
             longitude: 126.971458,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
           }}>
           {storeDartDatas.map((data, index) => {
-            if (
-              selectedCategory !== '전체' &&
-              data.category !== selectedCategory
-            ) {
-              return null;
-            }
             return (
               <MapDart
                 data={data}
@@ -139,6 +283,14 @@ export default function MapScreen() {
               />
             );
           })}
+          {myLocation.latitude !== 0 ? (
+            <Marker
+              coordinate={{
+                latitude: myLocation.latitude,
+                longitude: myLocation.longitude,
+              }}
+            />
+          ) : null}
         </MapView>
 
         <View style={{position: 'absolute', top: 6, alignItems: 'center'}}>
@@ -172,70 +324,287 @@ export default function MapScreen() {
           </AnimatedButton>
 
           {/* 필터 버튼들*/}
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              marginTop: 6,
-              justifyContent: 'space-between',
-              alignItems: 'stretch',
-              width: windowWidth - 32,
-            }}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{paddingTop: 16}}>
+            <View style={{width: 16}} />
+
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                categoryModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                ,
+                {
+                  backgroundColor:
+                    selectedCategory !== '전체'
+                      ? COLOR_PRIMARY
+                      : categoryModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
               }}>
-              <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
-              <Text style={styles.filterText}>{'카테고리'}</Text>
+              {selectedCategory === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
+                  <Text style={styles.filterText}>{'카테고리'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.shopColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>
+                    {selectedCategory}
+                  </Text>
+                </>
+              )}
             </AnimatedButton>
 
+            <View style={{width: 8}} />
+
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: selectSale ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 성대생 할인');
+                setSelectSale(!selectSale);
               }}>
-              <SvgXml xml={svgXml.icon.persent} width="20" height="20" />
-              <Text style={styles.filterText}>{'성대생 할인'}</Text>
+              {!selectSale ? (
+                <>
+                  <SvgXml xml={svgXml.icon.persent} width="20" height="20" />
+                  <Text style={styles.filterText}>{'성대생 할인'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.presentColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{'성대생 할인'}</Text>
+                </>
+              )}
             </AnimatedButton>
+
+            <View style={{width: 8}} />
 
             <AnimatedButton
-              style={styles.filterButton}
+              style={[
+                styles.filterButton,
+                {
+                  backgroundColor: likedStore ? COLOR_PRIMARY : 'white',
+                },
+              ]}
               onPress={() => {
                 console.log('press 찜');
+                setLikedStore(!likedStore);
               }}>
-              <SvgXml xml={svgXml.icon.emptyHeart} width="20" height="20" />
-              <Text style={styles.filterText}>{'찜'}</Text>
+              {!likedStore ? (
+                <>
+                  <SvgXml xml={svgXml.icon.emptyHeart} width="20" height="20" />
+                  <Text style={styles.filterText}>{'찜'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyHeartColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{'찜'}</Text>
+                </>
+              )}
             </AnimatedButton>
 
-            {/* 임시로 만들어 둔 UI 입니다. 추후에 수정이 필요합니다. 피그마 대로 하려면 좀 걸릴거 같습니다. */}
-            <View style={styles.filterButton}>
-              <Text
-                style={!isEnabled ? styles.filterText : styles.filterTextFade}>
-                {'식당'}
-              </Text>
-              <Switch
-                trackColor={{false: COLOR_PRIMARY, true: COLOR_PRIMARY}}
-                thumbColor={'#D4EBFF'}
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-              />
-              <Text
-                style={isEnabled ? styles.filterText : styles.filterTextFade}>
-                {'카페'}
-              </Text>
-            </View>
-          </View>
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                storeScoreModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    storeScore !== '전체'
+                      ? COLOR_PRIMARY
+                      : storeScoreModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 평점');
+                setStoreScoreModalVisible(true);
+              }}>
+              {storeScore === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+                  <Text style={styles.filterText}>{'평점'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyStarColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{storeScore}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                storeScoreNaverModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    storeScoreNaver !== '전체'
+                      ? COLOR_PRIMARY
+                      : storeScoreNaverModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 평점');
+                setStoreScoreNaverModalVisible(true);
+              }}>
+              {storeScoreNaver === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.emptyStar} width="20" height="20" />
+                  <Text style={styles.filterText}>{'네이버 평점'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml
+                    xml={svgXml.icon.emptyStarColor}
+                    width="20"
+                    height="20"
+                  />
+                  <Text style={styles.filterTextActive}>{storeScoreNaver}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                replyNumModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    replyNum !== '전체'
+                      ? COLOR_PRIMARY
+                      : replyNumModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 댓글수');
+                setReplyNumModalVisible(true);
+              }}>
+              {replyNum === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
+                  <Text style={styles.filterText}>{'댓글수'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.replyColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{replyNum}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                replyNumNaverModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    replyNumNaver !== '전체'
+                      ? COLOR_PRIMARY
+                      : replyNumNaverModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 네이버 댓글수');
+                setReplyNaverNumModalVisible(true);
+              }}>
+              {replyNumNaver === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
+                  <Text style={styles.filterText}>{'네이버 리뷰수'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.replyColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{replyNumNaver}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 8}} />
+
+            <AnimatedButton
+              style={[
+                priceRangeModalVisible
+                  ? styles.filterButtonSelected
+                  : styles.filterButton,
+                {
+                  backgroundColor:
+                    priceRange !== '전체'
+                      ? COLOR_PRIMARY
+                      : priceRangeModalVisible
+                      ? '#D9D9D9'
+                      : 'white',
+                },
+              ]}
+              onPress={() => {
+                console.log('press 댓글수');
+                setPriceRangeModalVisible(true);
+              }}>
+              {priceRange === '전체' ? (
+                <>
+                  <SvgXml xml={svgXml.icon.price} width="20" height="20" />
+                  <Text style={styles.filterText}>{'가격'}</Text>
+                </>
+              ) : (
+                <>
+                  <SvgXml xml={svgXml.icon.priceColor} width="20" height="20" />
+                  <Text style={styles.filterTextActive}>{priceRange}</Text>
+                </>
+              )}
+            </AnimatedButton>
+
+            <View style={{width: 16}} />
+          </ScrollView>
         </View>
 
-        {/*TODO: 나침반 버튼, gps버튼 기능 추가*/}
         {/* 나침반 버튼*/}
         <AnimatedButton
           style={[styles.cornerButton, {left: 16}]}
-          onPress={() => {
-            console.log('press compass');
-          }}>
+          onPress={alignToNorth}>
           <SvgXml xml={svgXml.icon.compass} width="30" height="30" />
         </AnimatedButton>
 
@@ -244,6 +613,7 @@ export default function MapScreen() {
           style={[styles.cornerButton, {right: 16}]}
           onPress={() => {
             console.log('press gps');
+            getMyLocation();
           }}>
           <SvgXml xml={svgXml.icon.gps} width="24" height="24" />
         </AnimatedButton>
@@ -278,6 +648,8 @@ export default function MapScreen() {
               style={{padding: 4}}
               onPress={() => {
                 console.log('새로고침');
+                setSelectedCategory('전체');
+                setCategoryModalVisible(false);
               }}>
               <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
             </AnimatedButton>
@@ -302,11 +674,79 @@ export default function MapScreen() {
         </View>
       </Modal>
 
+      {/* 평점 모달 */}
+      <ListModal
+        visible={storeScoreModalVisible}
+        setVisible={setStoreScoreModalVisible}
+        title={'평점'}
+        value={storeScore}
+        setValue={setStoreScore}
+        valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
+      />
+
+      {/* 네이버 평점 모달 */}
+      <ListModal
+        visible={storeScoreNaverModalVisible}
+        setVisible={setStoreScoreNaverModalVisible}
+        title={'네이버 평점'}
+        value={storeScoreNaver}
+        setValue={setStoreScoreNaver}
+        valueList={['전체', '5.0점', '4.5점 이상', '4.0점 이상', '3.5점 이상']}
+      />
+
+      {/* 댓글수 모달 */}
+      <ListModal
+        visible={replyNumModalVisible}
+        setVisible={setReplyNumModalVisible}
+        title={'댓글수'}
+        value={replyNum}
+        setValue={setReplyNum}
+        valueList={[
+          '전체',
+          '10개 이상',
+          '30개 이상',
+          '50개 이상',
+          '100개 이상',
+        ]}
+      />
+
+      {/* 댓글수 모달 */}
+      <ListModal
+        visible={replyNumNaverModalVisible}
+        setVisible={setReplyNaverNumModalVisible}
+        title={'네이버 리뷰수'}
+        value={replyNumNaver}
+        setValue={setReplyNumNaver}
+        valueList={[
+          '전체',
+          '10개 이상',
+          '30개 이상',
+          '50개 이상',
+          '100개 이상',
+        ]}
+      />
+
+      {/* 가격 모달 */}
+      <ListModal
+        visible={priceRangeModalVisible}
+        setVisible={setPriceRangeModalVisible}
+        title={'가격'}
+        value={priceRange}
+        setValue={setPriceRange}
+        valueList={[
+          '전체',
+          '1만원 미만',
+          '1만원 ~ 2만원',
+          '2만원 ~ 3만원',
+          '3만원 이상',
+        ]}
+      />
+
       {/* 가게 모달 */}
       <Modal
         isVisible={storeModalVisible}
         hasBackdrop={true}
-        backdropOpacity={0}
+        backdropOpacity={0.5}
         onSwipeComplete={closeStoreModalVisible}
         swipeDirection={'down'}
         onBackdropPress={closeStoreModalVisible}
@@ -321,31 +761,6 @@ export default function MapScreen() {
         </View>
       </Modal>
     </>
-  );
-}
-
-function CategoryButton(props) {
-  const {name, onPress, selected} = props;
-
-  return (
-    <AnimatedButton
-      style={
-        selected === name
-          ? styles.categoryModalButtonSelected
-          : styles.categoryModalButton
-      }
-      onPress={() => {
-        onPress(name);
-      }}>
-      <Text
-        style={
-          selected === name
-            ? styles.categoryModalButtonTextSelected
-            : styles.categoryModalButtonText
-        }>
-        {name}
-      </Text>
-    </AnimatedButton>
   );
 }
 
@@ -389,7 +804,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     paddingHorizontal: 7,
-    backgroundColor: 'white',
+    borderRadius: 15,
+    elevation: 4,
+  },
+  filterButtonSelected: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
+    paddingHorizontal: 7,
     borderRadius: 15,
     elevation: 4,
   },
@@ -397,6 +820,12 @@ const styles = StyleSheet.create({
     marginLeft: 1,
     fontSize: 12,
     color: COLOR_TEXT_BLACK,
+    fontWeight: 'bold',
+  },
+  filterTextActive: {
+    marginLeft: 1,
+    fontSize: 12,
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   filterTextFade: {
