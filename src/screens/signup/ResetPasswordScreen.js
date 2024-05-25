@@ -65,6 +65,14 @@ export default function ResetPasswordScreen(props) {
     passwordCheckInputRef.current.focus();
   };
 
+  function containsAll(text) {
+    const hasAlphabet = /[a-zA-Z]/.test(text);
+    const hasNumber = /\d/.test(text);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(text);
+
+    return hasAlphabet && hasNumber && hasSpecial;
+  }
+
   const resetPassword = async () => {
     console.log('email:', signUpData.email);
     console.log('token:', signUpData.token);
@@ -161,7 +169,9 @@ export default function ResetPasswordScreen(props) {
           <LongPrimaryButton
             text={
               password === passwordCheck
-                ? '비밀번호 재설정'
+                ? containsAll(password)
+                  ? '회원가입'
+                  : '영어, 숫자, 특수문자가 포함되어야 합니다.'
                 : '비밀번호가 일치하지 않습니다'
             }
             action={resetPassword}
