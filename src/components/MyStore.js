@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {
   COLOR_WHITE,
-  COLOR_BACKGROUND,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
 } from '../assets/color';
@@ -30,68 +29,72 @@ export default function MyStore(props) {
   return (
     <View style={styles.kingopass}>
       <Text style={styles.kingopassTitle}>찜한 가게</Text>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={true}
-        style={{
-          marginTop: 10,
-        }}
-        horizontal={true}
-        ref={scrollViewRef}>
-        <View style={{ width: 16 }} />
-        {passData.map((data, index) => {
-          return (
-            <AnimatedButton
-              key={index.toString()}
-              style={styles.kingopassKard}
-              // TODO: 찜한 가게 페이지로 이동
-              onPress={() => {
-                console.log('찜한 가게 페이지로 이동');
-              }}>
-              <Image
-                source={{
-                  uri: data.image,
-                }}
-                resizeMode="cover"
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderRadius: 10,
-                }}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  borderRadius: 10,
-                  width: 140,
-                  height: 140,
-                  backgroundColor: '#000000',
-                  opacity: 0.3,
-                }}
-              />
-              <View
-                style={{
-                  position: 'absolute',
-                  borderRadius: 10,
-                  width: 140,
-                  height: 140,
+      {passData.length === 0 ? (
+        <Text style={styles.noStoreText}>찜한 가게가 없습니다</Text>
+      ) : (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={true}
+          style={{
+            marginTop: 10,
+          }}
+          horizontal={true}
+          ref={scrollViewRef}>
+          <View style={{ width: 16 }} />
+          {passData.map((data, index) => {
+            return (
+              <AnimatedButton
+                key={index.toString()}
+                style={styles.kingopassKard}
+                // TODO: 찜한 가게 페이지로 이동
+                onPress={() => {
+                  console.log('찜한 가게 페이지로 이동');
                 }}>
-                <Text
-                  numberOfLines={1}
+                <Image
+                  source={{
+                    uri: data.image,
+                  }}
+                  resizeMode="cover"
                   style={{
-                    fontSize: 20,
-                    color: COLOR_WHITE,
-                    fontWeight: 'bold',
-                    margin: 10,
+                    width: 140,
+                    height: 140,
+                    borderRadius: 10,
+                  }}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    borderRadius: 10,
+                    width: 140,
+                    height: 140,
+                    backgroundColor: '#000000',
+                    opacity: 0.3,
+                  }}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    borderRadius: 10,
+                    width: 140,
+                    height: 140,
                   }}>
-                  {data.name}
-                </Text>
-              </View>
-            </AnimatedButton>
-          );
-        })}
-        <View style={{ width: 16 }} />
-      </ScrollView>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontSize: 20,
+                      color: COLOR_WHITE,
+                      fontWeight: 'bold',
+                      margin: 10,
+                    }}>
+                    {data.name}
+                  </Text>
+                </View>
+              </AnimatedButton>
+            );
+          })}
+          <View style={{ width: 16 }} />
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -121,5 +124,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 4,
+  },
+  noStoreText: {
+    fontSize: 16,
+    color: COLOR_TEXT70GRAY,
+    textAlign: 'center',
+    marginTop: 10,
   },
 });

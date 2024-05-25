@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, ScrollView, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import {
   COLOR_BACKGROUND,
@@ -7,23 +7,41 @@ import {
   COLOR_WHITE,
   COLOR_GRAY,
 } from '../../assets/color';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import Header from '../../components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppContext from '../../components/AppContext';
 
 export default function UserDataChangeScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
 
   const [nickname, setNickname] = useState('');
-  const [name, setName] = useState('');
   const email = 'test@test.com'; 
-
 
   const nicknameCheckHandler = () => {
     console.log('nickname check');
   };
 
-  const nameCheckHandler = () => {
-    console.log('name check');
+  const logout = async () => {
+    try {
+    
+      await AsyncStorage.removeItem('accessToken');
+      await AsyncStorage.removeItem('refreshToken');
+
+  
+      context.setAccessTokenValue(null);
+      context.setRefreshTokenValue(null);
+
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Splash' }], 
+        })
+      );
+    } catch (error) {
+      console.log('Error during logout:', error);
+    }
   };
 
   return (
@@ -52,21 +70,6 @@ export default function UserDataChangeScreen() {
         </View>
 
         <View style={styles.inputContainer}>
-          <Text style={styles.label}>이름</Text>
-          <View style={styles.inputWithButton}>
-            <TextInput
-              style={[styles.input, { flex: 1 }]}
-              value={name}
-              onChangeText={setName}
-              placeholder="박정호"
-            />
-            <TouchableOpacity style={styles.checkButton} onPress={nameCheckHandler}> 
-              <Text style={styles.checkButtonText}>중복확인</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        <View style={styles.inputContainer}>
           <Text style={styles.label}>대표 이메일</Text>
           <TextInput
             style={[styles.input, styles.disabledInput]}
@@ -80,7 +83,7 @@ export default function UserDataChangeScreen() {
         </TouchableOpacity>
 
         <View style={styles.footer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={logout}>
             <Text style={styles.footerText}>로그아웃</Text>
           </TouchableOpacity>
           <TouchableOpacity>

@@ -1,70 +1,79 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../../components/Header';
 import { COLOR_BACKGROUND, COLOR_PRIMARY } from '../../assets/color';
 import MyReview from '../../components/MyReview';
 import MyStore from '../../components/MyStore';
+import axios from 'axios';
+import AppContext from '../../components/AppContext';
+import { API_URL } from '@env';
 
 export default function MypageScreen() {
   const navigation = useNavigation();
+  const context = useContext(AppContext);
 
-  const [myReviews, setMyReviews] = useState([
-    {
-      name: '율천회관',
-      category: '한식',
-      menu: '육회비빔밥',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '무대뽀 핫도그',
-      category: '술집',
-      menu: '핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '무대뽀 핫도그',
-      category: '술집',
-      menu: '핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-  ]);
+  const [myReviews, setMyReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [myStoresData, setMyStoresData] = useState([]);
 
-  const [myStoresData, setMyStoresData] = useState([
-    {
-      name: '율천회관',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-    },
-    {
-      name: '무대뽀 핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-    },
-    {
-      name: '무대뽀 핫도그',
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-    },
-  ]);
+  useEffect(() => {
+    const fetchMyReviews = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/v1/restaurants/my-reviews`,
+          {
+            headers: { Authorization: `Bearer ${context.accessToken}` },
+          }
+        );
+
+        console.log('API Response:', response.data);
+
+        const reviews = response.data.reviews ? response.data.reviews.map(review => ({
+          id: review.id,
+          image: review.imageUrls[0], 
+          score: review.rating,
+          reviewCount: review.viewCount,
+          heartCount: review.likeCount,
+          firstReview: {
+            reviewer: review.username,
+            body: review.content,
+          },
+        })) : [];
+
+        setMyReviews(reviews);
+      } catch (error) {
+        console.error("Failed to fetch reviews:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchLikedStores = async () => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/v1/restaurants/like`,
+          {
+            headers: { Authorization: `Bearer ${context.accessToken}` },
+          }
+        );
+
+        console.log('Liked Stores API Response:', response.data);
+
+        const stores = response.data.restaurants ? response.data.restaurants.map(store => ({
+          name: store.name,
+          image: store.representativeImageUrl,
+        })) : [];
+
+        setMyStoresData(stores);
+      } catch (error) {
+        console.error("Failed to fetch liked stores:", error);
+      }
+    };
+
+    fetchMyReviews();
+    fetchLikedStores();
+  }, [context.accessToken]);
 
   return (
     <>
@@ -89,7 +98,11 @@ export default function MypageScreen() {
           />
         </TouchableOpacity>
         <MyStore passData={myStoresData} />
-        <MyReview myReviews={myReviews} />
+        {loading ? (
+          <ActivityIndicator size="large" color={COLOR_PRIMARY} />
+        ) : (
+          <MyReview myReviews={myReviews} />
+        )}
         <View style={{ height: 100 }} />
       </ScrollView>
     </>
