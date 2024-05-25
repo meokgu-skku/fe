@@ -44,13 +44,13 @@ export default function MapDart(props) {
             <Text
               style={{
                 fontSize: 12,
-                color: COLOR_TEXT70GRAY,
+                color: COLOR_WHITE,
                 fontWeight: 'bold',
                 alignSelf: 'center',
                 marginLeft: 3,
                 marginTop: -1,
               }}>
-              {data.rating}
+              {data.ratingAvg.toString()}
             </Text>
           </View>
         </View>

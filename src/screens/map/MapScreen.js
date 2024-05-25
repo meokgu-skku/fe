@@ -134,7 +134,7 @@ export default function MapScreen() {
         discountForSkku: discountForSkku,
         like: like,
         sort: 'BASIC',
-        size: 40,
+        size: 30,
       };
 
       if (selectedCategory !== '전체') {
