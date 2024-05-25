@@ -120,16 +120,16 @@ export default function ListMainScreen() {
       }
 
       switch (replyNum) {
-        case '10 이상':
+        case '10개 이상':
           params.reviewCount = 10;
           break;
-        case '30 이상':
+        case '30개 이상':
           params.reviewCount = 30;
           break;
-        case '50 이상':
+        case '50개 이상':
           params.reviewCount = 50;
           break;
-        case '100 이상':
+        case '100개 이상':
           params.reviewCount = 100;
           break;
       }
@@ -599,7 +599,13 @@ export default function ListMainScreen() {
         title={'댓글수'}
         value={replyNum}
         setValue={setReplyNum}
-        valueList={['전체', '10 이상', '30 이상', '50 이상', '100 이상']}
+        valueList={[
+          '전체',
+          '10개 이상',
+          '30개 이상',
+          '50개 이상',
+          '100개 이상',
+        ]}
       />
 
       {/* 가격 모달 */}
