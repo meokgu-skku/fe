@@ -9,3 +9,4 @@ export const COLOR_TEXT70GRAY = '#4D4D4D';
 export const COLOR_TEXT60GRAY = '#666666';
 export const COLOR_NAVY = '#003C71';
 export const COLOR_LIGHTGRAY = '#dddddd';
+export const COLOR_ORANGE = '#FF6A13';
