@@ -1,7 +1,13 @@
 /* eslint-disable no-sparse-arrays */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState, useCallback, useEffect, useContext} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 import {
   View,
   Text,
@@ -23,13 +29,11 @@ import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {BlurView} from '@react-native-community/blur';
 import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
 import Modal from 'react-native-modal';
 import {Dimensions} from 'react-native';
-import {TextInput} from 'react-native-gesture-handler';
 import StoreCompo from '../../components/StoreCompo';
 import Geolocation from 'react-native-geolocation-service';
 import {PERMISSIONS, RESULTS, request} from 'react-native-permissions';
@@ -44,6 +48,8 @@ const windowWidth = Dimensions.get('window').width;
 export default function MapScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
+
+  const mapRef = useRef(null);
 
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [storeScoreModalVisible, setStoreScoreModalVisible] = useState(false);
@@ -99,53 +105,7 @@ export default function MapScreen() {
   };
 
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
-  const [storeDartDatas, setStoreDartDatas] = useState([
-    {
-      name: '율천회관',
-      category: '한식',
-      menu: '육회비빔밥',
-      latitude: 37.296736,
-      longitude: 126.970762,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/max.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '자스민',
-      category: '아시안',
-      menu: '월남쌈',
-      latitude: 37.298612,
-      longitude: 126.972889,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-    {
-      name: '키와마루아지',
-      category: '일식',
-      menu: '라멘',
-      latitude: 37.29693,
-      longitude: 126.968718,
-      image: 'https://d2da4yi19up8sp.cloudfront.net/product/pro.jpeg',
-      score: 4.5,
-      reviewCount: 100,
-      heartCount: 20,
-      firstReview: {
-        reviewer: '엄승주',
-        body: '가게 내부 깨끗하고, 서비스 친절해서 개좋음. 기대안하고 첨 갔는데 걍 인생 oo 맛봄. 지림.',
-      },
-    },
-  ]);
+  const [storeDartDatas, setStoreDartDatas] = useState([]);
 
   const catrgory = [
     ['한식', '양식', '일식', '중식'],
@@ -244,6 +204,10 @@ export default function MapScreen() {
     }
   };
 
+  const alignToNorth = () => {
+    mapRef.current.animateCamera({heading: 0});
+  };
+
   useEffect(() => {
     getStoreDatas();
   }, [
@@ -260,13 +224,14 @@ export default function MapScreen() {
       <Header title={'지도'} isBackButton={false} />
       <View style={styles.entire}>
         <MapView
+          ref={mapRef}
           style={{flex: 1, width: windowWidth}}
           provider={PROVIDER_GOOGLE}
           initialRegion={{
             latitude: 37.297861,
             longitude: 126.971458,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
           }}>
           {storeDartDatas.map((data, index) => {
             return (
@@ -528,13 +493,11 @@ export default function MapScreen() {
         </View>
 
         {/* 나침반 버튼*/}
-        {/* <AnimatedButton
+        <AnimatedButton
           style={[styles.cornerButton, {left: 16}]}
-          onPress={() => {
-            console.log('press compass');
-          }}>
+          onPress={alignToNorth}>
           <SvgXml xml={svgXml.icon.compass} width="30" height="30" />
-        </AnimatedButton> */}
+        </AnimatedButton>
 
         {/* gps 버튼*/}
         <AnimatedButton
