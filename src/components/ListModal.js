@@ -39,7 +39,35 @@ import AppContext from './AppContext';
 const windowWidth = Dimensions.get('window').width;
 
 export default function ListModal(props) {
-  const {visible, setVisible, title, value, setValue, valueList} = props;
+  const {visible, setVisible, title, value, setValue, valueList, setLocation} =
+    props;
+
+  const getMyLocation = async () => {
+    const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+    try {
+      let result = await request(platformPermissions);
+      console.log(result);
+    } catch (err) {
+      console.warn(err);
+    }
+
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(position.coords.latitude, position.coords.longitude);
+        const {latitude, longitude} = position.coords;
+
+        setLocation({
+          latitude: latitude,
+          longitude: longitude,
+        });
+      },
+      error => {
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
 
   return (
     <Modal
@@ -83,7 +111,10 @@ export default function ListModal(props) {
             return (
               <AnimatedButton
                 style={styles.listButton}
-                onPress={() => {
+                onPress={async () => {
+                  if (item == '가까운 순') {
+                    getMyLocation();
+                  }
                   setValue(item);
                 }}>
                 {item == value ? (

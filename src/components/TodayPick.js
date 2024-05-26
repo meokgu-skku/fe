@@ -86,7 +86,7 @@ export default function TodayPick(props) {
         ref={scrollViewRef}>
         {todaysPick.map((pickData, index) => {
           return (
-            <StoreCompo storeData={pickData} index={index} addPadding={8} />
+            <StoreCompo storeData={pickData} index={index} addPadding={10} />
           );
         })}
       </ScrollView>
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: windowWidth - 32,
     padding: 12,
-    paddingHorizontal: 10,
+    paddingHorizontal: 0,
     backgroundColor: COLOR_WHITE,
     borderRadius: 10,
     shadowOffset: {
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
   },
   todayPickTitle: {
     fontSize: 20,
+    paddingHorizontal: 10,
     color: COLOR_TEXT70GRAY,
     fontWeight: '700',
   },

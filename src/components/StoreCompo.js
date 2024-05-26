@@ -50,10 +50,10 @@ export default function StoreCompo(props) {
     <Pressable
       key={index.toString()}
       style={{
-        width: addPadding
-          ? windowWidth - 32 - 2 * addPadding
-          : windowWidth - 32,
+        width: addPadding ? windowWidth - 32 : windowWidth - 32,
         height: windowWidth / 3,
+        paddingHorizontal: addPadding,
+        // backgroundColor: storeData.id % 2 === 0 ? 'red' : 'blue',
         // backgroundColor: 'blue',
       }}
       onPress={() => {
@@ -153,7 +153,7 @@ export default function StoreCompo(props) {
                   fontSize: 11,
                   color: COLOR_TEXT70GRAY,
                 }}>
-                {storeData.firstReview.reviewer + ' 님'}
+                {storeData.representativeReviewContent.reviewer + ' 님'}
               </Text>
               <Text
                 numberOfLines={4}
@@ -161,7 +161,7 @@ export default function StoreCompo(props) {
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
                 }}>
-                {storeData.firstReview.body}
+                {storeData.representativeReviewContent.body}
               </Text>
             </>
           ) : (

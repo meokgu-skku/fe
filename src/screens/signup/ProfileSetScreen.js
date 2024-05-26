@@ -58,7 +58,7 @@ export default function ProfileSetScreen(props) {
       //회원가입 하고 토큰 저장하는 부분
       const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
         email: signUpData.email,
-        nickname: signUpData.name,
+        nickname: signUpData.nickname,
         password: signUpData.password,
         profileImageUrl: profileImage,
       });

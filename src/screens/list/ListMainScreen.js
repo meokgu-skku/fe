@@ -59,7 +59,12 @@ export default function ListMainScreen() {
   const [sort, setSort] = useState('기본 순');
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
+  const [search, setSearch] = useState('');
 
+  const [myLocation, setMyLocation] = useState({
+    latitude: 37.297861,
+    longitude: 126.971458,
+  });
   const [pageNumber, setPageNumber] = useState(0);
 
   const catrgory = [
@@ -86,6 +91,7 @@ export default function ListMainScreen() {
   const getStoreDatas = async p => {
     try {
       // console.log('context.accessToken:', context.accessToken);
+
       setPageNumber(p + 1);
 
       let discountForSkku = false;
@@ -103,7 +109,6 @@ export default function ListMainScreen() {
       const params = {
         discountForSkku: discountForSkku,
         like: like,
-        sort: 'BASIC',
         page: pageNumber,
       };
 
@@ -188,6 +193,30 @@ export default function ListMainScreen() {
           break;
       }
 
+      switch (sort) {
+        case '가까운 순':
+          params.customSort = 'CLOSELY_DESC';
+          params.latitude = myLocation.latitude;
+          params.longitude = myLocation.longitude;
+          break;
+        case '평점 높은 순':
+          params.customSort = 'RATING_DESC';
+          break;
+        case '댓글 많은 순':
+          params.customSort = 'REVIEW_COUNT_DESC';
+          break;
+        case '찜 많은 순':
+          params.customSort = 'LIKE_COUNT_DESC';
+          break;
+        case '기본 순':
+          params.customSort = 'BASIC';
+          break;
+      }
+
+      if (search !== '') {
+        params.query = search;
+      }
+
       const queryString = new URLSearchParams(params).toString();
 
       const response = await axios.get(
@@ -197,7 +226,7 @@ export default function ListMainScreen() {
         },
       );
 
-      console.log('response:', response.data.data.restaurants.content[0]);
+      // console.log('response:', response.data.data.restaurants.content[0]);
 
       if (p == 0) {
         setStoreDartDatas(response.data.data.restaurants.content);
@@ -214,6 +243,9 @@ export default function ListMainScreen() {
 
   const onEndReached = () => {
     console.log('onEndReached', pageNumber);
+    if (pageNumber === 0) {
+      return;
+    }
     getStoreDatas(pageNumber);
   };
 
@@ -234,6 +266,8 @@ export default function ListMainScreen() {
     sort,
     storeScoreNaver,
     replyNumNaver,
+    myLocation,
+    search,
   ]);
 
   const listHeader = () => {
@@ -255,8 +289,8 @@ export default function ListMainScreen() {
               justifyContent: 'center',
             }}
             onPress={() => {
-              //TODO: 리스트화면에도 검색 화면 추가하기
-              // navigation.navigate('Search');
+              setSearch('');
+              navigation.navigate('Search', {setSearch: setSearch});
             }}>
             <View
               style={{
@@ -269,7 +303,13 @@ export default function ListMainScreen() {
                 }}>
                 <SvgXml xml={svgXml.icon.search} width="24" height="24" />
               </View>
-              <Text style={styles.textInput}>{'율전의 맛집은 과연 어디?'}</Text>
+              {search !== '' ? (
+                <Text style={styles.textInput}>{search}</Text>
+              ) : (
+                <Text style={styles.textInput}>
+                  {'율전의 맛집은 과연 어디?'}
+                </Text>
+              )}
             </View>
           </AnimatedButton>
 
@@ -709,6 +749,7 @@ export default function ListMainScreen() {
           '댓글 많은 순',
           '찜 많은 순',
         ]}
+        setLocation={setMyLocation}
       />
 
       {/* 댓글수 모달 */}
