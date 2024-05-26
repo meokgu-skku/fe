@@ -9,7 +9,7 @@ import axios from 'axios';
 import AppContext from '../../components/AppContext';
 import { API_URL } from '@env';
 
-export default function MypageScreen() {
+export default function MyPageScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
@@ -18,89 +18,111 @@ export default function MypageScreen() {
   const [myStoresData, setMyStoresData] = useState([]);
   const [nickname, setNickname] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState('');
+  const [reviewPage, setReviewPage] = useState(0);
+  const [storePage, setStorePage] = useState(0);
+  const [hasMoreReviews, setHasMoreReviews] = useState(true);
+  const [hasMoreStores, setHasMoreStores] = useState(true);
 
   const fetchUserInfo = async () => {
     try {
-      console.log(`Fetching user info with userId: ${context.id}`);
-      console.log(`Using accessToken: ${context.accessToken}`);
       const response = await axios.get(
         `${API_URL}/v1/users/${context.id}`,
         {
           headers: { Authorization: `Bearer ${context.accessToken}` },
         }
       );
-
-      console.log('User Info API Response:', response.data);
+      console.log('User Info:', response.data);
       setNickname(response.data.data.userDto.nickname);
-      setProfileImageUrl(response.data.data.userDto.profileImageUrl);  
+      setProfileImageUrl(response.data.data.userDto.profileImageUrl);
     } catch (error) {
       console.error("Failed to fetch user info:", error);
+    }
+  };
+
+  const fetchMyReviews = async (page) => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/v1/restaurants/my-reviews?page=${page}&size=5`,
+        {
+          headers: { Authorization: `Bearer ${context.accessToken}` },
+        }
+      );
+
+      console.log('My Reviews:', response.data);
+
+      const reviews = response.data.data.reviews.content.map(review => ({
+        id: review.id,
+        image: review.imageUrls[0],
+        score: review.rating,
+        reviewCount: review.viewCount,
+        heartCount: review.likeCount,
+        firstReview: {
+          reviewer: review.username,
+          body: review.content,
+        },
+      }));
+
+      setMyReviews(prevReviews => [...prevReviews, ...reviews]);
+      setHasMoreReviews(response.data.data.reviews.content.length > 0);
+    } catch (error) {
+      console.error("Failed to fetch reviews:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchLikedStores = async (page) => {
+    try {
+      const response = await axios.get(
+        `${API_URL}/v1/restaurants/my-like?page=${page}&size=5`,
+        {
+          headers: { Authorization: `Bearer ${context.accessToken}` },
+        }
+      );
+
+      console.log('Liked Stores Response:', response.data);
+
+      const stores = response.data.data.restaurants.content.map(store => ({
+        name: store.name,
+        image: store.representativeImageUrl,
+      }));
+
+      setMyStoresData(prevStores => [...prevStores, ...stores]);
+      setHasMoreStores(!response.data.data.restaurants.last);
+    } catch (error) {
+      console.error("Failed to fetch liked stores:", error);
     }
   };
 
   useFocusEffect(
     React.useCallback(() => {
       fetchUserInfo();
+      setReviewPage(0); 
+      setStorePage(0); 
+      setMyReviews([]); 
+      setMyStoresData([]); 
     }, [])
   );
 
   useEffect(() => {
-    const fetchMyReviews = async () => {
-      try {
-        const response = await axios.get(
-          `${API_URL}/v1/restaurants/my-reviews`,
-          {
-            headers: { Authorization: `Bearer ${context.accessToken}` },
-          }
-        );
+    fetchMyReviews(reviewPage);
+  }, [context.accessToken, context.id, reviewPage]);
 
-        console.log('My Review API Response:', response.data);
+  useEffect(() => {
+    fetchLikedStores(storePage);
+  }, [context.accessToken, context.id, storePage]);
 
-        const reviews = response.data.reviews ? response.data.reviews.map(review => ({
-          id: review.id,
-          image: review.imageUrls[0], 
-          score: review.rating,
-          reviewCount: review.viewCount,
-          heartCount: review.likeCount,
-          firstReview: {
-            reviewer: review.username,
-            body: review.content,
-          },
-        })) : [];
+  const handleLoadMoreReviews = () => {
+    if (hasMoreReviews) {
+      setReviewPage(prevPage => prevPage + 1);
+    }
+  };
 
-        setMyReviews(reviews);
-      } catch (error) {
-        console.error("Failed to fetch reviews:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchLikedStores = async () => {
-      try {
-        const response = await axios.get(
-          `${API_URL}/v1/restaurants/my-like`,
-          {
-            headers: { Authorization: `Bearer ${context.accessToken}` },
-          }
-        );
-
-        console.log('Liked Stores API Response:', response.data);
-
-        const stores = response.data.restaurants ? response.data.restaurants.map(store => ({
-          name: store.name,
-          image: store.representativeImageUrl,
-        })) : [];
-
-        setMyStoresData(stores);
-      } catch (error) {
-        console.error("Failed to fetch liked stores:", error);
-      }
-    };
-
-    fetchMyReviews();
-    fetchLikedStores();
-  }, [context.accessToken, context.id]);
+  const handleLoadMoreStores = () => {
+    if (hasMoreStores) {
+      setStorePage(prevPage => prevPage + 1);
+    }
+  };
 
   return (
     <>
@@ -109,7 +131,7 @@ export default function MypageScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={profileImageUrl ? { uri: profileImageUrl } : require("../../assets/skku.png")}  
+          source={profileImageUrl ? { uri: profileImageUrl } : require("../../assets/skku.png")}
         />
         <TouchableOpacity
           style={styles.text6Position}
@@ -124,11 +146,11 @@ export default function MypageScreen() {
             source={require("../../assets/right-arrow.png")}
           />
         </TouchableOpacity>
-        <MyStore passData={myStoresData} />
+        <MyStore passData={myStoresData} onEndReached={handleLoadMoreStores} hasMore={hasMoreStores} />
         {loading ? (
           <ActivityIndicator size="large" color={COLOR_PRIMARY} />
         ) : (
-          <MyReview myReviews={myReviews} />
+          <MyReview myReviews={myReviews} onEndReached={handleLoadMoreReviews} hasMore={hasMoreReviews} />
         )}
         <View style={{ height: 100 }} />
       </ScrollView>

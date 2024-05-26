@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {
   COLOR_WHITE,
-  COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
 } from '../assets/color';
 import { useNavigation } from '@react-navigation/native';
@@ -24,7 +23,16 @@ export default function MyStore(props) {
 
   const scrollViewRef = useRef();
 
-  const { passData } = props;
+  const { passData, onEndReached, hasMore } = props;
+
+  const handleScroll = (event) => {
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+    const isCloseToEnd = contentOffset.x + layoutMeasurement.width >= contentSize.width - 50;
+
+    if (isCloseToEnd && hasMore) {
+      onEndReached();
+    }
+  };
 
   return (
     <View style={styles.kingopass}>
@@ -35,20 +43,21 @@ export default function MyStore(props) {
         <ScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={true}
-          style={{
-            marginTop: 10,
-          }}
+          contentContainerStyle={styles.scrollViewContent}
           horizontal={true}
-          ref={scrollViewRef}>
+          ref={scrollViewRef}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
+        >
           <View style={{ width: 16 }} />
           {passData.map((data, index) => {
             return (
               <AnimatedButton
                 key={index.toString()}
                 style={styles.kingopassKard}
-                // TODO: 찜한 가게 페이지로 이동
                 onPress={() => {
                   console.log('찜한 가게 페이지로 이동');
+                  navigation.navigate('StoreDetail', { data: data });
                 }}>
                 <Image
                   source={{
@@ -130,5 +139,9 @@ const styles = StyleSheet.create({
     color: COLOR_TEXT70GRAY,
     textAlign: 'center',
     marginTop: 10,
+  },
+  scrollViewContent: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
   },
 });

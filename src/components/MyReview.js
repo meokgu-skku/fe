@@ -4,7 +4,7 @@ import { COLOR_WHITE, COLOR_PRIMARY, COLOR_TEXT70GRAY } from '../assets/color';
 import { useNavigation } from '@react-navigation/native';
 import AppContext from './AppContext';
 import { Dimensions } from 'react-native';
-import StoreCompo from './StoreCompo';
+import StoreCompoForR from './StoreCompoForR';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -14,8 +14,7 @@ export default function MyReview(props) {
 
   const scrollViewRef = useRef();
 
-  const { myReviews } = props;
-
+  const { myReviews, onEndReached, hasMore } = props; 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleScroll = event => {
@@ -23,6 +22,10 @@ export default function MyReview(props) {
     const pageWidth = event.nativeEvent.layoutMeasurement.width;
     const currentPage = Math.floor(offsetX / pageWidth + 0.5);
     setCurrentIndex(currentPage);
+
+    if (currentPage === myReviews.length - 1 && hasMore) { 
+      onEndReached();
+    }
   };
 
   const Indicator = Array.from({ length: myReviews.length }, (_, index) => (
@@ -40,7 +43,7 @@ export default function MyReview(props) {
 
   return (
     <View style={styles.myReview}>
-      <Text style={styles.myReviewTitle}>사용자&apos;s 리뷰</Text>
+      <Text style={styles.myReviewTitle}>내 리뷰</Text>
       {myReviews.length === 0 ? (
         <Text style={styles.noReviewText}>리뷰가 없습니다</Text>
       ) : (
@@ -55,7 +58,7 @@ export default function MyReview(props) {
             scrollEventThrottle={16}
             ref={scrollViewRef}>
             {myReviews.map((reviewData, index) => {
-              return <StoreCompo key={index.toString()} storeData={reviewData} index={index} />;
+              return <StoreCompoForR key={index.toString()} storeData={reviewData} index={index} />;
             })}
           </ScrollView>
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 4, // for Android
+    elevation: 4, 
   },
   myReviewTitle: {
     fontSize: 20,
