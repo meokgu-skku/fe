@@ -88,14 +88,17 @@ export default function LoginScreen() {
       //백엔드에서 받은 토큰을 저장하고 화면 이동
       const accessToken = response.data.data.token.accessToken;
       const refreshToken = response.data.data.token.refreshToken;
+      const userId = response.data.data.userDto.id;
 
       //전역 변수에 저장
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);
+      context.setIdValue(userId);
 
       //디바이스에 저장
       AsyncStorage.setItem('accessToken', accessToken);
       AsyncStorage.setItem('refreshToken', refreshToken);
+      AsyncStorage.setItem('userId', userId.toString());
 
       navigation.navigate('BottomTab');
     } catch (error) {

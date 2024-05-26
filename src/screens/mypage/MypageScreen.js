@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Header from '../../components/Header';
 import { COLOR_BACKGROUND, COLOR_PRIMARY } from '../../assets/color';
 import MyReview from '../../components/MyReview';
@@ -16,6 +16,33 @@ export default function MypageScreen() {
   const [myReviews, setMyReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myStoresData, setMyStoresData] = useState([]);
+  const [nickname, setNickname] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState('');
+
+  const fetchUserInfo = async () => {
+    try {
+      console.log(`Fetching user info with userId: ${context.id}`);
+      console.log(`Using accessToken: ${context.accessToken}`);
+      const response = await axios.get(
+        `${API_URL}/v1/users/${context.id}`,
+        {
+          headers: { Authorization: `Bearer ${context.accessToken}` },
+        }
+      );
+
+      console.log('User Info API Response:', response.data);
+      setNickname(response.data.data.userDto.nickname);
+      setProfileImageUrl(response.data.data.userDto.profileImageUrl);  
+    } catch (error) {
+      console.error("Failed to fetch user info:", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchUserInfo();
+    }, [])
+  );
 
   useEffect(() => {
     const fetchMyReviews = async () => {
@@ -27,7 +54,7 @@ export default function MypageScreen() {
           }
         );
 
-        console.log('API Response:', response.data);
+        console.log('My Review API Response:', response.data);
 
         const reviews = response.data.reviews ? response.data.reviews.map(review => ({
           id: review.id,
@@ -52,7 +79,7 @@ export default function MypageScreen() {
     const fetchLikedStores = async () => {
       try {
         const response = await axios.get(
-          `${API_URL}/v1/restaurants/like`,
+          `${API_URL}/v1/restaurants/my-like`,
           {
             headers: { Authorization: `Bearer ${context.accessToken}` },
           }
@@ -73,16 +100,16 @@ export default function MypageScreen() {
 
     fetchMyReviews();
     fetchLikedStores();
-  }, [context.accessToken]);
+  }, [context.accessToken, context.id]);
 
   return (
     <>
-      <Header title={'마이 프로필'} isBackButton={false} />
+      <Header title={'내 프로필'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={require("../../assets/skku.png")}
+          source={profileImageUrl ? { uri: profileImageUrl } : require("../../assets/skku.png")}  
         />
         <TouchableOpacity
           style={styles.text6Position}
@@ -90,7 +117,7 @@ export default function MypageScreen() {
             navigation.navigate('UserDataChange');
           }}
         >
-          <Text style={styles.text6}>사용자 이름</Text>
+          <Text style={styles.text6}>{nickname}</Text>
           <Image
             style={styles.arrowIcon}
             resizeMode="contain"

@@ -14,6 +14,7 @@ import 'react-native-gesture-handler';
 export default function App() {
   const [accessToken, setAccessToken] = useState('');
   const [refreshToken, setRefreshToken] = useState('');
+  const [id, setId] = useState('');
 
   const setAccessTokenValue = string => {
     setAccessToken(string);
@@ -23,11 +24,17 @@ export default function App() {
     setRefreshToken(string);
   };
 
+  const setIdValue = string => {
+    setId(string);
+  };
+
   const tokens = {
     accessToken: accessToken,
     setAccessTokenValue,
     refreshToken: refreshToken,
     setRefreshTokenValue,
+    id: id,
+    setIdValue,
   };
 
   return (

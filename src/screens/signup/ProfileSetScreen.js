@@ -55,7 +55,7 @@ export default function ProfileSetScreen(props) {
     console.log('password:', signUpData.password);
 
     try {
-      //회원가입 하고 토큰 저장하는 부분
+      // 회원가입 하고 토큰 저장하는 부분
       const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
         email: signUpData.email,
         nickname: signUpData.name,
@@ -70,11 +70,15 @@ export default function ProfileSetScreen(props) {
       }
       const accessToken = response.data.data.token.accessToken;
       const refreshToken = response.data.data.token.refreshToken;
+      const userId = response.data.data.userDto.id;
 
       context.setAccessTokenValue(accessToken);
       context.setRefreshTokenValue(refreshToken);
+      context.setIdValue(userId);
+
       AsyncStorage.setItem('accessToken', accessToken);
       AsyncStorage.setItem('refreshToken', refreshToken);
+      AsyncStorage.setItem('userId', userId.toString());
 
       navigation.navigate('BottomTab');
     } catch (error) {

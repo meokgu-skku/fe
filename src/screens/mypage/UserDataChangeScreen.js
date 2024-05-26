@@ -1,42 +1,133 @@
-import React, { useState, useContext } from 'react';
-import { View, ScrollView, StyleSheet, Image, Text, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, ScrollView, StyleSheet, Image, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import {
   COLOR_BACKGROUND,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_WHITE,
   COLOR_GRAY,
+  COLOR_RED,
+  COLOR_BLUE,
 } from '../../assets/color';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import Header from '../../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
+import axios from 'axios';
+import { API_URL } from '@env';
 
 export default function UserDataChangeScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
   const [nickname, setNickname] = useState('');
-  const email = 'test@test.com'; 
+  const [email, setEmail] = useState('');
+  const [duplicateMessage, setDuplicateMessage] = useState('');
+  const [messageColor, setMessageColor] = useState(COLOR_RED);
 
-  const nicknameCheckHandler = () => {
-    console.log('nickname check');
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        console.log(`Fetching user info with userId: ${context.id}`);
+        console.log(`Using accessToken: ${context.accessToken}`);
+        const response = await axios.get(
+          `${API_URL}/v1/users/${context.id}`,
+          {
+            headers: { Authorization: `Bearer ${context.accessToken}` },
+          }
+        );
+
+        console.log('User Info API Response:', response.data);
+        setNickname(response.data.data.userDto.nickname);
+        setEmail(response.data.data.userDto.email);
+      } catch (error) {
+        console.error("Failed to fetch user info:", error);
+      }
+    };
+
+    fetchUserInfo();
+  }, [context.accessToken, context.id]);
+
+  const nicknameCheckHandler = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/v1/users/check-nickname`, {
+        params: { nickname },
+        headers: { Authorization: `Bearer ${context.accessToken}` }
+      });
+
+      if (response.data.isDuplicate || nickname === context.nickname) {
+        setDuplicateMessage("이미 사용 중인 닉네임입니다.");
+        setMessageColor(COLOR_RED);
+      } else {
+        setDuplicateMessage("사용 가능한 닉네임입니다.");
+        setMessageColor(COLOR_BLUE);
+      }
+    } catch (error) {
+      setDuplicateMessage("닉네임 중복 확인 중 오류가 발생했습니다.");
+      setMessageColor(COLOR_RED);
+    }
+  };
+
+  const updateNicknameHandler = async () => {
+    try {
+      const response = await axios.patch(`${API_URL}/v1/users`, {
+        nickname: nickname
+      }, {
+        headers: { Authorization: `Bearer ${context.accessToken}` }
+      });
+
+      if (response.status === 200) {
+        Alert.alert("성공", "닉네임이 성공적으로 변경되었습니다.", [{ text: "확인", onPress: () => navigation.goBack() }]);
+      }
+    } catch (error) {
+      console.error("Failed to update nickname:", error);
+      Alert.alert("오류", "닉네임 변경 중 오류가 발생했습니다.", [{ text: "확인" }]);
+    }
+  };
+
+  const deleteUserHandler = async () => {
+    try {
+      const response = await axios.delete(`${API_URL}/v1/users`, {
+        headers: { Authorization: `Bearer ${context.accessToken}` }
+      });
+
+      if (response.status === 200) {
+        Alert.alert("성공", "회원탈퇴가 정상적으로 완료되었습니다.", [
+          {
+            text: "확인", onPress: async () => {
+              await AsyncStorage.removeItem('accessToken');
+              await AsyncStorage.removeItem('refreshToken');
+              context.setAccessTokenValue(null);
+              context.setRefreshTokenValue(null);
+
+              navigation.dispatch(
+                CommonActions.reset({
+                  index: 0,
+                  routes: [{ name: 'Splash' }],
+                })
+              );
+            }
+          }
+        ]);
+      }
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      Alert.alert("오류", "회원탈퇴 중 오류가 발생했습니다.", [{ text: "확인" }]);
+    }
   };
 
   const logout = async () => {
     try {
-    
       await AsyncStorage.removeItem('accessToken');
       await AsyncStorage.removeItem('refreshToken');
 
-  
       context.setAccessTokenValue(null);
       context.setRefreshTokenValue(null);
 
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: 'Splash' }], 
+          routes: [{ name: 'Splash' }],
         })
       );
     } catch (error) {
@@ -67,6 +158,11 @@ export default function UserDataChangeScreen() {
               <Text style={styles.checkButtonText}>중복확인</Text>
             </TouchableOpacity>
           </View>
+          {duplicateMessage ? (
+            <Text style={[styles.duplicateMessage, { color: messageColor }]}>
+              {duplicateMessage}
+            </Text>
+          ) : null}
         </View>
 
         <View style={styles.inputContainer}>
@@ -78,7 +174,7 @@ export default function UserDataChangeScreen() {
           />
         </View>
 
-        <TouchableOpacity style={styles.updateButton}>
+        <TouchableOpacity style={styles.updateButton} onPress={updateNicknameHandler}>
           <Text style={styles.updateButtonText}>수정하기</Text>
         </TouchableOpacity>
 
@@ -86,7 +182,7 @@ export default function UserDataChangeScreen() {
           <TouchableOpacity onPress={logout}>
             <Text style={styles.footerText}>로그아웃</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={deleteUserHandler}>
             <Text style={styles.footerText}>회원탈퇴</Text>
           </TouchableOpacity>
         </View>
@@ -149,6 +245,10 @@ const styles = StyleSheet.create({
   checkButtonText: {
     color: COLOR_WHITE,
     fontSize: 15,
+  },
+  duplicateMessage: {
+    fontSize: 14,
+    marginTop: 5,
   },
   updateButton: {
     width: '85%',
