@@ -63,7 +63,7 @@ export default function UserDataChangeScreen() {
         setMessageColor(COLOR_BLUE);
       }
     } catch (error) {
-      setDuplicateMessage("닉네임 중복 확인 중 오류가 발생했습니다.");
+      setDuplicateMessage("이미 사용 중인 닉네임입니다.");
       setMessageColor(COLOR_RED);
     }
   };
@@ -152,7 +152,7 @@ export default function UserDataChangeScreen() {
               style={[styles.input, { flex: 1 }]}
               value={nickname}
               onChangeText={setNickname}
-              placeholder="먹구스꾸"
+              placeholder="닉네임을 입력해주세요"
             />
             <TouchableOpacity style={styles.checkButton} onPress={nicknameCheckHandler}> 
               <Text style={styles.checkButtonText}>중복확인</Text>
