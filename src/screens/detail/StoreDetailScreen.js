@@ -28,9 +28,10 @@ import {
   COLOR_TEXT_BLACK,
   COLOR_LIGHTGRAY,
   COLOR_ORANGE,
+  COLOR_SECONDARY,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
@@ -47,7 +48,7 @@ export default function StoreDetailScreen(props) {
   const navigation = useNavigation();
   const context = useContext(AppContext);
   const { route } = props;
-  const restaurantId = route.params?.data?.id || 1;
+  const restaurantId = route.params?.data?.id || 2;
   const [restaurant, setRestaurant] = useState(null);
   const [isHearted, setIsHearted] = useState(false);
   const [heartCount, setHeartCount] = useState(0);
@@ -63,6 +64,12 @@ export default function StoreDetailScreen(props) {
     restaurantDetail();
     handleHeartPress();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      restaurantDetail();
+    }, [])
+  );
 
   useEffect(() => {
     setDisplayedMenuList(menuList.slice(0, menuCount));
@@ -85,7 +92,7 @@ export default function StoreDetailScreen(props) {
       const dataReview = responseReview.data.data;
       
       console.log('data: ', data.restaurant.isLike);
-      console.log('review: ', dataReview);
+      console.log('data: ', data.restaurant.likeCount);
       
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
@@ -100,9 +107,7 @@ export default function StoreDetailScreen(props) {
     const handleHeartPress = async () => {
       try {
         const newHeartedState = !isHearted;
-        setIsHearted(newHeartedState);
-        setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
-
+        
         await axios.post(
           `${API_URL}/v1/restaurants/${restaurantId}/like`, 
           {
@@ -113,11 +118,12 @@ export default function StoreDetailScreen(props) {
           },
         );
 
+        setIsHearted(newHeartedState);
+        setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
+
         console.log('isLike: ', newHeartedState);
       } catch (error) {
         console.error('Error updating heart count:', error);
-        setIsHearted(!newHeartedState);
-        setHeartCount(newHeartedState ? heartCount - 1 : heartCount + 1);
       }
     };
 
@@ -140,7 +146,7 @@ export default function StoreDetailScreen(props) {
             <Image source={{ uri: item.imageUrl }} style={styles.menuImage} />
           ) : (
             <View style={styles.menuImagePlaceholder}>
-              <Text style={styles.menuImagePlaceholderText}>(빈 이미지)</Text>
+              <Text style={styles.menuImagePlaceholderText}>음식 사진 준비중</Text>
             </View>
           )}
           <View style={styles.menuTextContainer}>
@@ -231,9 +237,16 @@ export default function StoreDetailScreen(props) {
                 <Text style={styles.storeCategory}>{restaurant.restaurant.categories}</Text>
               </View>
               <View style={styles.sectionTitle}>
-                <Text style={styles.storeReview}>찜 {heartCount}</Text>
-                <Text style={styles.storeReview}>·</Text>
-                <Text style={styles.storeReview}>리뷰 {restaurant.restaurant.reviewCount}</Text>
+                <View style={styles.sectionTitle}>
+                  <Text style={styles.storeReview}>찜 {heartCount}</Text>
+                  <Text style={styles.storeReview}>·</Text>
+                  <Text style={styles.storeReview}>리뷰 {restaurant.restaurant.reviewCount}</Text>
+                </View>
+                <View style={styles.sectionTitle}>
+                  <Text style={styles.storeReviewNaver}>{"("} 네이버 평점 {restaurant.restaurant.naverRatingAvg}</Text>
+                  <Text style={styles.storeReviewNaver}>·</Text>
+                  <Text style={styles.storeReviewNaver}>리뷰 {restaurant.restaurant.naverReviewCount} {")"}</Text>
+                </View>
               </View>
             </View>
             <View style={styles.horizontalDivider} />
@@ -334,14 +347,21 @@ export default function StoreDetailScreen(props) {
         >
           <View style={styles.modalView}>
             <Text style={styles.modalText}>전화번호: {restaurant.restaurant.detailInfo.contactNumber}</Text>
-            <TouchableHighlight
-              style={styles.closeButton}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.textStyle}>닫기</Text>
-            </TouchableHighlight>
+            <View style={styles.sectionItem}>
+              <TouchableHighlight
+                style={styles.callButton}
+              >
+                <Text style={styles.textStyle}>전화</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={styles.closeButton}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>닫기</Text>
+              </TouchableHighlight>
+            </View>
           </View>
         </Modal>
       </>
@@ -361,6 +381,7 @@ export default function StoreDetailScreen(props) {
     storeImage: {
       width: '100%',
       height: '100%',
+      resizeMode: 'cover',
     },
     storeInfo: {
       width: '100%',
@@ -386,6 +407,12 @@ export default function StoreDetailScreen(props) {
     storeReview: {
       fontSize: 15,
       color: COLOR_TEXT70GRAY,
+      marginBottom: 16,
+      marginRight: 6,
+    },
+    storeReviewNaver: {
+      fontSize: 15,
+      color: COLOR_GRAY,
       marginBottom: 16,
       marginRight: 6,
     },
@@ -423,6 +450,7 @@ export default function StoreDetailScreen(props) {
       fontSize: 15,
       color: COLOR_TEXT_DARKGRAY,
       marginVertical: 8,
+      flex: 1,
     },
     storeHours: {
       fontSize: 15,
@@ -480,21 +508,27 @@ export default function StoreDetailScreen(props) {
       justifyContent: 'center',
     },
     menuImagePlaceholderText: {
-      color: COLOR_LIGHTGRAY,
+      textAlign: 'center',
+      color: COLOR_SECONDARY,
       fontSize: 16,
+      margin: 5,
     },
     menuTextContainer: {
       marginLeft: 10,
+      marginVertical: 5,
       justifyContent: 'center',
+      flex: 1,
     },
     menuTitle: {
       fontSize: 18,
       color: COLOR_TEXT_BLACK,
       fontWeight: '500',
+      flexWrap: 'wrap',
     },
     menuDescription: {
       fontSize: 16,
       color: COLOR_TEXT_DARKGRAY,
+      flexWrap: 'wrap',
     },
     menuPrice: {
       fontSize: 17,
@@ -556,12 +590,13 @@ export default function StoreDetailScreen(props) {
       marginTop: 10,
     },
     modalView: {
+      top: 350,
       margin: 20,
       backgroundColor: "white",
       borderRadius: 20,
-      padding: 35,
+      padding: 20,
       alignItems: "center",
-      shadowColor: "#000",
+      shadowColor: "#000000",
       shadowOffset: {
         width: 0,
         height: 2,
@@ -570,10 +605,19 @@ export default function StoreDetailScreen(props) {
       shadowRadius: 4,
       elevation: 5,
     },
+    callButton: {
+      borderRadius: 20,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      marginHorizontal: 10,
+      elevation: 2,
+    },
     closeButton: {
       backgroundColor: COLOR_PRIMARY,
       borderRadius: 20,
-      padding: 10,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      marginHorizontal: 10,
       elevation: 2,
     },
     textStyle: {
@@ -584,5 +628,7 @@ export default function StoreDetailScreen(props) {
     modalText: {
       marginBottom: 15,
       textAlign: "center",
+      fontSize: 17,
+      color: COLOR_TEXT_BLACK,
     },
   });
