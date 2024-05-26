@@ -59,6 +59,7 @@ export default function ListMainScreen() {
   const [sort, setSort] = useState('기본 순');
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
+  const [search, setSearch] = useState('');
 
   const [myLocation, setMyLocation] = useState({
     latitude: 37.297861,
@@ -276,8 +277,8 @@ export default function ListMainScreen() {
               justifyContent: 'center',
             }}
             onPress={() => {
-              //TODO: 리스트화면에도 검색 화면 추가하기
-              // navigation.navigate('Search');
+              setSearch('');
+              navigation.navigate('Search', {setSearch: setSearch});
             }}>
             <View
               style={{
@@ -290,7 +291,13 @@ export default function ListMainScreen() {
                 }}>
                 <SvgXml xml={svgXml.icon.search} width="24" height="24" />
               </View>
-              <Text style={styles.textInput}>{'율전의 맛집은 과연 어디?'}</Text>
+              {search !== '' ? (
+                <Text style={styles.textInput}>{search}</Text>
+              ) : (
+                <Text style={styles.textInput}>
+                  {'율전의 맛집은 과연 어디?'}
+                </Text>
+              )}
             </View>
           </AnimatedButton>
 

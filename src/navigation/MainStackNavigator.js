@@ -17,6 +17,7 @@ import CheckEmailScreen from '../screens/signup/CheckEmailScreen';
 import ProfileSetScreen from '../screens/signup/ProfileSetScreen';
 import CheckEmailScreen2 from '../screens/signup/CheckEmailScreen2';
 import ResetPasswordScreen from '../screens/signup/ResetPasswordScreen';
+import SearchScreen from '../screens/detail/SearchScreen';
 
 import BottomTabNavigator from './BottomTabNavigator';
 
@@ -56,6 +57,7 @@ export default function MainStackNavigator() {
         <MainStack.Screen name="CheckEmail" component={CheckEmailScreen} />
         <MainStack.Screen name="ProfileSet" component={ProfileSetScreen} />
         <MainStack.Screen name="CheckEmail2" component={CheckEmailScreen2} />
+        <MainStack.Screen name="Search" component={SearchScreen} />
         <MainStack.Screen
           name="ResetPassword"
           component={ResetPasswordScreen}

@@ -73,6 +73,7 @@ export default function MapScreen() {
 
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
+  const [search, setSearch] = useState('');
 
   const closeStoreModalVisible = () => {
     setStoreModalVisible(false);
@@ -224,6 +225,10 @@ export default function MapScreen() {
           break;
       }
 
+      if (search !== '') {
+        params.query = search;
+      }
+
       const queryString = new URLSearchParams(params).toString();
 
       const response = await axios.get(
@@ -256,6 +261,7 @@ export default function MapScreen() {
     likedStore,
     storeScoreNaver,
     replyNumNaver,
+    search,
   ]);
 
   return (
@@ -306,7 +312,8 @@ export default function MapScreen() {
               justifyContent: 'center',
             }}
             onPress={() => {
-              navigation.navigate('Search');
+              setSearch('');
+              navigation.navigate('Search', {setSearch: setSearch});
             }}>
             <View
               style={{
@@ -319,7 +326,13 @@ export default function MapScreen() {
                 }}>
                 <SvgXml xml={svgXml.icon.search} width="24" height="24" />
               </View>
-              <Text style={styles.textInput}>{'율전의 맛집은 과연 어디?'}</Text>
+              {search !== '' ? (
+                <Text style={styles.textInput}>{search}</Text>
+              ) : (
+                <Text style={styles.textInput}>
+                  {'율전의 맛집은 과연 어디?'}
+                </Text>
+              )}
             </View>
           </AnimatedButton>
 
