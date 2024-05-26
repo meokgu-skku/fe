@@ -142,6 +142,98 @@ export default function ReviewWriteScreen(props) {
     );
   };
 
+  const handleReviewSubmit = async () => {
+    if (rating === 0) {
+      setShowRatingError(true);
+      return;
+    }
+    if (reviewContent.trim() === '') {
+      setShowContentError(true);
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/v1/restaurants/${storeData.id}/reviews`,
+        {
+          content: reviewContent,
+          imageUrls: reviewImage,
+          rating: rating,
+        },
+        {
+          headers: { Authorization: `Bearer ${context.accessToken}` },
+        },
+      );
+      console.log('Review submitted successfully:', response.data);
+      navigation.goBack();
+    } catch (error) {
+      console.error('Error submitting review:', error);
+    }
+  };
+
+  const uploadImage = async (image) => {
+    if (reviewImage.length >= 3) {
+        setShowImageError(true);
+      return;
+    }
+
+    let imageData = '';
+    await RNFS.readFile(image.path, 'base64')
+      .then((data) => {
+        console.log('encoded', data);
+        imageData = data;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    try {
+      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
+        images: [
+          {
+            imageData: imageData,
+            location: 'test',
+          },
+        ],
+      });
+
+      console.log('response image:', response.data);
+
+      if (response.data.result != 'SUCCESS') {
+        console.log('Error: No return data');
+        return;
+      }
+
+      setReviewImage((prevImages) => [...prevImages, response.data.data[0].imageUrl]);
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
+  const removeImage = (index) => {
+    setReviewImage((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const DottedLine = () => {
+    return (
+      <View style={styles.dottedContainer}>
+        {[...Array(20)].map((_, index) => (
+          <View key={index} style={styles.dot} />
+        ))}
+      </View>
+    );
+  };
+
+  const DottedLine = () => {
+    return (
+      <View style={styles.dottedContainer}>
+        {[...Array(20)].map((_, index) => (
+          <View key={index} style={styles.dot} />
+        ))}
+      </View>
+    );
+  };
+
   return (
     <>
       <Header title={'리뷰 쓰기'} isBackButton={true} />

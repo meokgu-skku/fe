@@ -64,13 +64,11 @@ export default function StoreDetailScreen(props) {
     restaurantDetail();
     handleHeartPress();
   }, []);
-
   useFocusEffect(
     useCallback(() => {
       restaurantDetail();
     }, [])
   );
-
   useEffect(() => {
     setDisplayedMenuList(menuList.slice(0, menuCount));
   }, [menuList, menuCount]);
@@ -91,9 +89,6 @@ export default function StoreDetailScreen(props) {
       const data = response.data.data;
       const dataReview = responseReview.data.data;
       
-      console.log('data: ', data.restaurant.isLike);
-      console.log('data: ', data.restaurant.likeCount);
-      
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
       setHeartCount(data.restaurant.likeCount);
@@ -107,7 +102,8 @@ export default function StoreDetailScreen(props) {
     const handleHeartPress = async () => {
       try {
         const newHeartedState = !isHearted;
-        
+        setIsHearted(newHeartedState);
+        setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
         await axios.post(
           `${API_URL}/v1/restaurants/${restaurantId}/like`, 
           {
@@ -117,7 +113,6 @@ export default function StoreDetailScreen(props) {
             headers: { Authorization: `Bearer ${context.accessToken}` },
           },
         );
-
         setIsHearted(newHeartedState);
         setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
 
