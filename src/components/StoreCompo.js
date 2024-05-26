@@ -50,10 +50,10 @@ export default function StoreCompo(props) {
     <Pressable
       key={index.toString()}
       style={{
-        width: addPadding
-          ? windowWidth - 32 - 2 * addPadding
-          : windowWidth - 32,
+        width: addPadding ? windowWidth - 32 : windowWidth - 32,
         height: windowWidth / 3,
+        paddingHorizontal: addPadding,
+        // backgroundColor: storeData.id % 2 === 0 ? 'red' : 'blue',
         // backgroundColor: 'blue',
       }}
       onPress={() => {
