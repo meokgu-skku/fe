@@ -31,7 +31,9 @@ export default function MapDart(props) {
       }}>
       <View>
         <View style={styles.dart}>
-          <Text style={styles.dartText}>{data.name}</Text>
+          <Text style={styles.dartText} numberOfLines={1}>
+            {data.name}
+          </Text>
 
           <View
             style={{
@@ -42,13 +44,13 @@ export default function MapDart(props) {
             <Text
               style={{
                 fontSize: 12,
-                color: COLOR_TEXT70GRAY,
+                color: COLOR_WHITE,
                 fontWeight: 'bold',
                 alignSelf: 'center',
                 marginLeft: 3,
                 marginTop: -1,
               }}>
-              {data.rating}
+              {data.ratingAvg.toString()}
             </Text>
           </View>
         </View>
@@ -66,17 +68,18 @@ const styles = StyleSheet.create({
     borderRightWidth: 8,
     borderTopWidth: 8,
     borderRightColor: 'transparent',
-    borderTopColor: 'white',
+    borderTopColor: COLOR_PRIMARY,
   },
   dart: {
     padding: 3,
     alignItems: 'center',
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLOR_PRIMARY,
     borderRadius: 8,
     borderBottomLeftRadius: 0,
   },
   dartText: {
     fontSize: 12,
-    color: COLOR_TEXT_BLACK,
+    color: COLOR_WHITE,
+    maxWidth: 100,
   },
 });

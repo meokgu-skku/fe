@@ -59,6 +59,7 @@ export default function KingoPass(props) {
         horizontal={true}
         ref={scrollViewRef}>
         <View style={{width: 16}} />
+
         {passData.map((data, index) => {
           return (
             <AnimatedButton

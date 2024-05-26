@@ -1,5 +1,12 @@
 import React, {useState, useCallback, useEffect, useContext} from 'react';
-import {View, Text, SafeAreaView, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Image,
+} from 'react-native';
 import {
   COLOR_WHITE,
   COLOR_BACKGROUND,
@@ -67,7 +74,11 @@ export default function SplashScreen() {
   //이 함수형 컴포넌트가 화면에 보여지는 부분
   return (
     <View style={styles.entire}>
-      <Text style={styles.textMain}>먹구스꾸</Text>
+      <View style={{flexDirection: 'row', marginTop: 100}}>
+        <Text style={styles.textMain}>{'맛있는 음식을'}</Text>
+        <Text style={styles.textMainColor}>{' 먹구스꾸'}</Text>
+      </View>
+      <Image source={require('../../assets/image.png')} style={styles.image} />
 
       <View style={styles.buttonContainer}>
         <LongPrimaryButton text="시작하기" action={pressButton} />
@@ -82,12 +93,18 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
   },
-  textMain: {
-    fontSize: 35,
-    color: COLOR_TEXT70GRAY,
+  textMainColor: {
+    fontSize: 33,
+    color: '#A4D65E',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 76,
+  },
+  textMain: {
+    fontSize: 33,
+    fontFamily: 'NotoSansKR-Regular',
+    color: COLOR_PRIMARY,
+    fontWeight: 'normal',
+    textAlign: 'center',
   },
   buttonContainer: {
     position: 'absolute',
@@ -95,5 +112,10 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  image: {
+    width: 400,
+    height: 400,
+    marginTop: 25,
   },
 });

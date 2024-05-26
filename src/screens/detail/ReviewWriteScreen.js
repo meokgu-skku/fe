@@ -58,7 +58,7 @@ export default function ReviewWriteScreen(props) {
   const [showImageError, setShowImageError] = useState(false);
   const [reviewImage, setReviewImage] = useState([]);
 
-  console.log('storeData:', 2);
+  console.log('storeData:', storeData);
 
   const handleReviewSubmit = async () => {
     if (rating === 0) {
@@ -130,6 +130,16 @@ export default function ReviewWriteScreen(props) {
 
   const removeImage = (index) => {
     setReviewImage((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const DottedLine = () => {
+    return (
+      <View style={styles.dottedContainer}>
+        {[...Array(20)].map((_, index) => (
+          <View key={index} style={styles.dot} />
+        ))}
+      </View>
+    );
   };
 
   const DottedLine = () => {
