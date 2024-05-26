@@ -207,6 +207,9 @@ export default function ListMainScreen() {
         case '찜 많은 순':
           params.customSort = 'LIKE_COUNT_DESC';
           break;
+        case '기본 순':
+          params.customSort = 'BASIC';
+          break;
       }
 
       const queryString = new URLSearchParams(params).toString();
