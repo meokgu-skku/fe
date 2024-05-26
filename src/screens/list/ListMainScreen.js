@@ -60,6 +60,10 @@ export default function ListMainScreen() {
   const [selectSale, setSelectSale] = useState(false);
   const [likedStore, setLikedStore] = useState(false);
 
+  const [myLocation, setMyLocation] = useState({
+    latitude: 37.297861,
+    longitude: 126.971458,
+  });
   const [pageNumber, setPageNumber] = useState(0);
 
   const catrgory = [
@@ -103,7 +107,6 @@ export default function ListMainScreen() {
       const params = {
         discountForSkku: discountForSkku,
         like: like,
-        sort: 'BASIC',
         page: pageNumber,
       };
 
@@ -188,6 +191,23 @@ export default function ListMainScreen() {
           break;
       }
 
+      switch (sort) {
+        case '가까운 순':
+          params.customSort = 'CLOSELY_DESC';
+          params.latitude = myLocation.latitude;
+          params.longitude = myLocation.longitude;
+          break;
+        case '평점 높은 순':
+          params.customSort = 'RATING_DESC';
+          break;
+        case '댓글 많은 순':
+          params.customSort = 'REVIEW_COUNT_DESC';
+          break;
+        case '찜 많은 순':
+          params.customSort = 'LIKE_COUNT_DESC';
+          break;
+      }
+
       const queryString = new URLSearchParams(params).toString();
 
       const response = await axios.get(
@@ -234,6 +254,7 @@ export default function ListMainScreen() {
     sort,
     storeScoreNaver,
     replyNumNaver,
+    myLocation,
   ]);
 
   const listHeader = () => {
@@ -709,6 +730,7 @@ export default function ListMainScreen() {
           '댓글 많은 순',
           '찜 많은 순',
         ]}
+        setLocation={setMyLocation}
       />
 
       {/* 댓글수 모달 */}
