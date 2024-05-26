@@ -34,7 +34,7 @@ import {Dimensions} from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
 import StoreCompo from '../../components/StoreCompo';
 import axios, {AxiosError} from 'axios';
-import {API_URL} from '@env';
+import {API_URL, AUTO_COMPLETE} from '@env';
 import AppContext from '../../components/AppContext';
 
 const windowWidth = Dimensions.get('window').width;
@@ -49,11 +49,7 @@ export default function SearchScreen(props) {
   const [searchText, setSearchText] = useState('');
   const [recentSearch, setRecentSearch] = useState([]);
 
-  const [autoCompleteData, setAutoCompleteData] = useState([
-    '햄버거',
-    '햄스터',
-    '햄토리',
-  ]);
+  const [autoCompleteData, setAutoCompleteData] = useState([]);
 
   useEffect(() => {
     initRecentSearch();
@@ -62,26 +58,19 @@ export default function SearchScreen(props) {
   const autocomplete = async inputString => {
     console.log('검색어:', inputString);
     try {
-      // console.log('context.accessToken:', context.accessToken);
-
-      //TODO: 필터 조건 추가하기
-
       const params = {
-        text: inputString,
+        query: inputString,
       };
 
       const queryString = new URLSearchParams(params).toString();
 
-      const response = await axios.get(
-        `${API_URL}/v1/restaurants/autocomplete?${queryString}`,
-        {
-          headers: {Authorization: `Bearer ${context.accessToken}`},
-        },
-      );
+      const response = await axios.get(`${AUTO_COMPLETE}?${queryString}`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
 
-      console.log('response:', response.data.data);
+      console.log('response:', response.data.results);
 
-      // setStoreDartDatas(response.data.data.restaurants.content);
+      setAutoCompleteData(response.data.results);
     } catch (e) {
       console.log('error', e);
     }
@@ -89,8 +78,6 @@ export default function SearchScreen(props) {
 
   const initRecentSearch = async () => {
     try {
-      // console.log('context.accessToken:', context.accessToken);
-
       const response = await axios.get(`${API_URL}/v1/recents`, {
         headers: {Authorization: `Bearer ${context.accessToken}`},
       });
@@ -117,8 +104,6 @@ export default function SearchScreen(props) {
       });
 
       console.log('response:', response.data);
-
-      // setRecentSearch(response.data.data.recentQueries);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         console.log('Axios error:', e.response ? e.response.data : e.message);
@@ -164,7 +149,7 @@ export default function SearchScreen(props) {
               style={styles.textInput}
               onChangeText={text => {
                 setSearchText(text);
-                // autocomplete(text);
+                autocomplete(text);
               }}
               blurOnSubmit={false}
               maxLength={200}
@@ -261,12 +246,11 @@ export default function SearchScreen(props) {
                   <AnimatedButton
                     style={styles.listButton}
                     onPress={async () => {
-                      console.log('item:', item);
-                      setSearch(item);
+                      setSearch(item.org_display);
                       navigation.goBack();
                     }}>
                     <SvgXml xml={svgXml.icon.search} width="18" height="18" />
-                    <Text style={styles.buttonText}>{item}</Text>
+                    <Text style={styles.buttonText}>{item.org_display}</Text>
                   </AnimatedButton>
                 );
               }}

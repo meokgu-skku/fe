@@ -91,6 +91,7 @@ export default function ListMainScreen() {
   const getStoreDatas = async p => {
     try {
       // console.log('context.accessToken:', context.accessToken);
+
       setPageNumber(p + 1);
 
       let discountForSkku = false;
@@ -212,6 +213,10 @@ export default function ListMainScreen() {
           break;
       }
 
+      if (search !== '') {
+        params.query = search;
+      }
+
       const queryString = new URLSearchParams(params).toString();
 
       const response = await axios.get(
@@ -221,7 +226,7 @@ export default function ListMainScreen() {
         },
       );
 
-      console.log('response:', response.data.data.restaurants.content[0]);
+      // console.log('response:', response.data.data.restaurants.content[0]);
 
       if (p == 0) {
         setStoreDartDatas(response.data.data.restaurants.content);
@@ -238,6 +243,9 @@ export default function ListMainScreen() {
 
   const onEndReached = () => {
     console.log('onEndReached', pageNumber);
+    if (pageNumber === 0) {
+      return;
+    }
     getStoreDatas(pageNumber);
   };
 
@@ -259,6 +267,7 @@ export default function ListMainScreen() {
     storeScoreNaver,
     replyNumNaver,
     myLocation,
+    search,
   ]);
 
   const listHeader = () => {
