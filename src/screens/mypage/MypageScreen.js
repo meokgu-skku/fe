@@ -16,6 +16,7 @@ import MyStore from '../../components/MyStore';
 import axios from 'axios';
 import AppContext from '../../components/AppContext';
 import {API_URL} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function MyPageScreen() {
   const navigation = useNavigation();
@@ -33,8 +34,10 @@ export default function MyPageScreen() {
 
   const fetchUserInfo = async () => {
     try {
-      console.log('User ID:', context.id);
-      const response = await axios.get(`${API_URL}/v1/users/${context.id}`, {
+      const userId = await AsyncStorage.getItem('userId');
+      console.log('User ID:', userId);
+
+      const response = await axios.get(`${API_URL}/v1/users/${userId}`, {
         headers: {Authorization: `Bearer ${context.accessToken}`},
       });
       console.log('User Info:', response.data);
@@ -80,17 +83,21 @@ export default function MyPageScreen() {
   const fetchLikedStores = async page => {
     try {
       const response = await axios.get(
-        `${API_URL}/v1/restaurants/my-like?page=${page}&size=5`,
+        `${API_URL}/v1/restaurants/my-like?page=${page}&size=20`,
         {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
 
-      console.log('Liked Stores Response:', response.data);
+      console.log(
+        'Liked Stores Response:',
+        response.data.data.restaurants.content,
+      );
 
       const stores = response.data.data.restaurants.content.map(store => ({
         name: store.name,
         image: store.representativeImageUrl,
+        id: store.id,
       }));
 
       setMyStoresData(prevStores => [...prevStores, ...stores]);
@@ -105,18 +112,20 @@ export default function MyPageScreen() {
       fetchUserInfo();
       setReviewPage(0);
       setStorePage(0);
-      setMyReviews([]);
-      setMyStoresData([]);
+      // setMyReviews([]);
+      // setMyStoresData([]);
+      // fetchMyReviews(0);
+      // fetchLikedStores(0);
     }, []),
   );
 
   useEffect(() => {
     fetchMyReviews(reviewPage);
-  }, [context.accessToken, context.id, reviewPage]);
+  }, [context.accessToken, reviewPage]);
 
   useEffect(() => {
     fetchLikedStores(storePage);
-  }, [context.accessToken, context.id, storePage]);
+  }, [context.accessToken, storePage]);
 
   const handleLoadMoreReviews = () => {
     if (hasMoreReviews) {
@@ -155,6 +164,7 @@ export default function MyPageScreen() {
             source={require('../../assets/right-arrow.png')}
           />
         </TouchableOpacity>
+
         <MyStore
           passData={myStoresData}
           onEndReached={handleLoadMoreStores}
@@ -179,6 +189,7 @@ const styles = StyleSheet.create({
   entire: {
     backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
+    flex: 1,
   },
   myPageItem: {
     width: 100,

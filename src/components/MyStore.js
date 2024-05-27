@@ -1,18 +1,9 @@
-import React, { useContext, useRef } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  Image,
-} from 'react-native';
-import {
-  COLOR_WHITE,
-  COLOR_TEXT70GRAY,
-} from '../assets/color';
-import { useNavigation } from '@react-navigation/native';
+import React, {useContext, useRef} from 'react';
+import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
+import {COLOR_WHITE, COLOR_TEXT70GRAY} from '../assets/color';
+import {useNavigation} from '@react-navigation/native';
 import AppContext from './AppContext';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import AnimatedButton from './AnimationButton';
 
 const windowWidth = Dimensions.get('window').width;
@@ -23,11 +14,12 @@ export default function MyStore(props) {
 
   const scrollViewRef = useRef();
 
-  const { passData, onEndReached, hasMore } = props;
+  const {passData, onEndReached, hasMore} = props;
 
-  const handleScroll = (event) => {
-    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
-    const isCloseToEnd = contentOffset.x + layoutMeasurement.width >= contentSize.width - 50;
+  const handleScroll = event => {
+    const {contentOffset, layoutMeasurement, contentSize} = event.nativeEvent;
+    const isCloseToEnd =
+      contentOffset.x + layoutMeasurement.width >= contentSize.width - 50;
 
     if (isCloseToEnd && hasMore) {
       onEndReached();
@@ -47,17 +39,17 @@ export default function MyStore(props) {
           horizontal={true}
           ref={scrollViewRef}
           onScroll={handleScroll}
-          scrollEventThrottle={16}
-        >
-          <View style={{ width: 16 }} />
+          scrollEventThrottle={16}>
+          {/* <View style={{width: 16}} /> */}
           {passData.map((data, index) => {
             return (
               <AnimatedButton
                 key={index.toString()}
                 style={styles.kingopassKard}
                 onPress={() => {
-                  console.log('찜한 가게 페이지로 이동');
-                  navigation.navigate('StoreDetail', { data: data });
+                  //TODO: 찜한 가게  불러올 때 가게 id가 안나옴
+                  console.log('찜한 가게 페이지로 이동', data);
+                  navigation.navigate('StoreDetail', {data: data});
                 }}>
                 <Image
                   source={{
@@ -101,7 +93,7 @@ export default function MyStore(props) {
               </AnimatedButton>
             );
           })}
-          <View style={{ width: 16 }} />
+          {/* <View style={{width: 16}} /> */}
         </ScrollView>
       )}
     </View>
@@ -119,6 +111,7 @@ const styles = StyleSheet.create({
     marginLeft: 26,
     color: COLOR_TEXT70GRAY,
     fontWeight: '700',
+    marginBottom: 10,
   },
   kingopassKard: {
     height: 140,
