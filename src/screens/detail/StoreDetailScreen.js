@@ -148,7 +148,15 @@ export default function StoreDetailScreen(props) {
     <>
       <View key={item.name} style={styles.sectionItem}>
         {item.imageUrl ? (
-          <Image source={{uri: item.imageUrl}} style={styles.menuImage} />
+          <ImageModal
+            swipeToDismiss={true}
+            modalImageResizeMode="contain"
+            // resizeMode="contain"
+            imageBackgroundColor="transparent"
+            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+            source={{uri: item.imageUrl}}
+            style={styles.menuImage}
+          />
         ) : (
           <View style={styles.menuImagePlaceholder}>
             <Text style={styles.menuImagePlaceholderText}>
@@ -222,7 +230,15 @@ export default function StoreDetailScreen(props) {
           horizontal
           data={item.imageUrls}
           renderItem={({item}) => (
-            <Image source={{uri: item}} style={styles.reviewImage} />
+            <ImageModal
+              swipeToDismiss={true}
+              modalImageResizeMode="contain"
+              // resizeMode="contain"
+              imageBackgroundColor="transparent"
+              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+              source={{uri: item}}
+              style={styles.reviewImage}
+            />
           )}
           keyExtractor={(image, index) => `${item.id}-${index}`}
         />
@@ -235,11 +251,15 @@ export default function StoreDetailScreen(props) {
     <>
       <View style={styles.entire}>
         <View style={styles.storeImageContainer}>
-          <Image
+          <ImageModal
+            swipeToDismiss={true}
+            modalImageResizeMode="contain"
+            imageBackgroundColor="transparent"
+            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
             source={{uri: restaurant.restaurant.representativeImageUrl}}
             style={styles.storeImage}
           />
-          <ImageModal
+          {/* <ImageModal
             swipeToDismiss={true}
             modalImageResizeMode="contain"
             imageBackgroundColor="transparent"
@@ -247,7 +267,7 @@ export default function StoreDetailScreen(props) {
             resizeMode="cover"
             style={styles.storeImage}
             source={{uri: restaurant.restaurant.representativeImageUrl}}
-          />
+          /> */}
         </View>
         <View style={styles.storeInfo}>
           <View style={styles.storeHeader}>
@@ -426,12 +446,12 @@ const styles = StyleSheet.create({
     marginHorizontal: -3,
   },
   storeImageContainer: {
-    width: '100%',
-    height: 240,
+    // width: '100%',
+    // height: 240,
   },
   storeImage: {
-    width: '100%',
-    height: '100%',
+    width: windowWidth,
+    height: 240,
     resizeMode: 'cover',
   },
   storeInfo: {
@@ -543,6 +563,7 @@ const styles = StyleSheet.create({
   },
   sectionItem: {
     flexDirection: 'row',
+    height: 120,
   },
   menuImage: {
     width: 90,

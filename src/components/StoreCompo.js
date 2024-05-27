@@ -61,12 +61,7 @@ export default function StoreCompo(props) {
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
       <View style={{flexDirection: 'row'}}>
-        <ImageModal
-          swipeToDismiss={true}
-          modalImageResizeMode="contain"
-          // resizeMode="contain"
-          imageBackgroundColor="transparent"
-          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+        <Image
           resizeMode="cover"
           style={{
             width: windowWidth / 3,
