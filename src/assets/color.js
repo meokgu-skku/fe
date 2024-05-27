@@ -11,3 +11,4 @@ export const COLOR_NAVY = '#003C71';
 export const COLOR_LIGHTGRAY = '#dddddd';
 export const COLOR_RED = '#FF0000';
 export const COLOR_BLUE = '#0000FF';
+export const COLOR_ORANGE = '#FF6A13';

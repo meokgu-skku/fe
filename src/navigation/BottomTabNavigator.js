@@ -29,7 +29,6 @@ import HomeScreen from '../screens/home/HomeScreen';
 import ListMainScreen from '../screens/list/ListMainScreen';
 import MapScreen from '../screens/map/MapScreen';
 import MypageScreen from '../screens/mypage/MypageScreen';
-import SearchScreen from '../screens/map/SearchScreen';
 import UserDataChangeScreen from '../screens/mypage/UserDataChangeScreen';
 
 const BottomTab = createBottomTabNavigator();
@@ -94,7 +93,6 @@ function MapNavigator() {
         cardStyleInterpolator: customCardStyleInterpolator,
       }}>
       <MapStack.Screen name="Map" component={MapScreen} />
-      <MapStack.Screen name="Search" component={SearchScreen} />
     </MapStack.Navigator>
   );
 }
