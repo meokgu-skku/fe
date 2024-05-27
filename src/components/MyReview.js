@@ -1,9 +1,16 @@
-import React, { useState, useCallback, useEffect, useContext, useRef } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import { COLOR_WHITE, COLOR_PRIMARY, COLOR_TEXT70GRAY } from '../assets/color';
-import { useNavigation } from '@react-navigation/native';
+/* eslint-disable react-native/no-inline-styles */
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
+import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {COLOR_WHITE, COLOR_PRIMARY, COLOR_TEXT70GRAY} from '../assets/color';
+import {useNavigation} from '@react-navigation/native';
 import AppContext from './AppContext';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
 import StoreCompoForR from './StoreCompoForR';
 
 const windowWidth = Dimensions.get('window').width;
@@ -14,7 +21,7 @@ export default function MyReview(props) {
 
   const scrollViewRef = useRef();
 
-  const { myReviews, onEndReached, hasMore } = props; 
+  const {myReviews, onEndReached, hasMore} = props;
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleScroll = event => {
@@ -23,12 +30,12 @@ export default function MyReview(props) {
     const currentPage = Math.floor(offsetX / pageWidth + 0.5);
     setCurrentIndex(currentPage);
 
-    if (currentPage === myReviews.length - 1 && hasMore) { 
+    if (currentPage === myReviews.length - 1 && hasMore) {
       onEndReached();
     }
   };
 
-  const Indicator = Array.from({ length: myReviews.length }, (_, index) => (
+  const Indicator = Array.from({length: myReviews.length}, (_, index) => (
     <View
       key={index.toString()}
       style={{
@@ -51,17 +58,28 @@ export default function MyReview(props) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
-            style={{ marginTop: 10 }}
+            style={{marginTop: 10}}
             horizontal={true}
             pagingEnabled
             onScroll={handleScroll}
             scrollEventThrottle={16}
             ref={scrollViewRef}>
             {myReviews.map((reviewData, index) => {
-              return <StoreCompoForR key={index.toString()} storeData={reviewData} index={index} />;
+              return (
+                <StoreCompoForR
+                  key={index.toString()}
+                  storeData={reviewData}
+                  index={index}
+                />
+              );
             })}
           </ScrollView>
-          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 8 }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: 8,
+            }}>
             {Indicator}
           </View>
         </>
@@ -84,7 +102,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    elevation: 4, 
+    elevation: 4,
   },
   myReviewTitle: {
     fontSize: 20,

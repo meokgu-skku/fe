@@ -10,7 +10,13 @@ import {
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
-import {COLOR_BACKGROUND, COLOR_PRIMARY} from '../../assets/color';
+import {
+  COLOR_BACKGROUND,
+  COLOR_PRIMARY,
+  COLOR_TEXT70GRAY,
+  COLOR_TEXT_BLACK,
+  COLOR_TEXT_DARKGRAY,
+} from '../../assets/color';
 import MyReview from '../../components/MyReview';
 import MyStore from '../../components/MyStore';
 import axios from 'axios';
@@ -31,6 +37,7 @@ export default function MyPageScreen() {
   const [storePage, setStorePage] = useState(0);
   const [hasMoreReviews, setHasMoreReviews] = useState(true);
   const [hasMoreStores, setHasMoreStores] = useState(true);
+  const [email, setEmail] = useState('');
 
   const fetchUserInfo = async () => {
     try {
@@ -43,6 +50,7 @@ export default function MyPageScreen() {
       console.log('User Info:', response.data);
       setNickname(response.data.data.userDto.nickname);
       setProfileImageUrl(response.data.data.userDto.profileImageUrl);
+      setEmail(response.data.data.userDto.email);
     } catch (error) {
       console.error('Failed to fetch user info:', error);
     }
@@ -165,6 +173,16 @@ export default function MyPageScreen() {
           />
         </TouchableOpacity>
 
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={styles.text7}>이메일 주소</Text>
+          <Text style={styles.text8}> {email}</Text>
+        </View>
+
         <MyStore
           passData={myStoresData}
           onEndReached={handleLoadMoreStores}
@@ -197,13 +215,24 @@ const styles = StyleSheet.create({
   },
   myPageItemLayout: {
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   text6: {
     fontSize: 20,
-    color: COLOR_PRIMARY,
+    color: COLOR_TEXT70GRAY,
     marginLeft: 20,
     marginRight: 5,
+    fontWeight: 'bold',
+  },
+  text7: {
+    fontSize: 12,
+    color: COLOR_TEXT70GRAY,
+    marginRight: 6,
+  },
+  text8: {
+    fontSize: 12,
+    color: COLOR_TEXT70GRAY,
+    fontWeight: 'bold',
   },
   text6Position: {
     flexDirection: 'row',
