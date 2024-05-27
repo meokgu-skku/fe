@@ -119,9 +119,9 @@ export default function ReviewWriteScreen(props) {
           ],
         });
 
-        console.log('response image:', response.result);
+        console.log('response image:', response.data);
 
-        if (response.result === 'SUCCESS') {
+        if (response.data.result === 'SUCCESS') {
           setReviewImage(prevImages => [
             ...prevImages,
             response.data.data[0].imageUrl,
