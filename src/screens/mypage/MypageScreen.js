@@ -1,13 +1,21 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, ActivityIndicator } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import React, {useState, useEffect, useContext} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
-import { COLOR_BACKGROUND, COLOR_PRIMARY } from '../../assets/color';
+import {COLOR_BACKGROUND, COLOR_PRIMARY} from '../../assets/color';
 import MyReview from '../../components/MyReview';
 import MyStore from '../../components/MyStore';
 import axios from 'axios';
 import AppContext from '../../components/AppContext';
-import { API_URL } from '@env';
+import {API_URL} from '@env';
 
 export default function MyPageScreen() {
   const navigation = useNavigation();
@@ -25,27 +33,25 @@ export default function MyPageScreen() {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get(
-        `${API_URL}/v1/users/${context.id}`,
-        {
-          headers: { Authorization: `Bearer ${context.accessToken}` },
-        }
-      );
+      console.log('User ID:', context.id);
+      const response = await axios.get(`${API_URL}/v1/users/${context.id}`, {
+        headers: {Authorization: `Bearer ${context.accessToken}`},
+      });
       console.log('User Info:', response.data);
       setNickname(response.data.data.userDto.nickname);
       setProfileImageUrl(response.data.data.userDto.profileImageUrl);
     } catch (error) {
-      console.error("Failed to fetch user info:", error);
+      console.error('Failed to fetch user info:', error);
     }
   };
 
-  const fetchMyReviews = async (page) => {
+  const fetchMyReviews = async page => {
     try {
       const response = await axios.get(
         `${API_URL}/v1/restaurants/my-reviews?page=${page}&size=5`,
         {
-          headers: { Authorization: `Bearer ${context.accessToken}` },
-        }
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
       );
 
       console.log('My Reviews:', response.data);
@@ -65,19 +71,19 @@ export default function MyPageScreen() {
       setMyReviews(prevReviews => [...prevReviews, ...reviews]);
       setHasMoreReviews(response.data.data.reviews.content.length > 0);
     } catch (error) {
-      console.error("Failed to fetch reviews:", error);
+      console.error('Failed to fetch reviews:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchLikedStores = async (page) => {
+  const fetchLikedStores = async page => {
     try {
       const response = await axios.get(
         `${API_URL}/v1/restaurants/my-like?page=${page}&size=5`,
         {
-          headers: { Authorization: `Bearer ${context.accessToken}` },
-        }
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
       );
 
       console.log('Liked Stores Response:', response.data);
@@ -90,18 +96,18 @@ export default function MyPageScreen() {
       setMyStoresData(prevStores => [...prevStores, ...stores]);
       setHasMoreStores(!response.data.data.restaurants.last);
     } catch (error) {
-      console.error("Failed to fetch liked stores:", error);
+      console.error('Failed to fetch liked stores:', error);
     }
   };
 
   useFocusEffect(
     React.useCallback(() => {
       fetchUserInfo();
-      setReviewPage(0); 
-      setStorePage(0); 
-      setMyReviews([]); 
-      setMyStoresData([]); 
-    }, [])
+      setReviewPage(0);
+      setStorePage(0);
+      setMyReviews([]);
+      setMyStoresData([]);
+    }, []),
   );
 
   useEffect(() => {
@@ -131,28 +137,39 @@ export default function MyPageScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={profileImageUrl ? { uri: profileImageUrl } : require("../../assets/skku.png")}
+          source={
+            profileImageUrl
+              ? {uri: profileImageUrl}
+              : require('../../assets/skku.png')
+          }
         />
         <TouchableOpacity
           style={styles.text6Position}
           onPress={() => {
             navigation.navigate('UserDataChange');
-          }}
-        >
+          }}>
           <Text style={styles.text6}>{nickname}</Text>
           <Image
             style={styles.arrowIcon}
             resizeMode="contain"
-            source={require("../../assets/right-arrow.png")}
+            source={require('../../assets/right-arrow.png')}
           />
         </TouchableOpacity>
-        <MyStore passData={myStoresData} onEndReached={handleLoadMoreStores} hasMore={hasMoreStores} />
+        <MyStore
+          passData={myStoresData}
+          onEndReached={handleLoadMoreStores}
+          hasMore={hasMoreStores}
+        />
         {loading ? (
           <ActivityIndicator size="large" color={COLOR_PRIMARY} />
         ) : (
-          <MyReview myReviews={myReviews} onEndReached={handleLoadMoreReviews} hasMore={hasMoreReviews} />
+          <MyReview
+            myReviews={myReviews}
+            onEndReached={handleLoadMoreReviews}
+            hasMore={hasMoreReviews}
+          />
         )}
-        <View style={{ height: 100 }} />
+        <View style={{height: 100}} />
       </ScrollView>
     </>
   );
@@ -175,7 +192,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLOR_PRIMARY,
     marginLeft: 20,
-    marginRight: 5
+    marginRight: 5,
   },
   text6Position: {
     flexDirection: 'row',
