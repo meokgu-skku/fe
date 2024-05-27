@@ -17,6 +17,7 @@ import {
   TextInput,
   FlatList,
   Pressable,
+  Alert,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -36,20 +37,20 @@ import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
 import AppContext from '../../components/AppContext';
 import axios from 'axios';
-import { API_URL, IMG_URL } from '@env';
+import {API_URL, IMG_URL} from '@env';
 import {Dimensions} from 'react-native';
 import TodayPick from '../../components/TodayPick';
 import FoodCategory from '../../components/FoodCategory';
 import KingoPass from '../../components/KingoPass';
 import ImagePicker from 'react-native-image-crop-picker';
-import RNFS from 'react-native-fs'
+import RNFS from 'react-native-fs';
 
 const windowWidth = Dimensions.get('window').width;
 
 export default function ReviewWriteScreen(props) {
   const navigation = useNavigation();
   const context = useContext(AppContext);
-  const { route } = props;
+  const {route} = props;
   const storeData = route.params?.data;
   const [rating, setRating] = useState(0);
   const [reviewContent, setReviewContent] = useState('');
@@ -79,7 +80,7 @@ export default function ReviewWriteScreen(props) {
           rating: rating,
         },
         {
-          headers: { Authorization: `Bearer ${context.accessToken}` },
+          headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
       console.log('Review submitted successfully:', response.data);
@@ -89,139 +90,57 @@ export default function ReviewWriteScreen(props) {
     }
   };
 
-  const uploadImage = async (image) => {
+  const uploadImage = async image => {
     if (reviewImage.length >= 3) {
-        setShowImageError(true);
+      setShowImageError(true);
       return;
     }
 
     let imageData = '';
     await RNFS.readFile(image.path, 'base64')
-      .then((data) => {
+      .then(data => {
         console.log('encoded', data);
         imageData = data;
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
 
     try {
-      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
-        images: [
-          {
-            imageData: imageData,
-            location: 'test',
-          },
-        ],
-      });
+      let count = 0;
+      let response;
+      while (count < 3) {
+        response = await axios.post(`${IMG_URL}/v1/upload-image`, {
+          images: [
+            {
+              imageData: imageData,
+              location: 'test',
+            },
+          ],
+        });
 
-      console.log('response image:', response.data);
+        console.log('response image:', response.data);
 
-      if (response.data.result != 'SUCCESS') {
-        console.log('Error: No return data');
-        return;
+        if (response.data.result === 'SUCCESS') {
+          setReviewImage(prevImages => [
+            ...prevImages,
+            response.data.data[0].imageUrl,
+          ]);
+          break;
+        }
+        count += 1;
       }
 
-      setReviewImage((prevImages) => [...prevImages, response.data.data[0].imageUrl]);
+      if (count === 3) {
+        Alert.alert('오류', '이미지 업로드에 실패했습니다!', [{text: '확인'}]);
+      }
     } catch (error) {
       console.log('Error:', error);
     }
   };
 
-  const removeImage = (index) => {
-    setReviewImage((prevImages) => prevImages.filter((_, i) => i !== index));
-  };
-
-  const DottedLine = () => {
-    return (
-      <View style={styles.dottedContainer}>
-        {[...Array(20)].map((_, index) => (
-          <View key={index} style={styles.dot} />
-        ))}
-      </View>
-    );
-  };
-
-  const handleReviewSubmit = async () => {
-    if (rating === 0) {
-      setShowRatingError(true);
-      return;
-    }
-    if (reviewContent.trim() === '') {
-      setShowContentError(true);
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        `${API_URL}/v1/restaurants/${storeData.id}/reviews`,
-        {
-          content: reviewContent,
-          imageUrls: reviewImage,
-          rating: rating,
-        },
-        {
-          headers: { Authorization: `Bearer ${context.accessToken}` },
-        },
-      );
-      console.log('Review submitted successfully:', response.data);
-      navigation.goBack();
-    } catch (error) {
-      console.error('Error submitting review:', error);
-    }
-  };
-
-  const uploadImage = async (image) => {
-    if (reviewImage.length >= 3) {
-        setShowImageError(true);
-      return;
-    }
-
-    let imageData = '';
-    await RNFS.readFile(image.path, 'base64')
-      .then((data) => {
-        console.log('encoded', data);
-        imageData = data;
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-    try {
-      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
-        images: [
-          {
-            imageData: imageData,
-            location: 'test',
-          },
-        ],
-      });
-
-      console.log('response image:', response.data);
-
-      if (response.data.result != 'SUCCESS') {
-        console.log('Error: No return data');
-        return;
-      }
-
-      setReviewImage((prevImages) => [...prevImages, response.data.data[0].imageUrl]);
-    } catch (error) {
-      console.log('Error:', error);
-    }
-  };
-
-  const removeImage = (index) => {
-    setReviewImage((prevImages) => prevImages.filter((_, i) => i !== index));
-  };
-
-  const DottedLine = () => {
-    return (
-      <View style={styles.dottedContainer}>
-        {[...Array(20)].map((_, index) => (
-          <View key={index} style={styles.dot} />
-        ))}
-      </View>
-    );
+  const removeImage = index => {
+    setReviewImage(prevImages => prevImages.filter((_, i) => i !== index));
   };
 
   const DottedLine = () => {
@@ -247,20 +166,25 @@ export default function ReviewWriteScreen(props) {
                 onPress={() => {
                   setRating(index + 1);
                   setShowRatingError(false);
-                }}
-              >
+                }}>
                 <SvgXml
-                  xml={index < rating ? svgXml.icon.starFill : svgXml.icon.starEmpty}
+                  xml={
+                    index < rating
+                      ? svgXml.icon.starFill
+                      : svgXml.icon.starEmpty
+                  }
                   width="24"
                   height="24"
-                  style={{ marginLeft: 7 }}
+                  style={{marginLeft: 7}}
                 />
               </TouchableOpacity>
             ))}
           </View>
         </View>
         <View style={styles.Container}>
-          {showRatingError && <Text style={styles.errorText}>평점을 매겨주세요</Text>}
+          {showRatingError && (
+            <Text style={styles.errorText}>평점을 매겨주세요</Text>
+          )}
           <AnimatedButton
             style={styles.photoButton}
             onPress={() => {
@@ -274,37 +198,42 @@ export default function ReviewWriteScreen(props) {
                 height: 400,
                 cropping: true,
                 multiple: true,
-              }).then((images) => {
-                images.forEach((image) => uploadImage(image));
-              }).catch((error) => {
-                console.error('Image Picker Error:', error);
-              });
+              })
+                .then(images => {
+                  images.forEach(image => uploadImage(image));
+                })
+                .catch(error => {
+                  console.error('Image Picker Error:', error);
+                });
             }}>
             <SvgXml xml={svgXml.icon.camera} width={24} height={24} />
             <Text style={styles.photoButtonText}>사진 첨부하기</Text>
           </AnimatedButton>
-          {showImageError && <Text style={styles.errorText}>사진은 최대 3개만 넣어주세요</Text>}
+          {showImageError && (
+            <Text style={styles.errorText}>사진은 최대 3개만 넣어주세요</Text>
+          )}
           <TextInput
             style={styles.reviewInput}
             multiline
             placeholder="음식의 맛, 양, 위생 상태 등 음식에 대한 솔직한 리뷰를 남겨주세요. (선택)"
             value={reviewContent}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setReviewContent(text);
               setShowContentError(false);
             }}
           />
-          {showContentError && <Text style={styles.errorText}>리뷰 내용을 작성해주세요</Text>}
+          {showContentError && (
+            <Text style={styles.errorText}>리뷰 내용을 작성해주세요</Text>
+          )}
           <DottedLine />
           <ScrollView alwaysBounceHorizontal style={styles.imageScrollView}>
             <View style={styles.imageContainer}>
               {reviewImage.map((image, index) => (
                 <View key={index} style={styles.imageWrapper}>
-                  <Image
-                    source={{ uri: image }}
-                    style={styles.image}
-                  />
-                  <TouchableOpacity style={styles.removeButton} onPress={() => removeImage(index)}>
+                  <Image source={{uri: image}} style={styles.image} />
+                  <TouchableOpacity
+                    style={styles.removeButton}
+                    onPress={() => removeImage(index)}>
                     <Text style={styles.removeButtonText}>X</Text>
                   </TouchableOpacity>
                 </View>
@@ -312,7 +241,9 @@ export default function ReviewWriteScreen(props) {
             </View>
           </ScrollView>
           <DottedLine />
-          <TouchableOpacity style={styles.submitButton} onPress={handleReviewSubmit}>
+          <TouchableOpacity
+            style={styles.submitButton}
+            onPress={handleReviewSubmit}>
             <Text style={styles.submitButtonText}>완료</Text>
           </TouchableOpacity>
         </View>
@@ -422,8 +353,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 1,
   },
   submitButton: {
-    position: 'absolute',
-    bottom: 0,
     backgroundColor: COLOR_PRIMARY,
     padding: 16,
     borderRadius: 32,
@@ -431,7 +360,7 @@ const styles = StyleSheet.create({
     width: '92%',
     marginBottom: 16,
     shadowColor: COLOR_TEXT_BLACK,
-    shadowOffset: { width: 0, height: 3 },
+    shadowOffset: {width: 0, height: 3},
     shadowOpacity: 1,
     shadowRadius: 5,
     elevation: 8,

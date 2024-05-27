@@ -61,12 +61,7 @@ export default function StoreCompo(props) {
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
       <View style={{flexDirection: 'row'}}>
-        <ImageModal
-          swipeToDismiss={true}
-          modalImageResizeMode="contain"
-          // resizeMode="contain"
-          imageBackgroundColor="transparent"
-          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+        <Image
           resizeMode="cover"
           style={{
             width: windowWidth / 3,
@@ -149,19 +144,12 @@ export default function StoreCompo(props) {
           {storeData.representativeReviewContent ? (
             <>
               <Text
-                style={{
-                  fontSize: 11,
-                  color: COLOR_TEXT70GRAY,
-                }}>
-                {storeData.representativeReviewContent.reviewer + ' 님'}
-              </Text>
-              <Text
                 numberOfLines={4}
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
                 }}>
-                {storeData.representativeReviewContent.body}
+                {storeData.representativeReviewContent}
               </Text>
             </>
           ) : (

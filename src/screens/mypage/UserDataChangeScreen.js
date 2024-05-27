@@ -1,5 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, ScrollView, StyleSheet, Image, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import React, {useState, useContext, useEffect} from 'react';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import {
   COLOR_BACKGROUND,
   COLOR_PRIMARY,
@@ -9,12 +18,12 @@ import {
   COLOR_RED,
   COLOR_BLUE,
 } from '../../assets/color';
-import { useNavigation, CommonActions } from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import Header from '../../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 import axios from 'axios';
-import { API_URL } from '@env';
+import {API_URL} from '@env';
 
 export default function UserDataChangeScreen() {
   const navigation = useNavigation();
@@ -28,73 +37,81 @@ export default function UserDataChangeScreen() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        console.log(`Fetching user info with userId: ${context.id}`);
+        const userId = await AsyncStorage.getItem('userId');
+
+        console.log(`Fetching user info with userId: ${userId}`);
         console.log(`Using accessToken: ${context.accessToken}`);
-        const response = await axios.get(
-          `${API_URL}/v1/users/${context.id}`,
-          {
-            headers: { Authorization: `Bearer ${context.accessToken}` },
-          }
-        );
+        const response = await axios.get(`${API_URL}/v1/users/${userId}`, {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        });
 
         console.log('User Info API Response:', response.data);
         setNickname(response.data.data.userDto.nickname);
         setEmail(response.data.data.userDto.email);
       } catch (error) {
-        console.error("Failed to fetch user info:", error);
+        console.error('Failed to fetch user info:', error);
       }
     };
 
     fetchUserInfo();
-  }, [context.accessToken, context.id]);
+  }, [context.accessToken]);
 
   const nicknameCheckHandler = async () => {
     try {
       const response = await axios.get(`${API_URL}/v1/users/check-nickname`, {
-        params: { nickname },
-        headers: { Authorization: `Bearer ${context.accessToken}` }
+        params: {nickname},
+        headers: {Authorization: `Bearer ${context.accessToken}`},
       });
 
       if (response.data.isDuplicate || nickname === context.nickname) {
-        setDuplicateMessage("이미 사용 중인 닉네임입니다.");
+        setDuplicateMessage('이미 사용 중인 닉네임입니다.');
         setMessageColor(COLOR_RED);
       } else {
-        setDuplicateMessage("사용 가능한 닉네임입니다.");
+        setDuplicateMessage('사용 가능한 닉네임입니다.');
         setMessageColor(COLOR_BLUE);
       }
     } catch (error) {
-      setDuplicateMessage("이미 사용 중인 닉네임입니다.");
+      setDuplicateMessage('이미 사용 중인 닉네임입니다.');
       setMessageColor(COLOR_RED);
     }
   };
 
   const updateNicknameHandler = async () => {
     try {
-      const response = await axios.patch(`${API_URL}/v1/users`, {
-        nickname: nickname
-      }, {
-        headers: { Authorization: `Bearer ${context.accessToken}` }
-      });
+      const response = await axios.patch(
+        `${API_URL}/v1/users`,
+        {
+          nickname: nickname,
+        },
+        {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
+      );
 
       if (response.status === 200) {
-        Alert.alert("성공", "닉네임이 성공적으로 변경되었습니다.", [{ text: "확인", onPress: () => navigation.goBack() }]);
+        Alert.alert('성공', '닉네임이 성공적으로 변경되었습니다.', [
+          {text: '확인', onPress: () => navigation.goBack()},
+        ]);
       }
     } catch (error) {
-      console.error("Failed to update nickname:", error);
-      Alert.alert("오류", "닉네임 변경 중 오류가 발생했습니다.", [{ text: "확인" }]);
+      console.error('Failed to update nickname:', error);
+      Alert.alert('오류', '닉네임 변경 중 오류가 발생했습니다.', [
+        {text: '확인'},
+      ]);
     }
   };
 
   const deleteUserHandler = async () => {
     try {
       const response = await axios.delete(`${API_URL}/v1/users`, {
-        headers: { Authorization: `Bearer ${context.accessToken}` }
+        headers: {Authorization: `Bearer ${context.accessToken}`},
       });
 
       if (response.status === 200) {
-        Alert.alert("성공", "회원탈퇴가 정상적으로 완료되었습니다.", [
+        Alert.alert('성공', '회원탈퇴가 정상적으로 완료되었습니다.', [
           {
-            text: "확인", onPress: async () => {
+            text: '확인',
+            onPress: async () => {
               await AsyncStorage.removeItem('accessToken');
               await AsyncStorage.removeItem('refreshToken');
               context.setAccessTokenValue(null);
@@ -103,16 +120,16 @@ export default function UserDataChangeScreen() {
               navigation.dispatch(
                 CommonActions.reset({
                   index: 0,
-                  routes: [{ name: 'Splash' }],
-                })
+                  routes: [{name: 'Splash'}],
+                }),
               );
-            }
-          }
+            },
+          },
         ]);
       }
     } catch (error) {
-      console.error("Failed to delete user:", error);
-      Alert.alert("오류", "회원탈퇴 중 오류가 발생했습니다.", [{ text: "확인" }]);
+      console.error('Failed to delete user:', error);
+      Alert.alert('오류', '회원탈퇴 중 오류가 발생했습니다.', [{text: '확인'}]);
     }
   };
 
@@ -127,8 +144,8 @@ export default function UserDataChangeScreen() {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: 'Splash' }],
-        })
+          routes: [{name: 'Splash'}],
+        }),
       );
     } catch (error) {
       console.log('Error during logout:', error);
@@ -142,24 +159,26 @@ export default function UserDataChangeScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={require("../../assets/skku.png")}
+          source={require('../../assets/skku.png')}
         />
 
         <View style={styles.inputContainer}>
           <Text style={styles.label}>닉네임</Text>
           <View style={styles.inputWithButton}>
             <TextInput
-              style={[styles.input, { flex: 1 }]}
+              style={[styles.input, {flex: 1}]}
               value={nickname}
               onChangeText={setNickname}
               placeholder="닉네임을 입력해주세요"
             />
-            <TouchableOpacity style={styles.checkButton} onPress={nicknameCheckHandler}> 
+            <TouchableOpacity
+              style={styles.checkButton}
+              onPress={nicknameCheckHandler}>
               <Text style={styles.checkButtonText}>중복확인</Text>
             </TouchableOpacity>
           </View>
           {duplicateMessage ? (
-            <Text style={[styles.duplicateMessage, { color: messageColor }]}>
+            <Text style={[styles.duplicateMessage, {color: messageColor}]}>
               {duplicateMessage}
             </Text>
           ) : null}
@@ -174,7 +193,9 @@ export default function UserDataChangeScreen() {
           />
         </View>
 
-        <TouchableOpacity style={styles.updateButton} onPress={updateNicknameHandler}>
+        <TouchableOpacity
+          style={styles.updateButton}
+          onPress={updateNicknameHandler}>
           <Text style={styles.updateButtonText}>수정하기</Text>
         </TouchableOpacity>
 
