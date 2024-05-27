@@ -17,6 +17,7 @@ import {
   TextInput,
   FlatList,
   Pressable,
+  Alert,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -106,26 +107,33 @@ export default function ReviewWriteScreen(props) {
       });
 
     try {
-      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
-        images: [
-          {
-            imageData: imageData,
-            location: 'test',
-          },
-        ],
-      });
+      let count = 0;
+      let response;
+      while (count < 3) {
+        response = await axios.post(`${IMG_URL}/v1/upload-image`, {
+          images: [
+            {
+              imageData: imageData,
+              location: 'test',
+            },
+          ],
+        });
 
-      console.log('response image:', response.data);
+        console.log('response image:', response.result);
 
-      if (response.data.result != 'SUCCESS') {
-        console.log('Error: No return data');
-        return;
+        if (response.result === 'SUCCESS') {
+          setReviewImage(prevImages => [
+            ...prevImages,
+            response.data.data[0].imageUrl,
+          ]);
+          break;
+        }
+        count += 1;
       }
 
-      setReviewImage(prevImages => [
-        ...prevImages,
-        response.data.data[0].imageUrl,
-      ]);
+      if (count === 3) {
+        Alert.alert('오류', '이미지 업로드에 실패했습니다!', [{text: '확인'}]);
+      }
     } catch (error) {
       console.log('Error:', error);
     }
