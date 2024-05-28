@@ -78,7 +78,10 @@ export default function SplashScreen() {
         <Text style={styles.textMain}>{'맛있는 음식을'}</Text>
         <Text style={styles.textMainColor}>{' 먹구스꾸'}</Text>
       </View>
-      <Image source={require('../../assets/image.png')} style={styles.image} />
+      <Image
+        source={require('../../assets/images/image.png')}
+        style={styles.image}
+      />
 
       <View style={styles.buttonContainer}>
         <LongPrimaryButton text="시작하기" action={pressButton} />

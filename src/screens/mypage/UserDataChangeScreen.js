@@ -159,7 +159,7 @@ export default function UserDataChangeScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={require('../../assets/skku.png')}
+          source={require('../../assets/images/skku.png')}
         />
 
         <View style={styles.inputContainer}>

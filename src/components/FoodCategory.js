@@ -24,6 +24,7 @@ import {
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_TEXT_BLACK,
+  COLOR_SECONDARY,
   COLOR_TEXT60GRAY,
 } from '../assets/color';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -69,6 +70,7 @@ export default function FoodCategory(props) {
       </View>
       <View style={styles.buttonLine}>
         {categroyList1.map((categroy, index) => {
+          const n = index + 1;
           return (
             <AnimatedButton
               style={styles.buttonSet}
@@ -84,7 +86,39 @@ export default function FoodCategory(props) {
                   ],
                 });
               }}>
-              <View key={index} style={styles.categroyButton} />
+              <View key={index} style={styles.categroyButton}>
+                {n === 1 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/1.png')}
+                  />
+                ) : n === 2 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/2.png')}
+                  />
+                ) : n === 3 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/3.png')}
+                  />
+                ) : n === 4 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/4.png')}
+                  />
+                ) : (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/5.png')}
+                  />
+                )}
+              </View>
               <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
@@ -94,6 +128,7 @@ export default function FoodCategory(props) {
       <View style={{height: 13}} />
       <View style={styles.buttonLine}>
         {categroyList2.map((categroy, index) => {
+          const n = index + 1;
           return (
             <AnimatedButton
               style={styles.buttonSet}
@@ -109,7 +144,39 @@ export default function FoodCategory(props) {
                   ],
                 });
               }}>
-              <View key={index} style={styles.categroyButton} />
+              <View key={index} style={styles.categroyButton}>
+                {n === 1 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/6.png')}
+                  />
+                ) : n === 2 ? (
+                  <Image
+                    style={styles.foodIcon2}
+                    resizeMode="contain"
+                    source={require('../assets/images/7.png')}
+                  />
+                ) : n === 3 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/8.png')}
+                  />
+                ) : n === 4 ? (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/9.png')}
+                  />
+                ) : (
+                  <Image
+                    style={styles.foodIcon}
+                    resizeMode="contain"
+                    source={require('../assets/images/10.png')}
+                  />
+                )}
+              </View>
               <Text style={styles.categroyText2}>{categroy}</Text>
             </AnimatedButton>
           );
@@ -137,8 +204,10 @@ const styles = StyleSheet.create({
   },
   todayPickTitle: {
     fontSize: 20,
-    color: COLOR_TEXT70GRAY,
-    fontWeight: '700',
+    color: COLOR_PRIMARY,
+    // fontWeight: '700',
+    // fontFamily: 'NanumSquareRoundEB',
+    fontFamily: 'NIXGONFONTS M 2.0',
   },
   line: {
     marginVertical: 8,
@@ -157,17 +226,27 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     width: 50,
     height: 50,
-    backgroundColor: COLOR_PRIMARY,
+    backgroundColor: COLOR_SECONDARY,
     borderRadius: 20,
   },
   categroyText2: {
-    fontSize: 15,
+    fontSize: 13,
     color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    // fontFamily: 'NanumSquareRoundEB',
+    fontFamily: 'NIXGONFONTS M 2.0',
   },
   buttonSet: {
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 0,
+  },
+  foodIcon: {
+    width: 30,
+    height: 30,
+  },
+  foodIcon2: {
+    width: 25,
+    height: 25,
   },
 });

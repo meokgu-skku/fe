@@ -157,7 +157,7 @@ export default function MyPageScreen() {
           source={
             profileImageUrl
               ? {uri: profileImageUrl}
-              : require('../../assets/skku.png')
+              : require('../../assets/images/skku.png')
           }
         />
         <TouchableOpacity
@@ -169,7 +169,7 @@ export default function MyPageScreen() {
           <Image
             style={styles.arrowIcon}
             resizeMode="contain"
-            source={require('../../assets/right-arrow.png')}
+            source={require('../../assets/images/right-arrow.png')}
           />
         </TouchableOpacity>
 

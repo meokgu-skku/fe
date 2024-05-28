@@ -103,7 +103,8 @@ export default function KingoPass(props) {
                   style={{
                     fontSize: 20,
                     color: COLOR_WHITE,
-                    fontWeight: 'bold',
+                    // fontWeight: 'bold',
+                    fontFamily: 'NIXGONFONTS M 2.0',
                     margin: 10,
                   }}>
                   {data.name}
@@ -114,8 +115,9 @@ export default function KingoPass(props) {
                     position: 'absolute',
                     bottom: 0,
                     fontSize: 12,
-                    color: '#A4D65E',
-                    fontWeight: 'bold',
+                    color: COLOR_WHITE,
+                    // fontWeight: 'bold',
+                    fontFamily: 'NanumSquareRoundB',
                     margin: 10,
                   }}>
                   {data.discountContent}
@@ -140,8 +142,10 @@ const styles = StyleSheet.create({
   kingopassTitle: {
     fontSize: 20,
     marginLeft: 26,
-    color: COLOR_TEXT70GRAY,
-    fontWeight: '700',
+    color: COLOR_PRIMARY,
+    // fontWeight: '700',
+    // fontFamily: 'NanumSquareRoundEB',
+    fontFamily: 'NIXGONFONTS M 2.0',
   },
   line: {
     marginVertical: 8,

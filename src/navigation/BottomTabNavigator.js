@@ -136,7 +136,7 @@ function MypageNavigator() {
 }
 
 export default function BottomTabNavigator() {
-  changeNavigationBarColor(COLOR_WHITE);
+  changeNavigationBarColor(COLOR_PRIMARY);
   return (
     <>
       <StatusBar backgroundColor={COLOR_PRIMARY} />
@@ -146,7 +146,7 @@ export default function BottomTabNavigator() {
           headerShown: false,
           tabBarStyle: {
             height: 56,
-            backgroundColor: COLOR_WHITE,
+            backgroundColor: COLOR_PRIMARY,
             // backgroundColor: 'red',
           },
           tabBarShowLabel: false,

@@ -534,7 +534,7 @@ export default function MapScreen() {
               {replyNum === '전체' ? (
                 <>
                   <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
-                  <Text style={styles.filterText}>{'댓글수'}</Text>
+                  <Text style={styles.filterText}>{'댓글 수'}</Text>
                 </>
               ) : (
                 <>
@@ -567,7 +567,7 @@ export default function MapScreen() {
               {replyNumNaver === '전체' ? (
                 <>
                   <SvgXml xml={svgXml.icon.reply} width="20" height="20" />
-                  <Text style={styles.filterText}>{'네이버 리뷰수'}</Text>
+                  <Text style={styles.filterText}>{'네이버 리뷰 수'}</Text>
                 </>
               ) : (
                 <>
@@ -711,7 +711,7 @@ export default function MapScreen() {
       <ListModal
         visible={replyNumModalVisible}
         setVisible={setReplyNumModalVisible}
-        title={'댓글수'}
+        title={'댓글 수'}
         value={replyNum}
         setValue={setReplyNum}
         valueList={[
@@ -727,7 +727,7 @@ export default function MapScreen() {
       <ListModal
         visible={replyNumNaverModalVisible}
         setVisible={setReplyNaverNumModalVisible}
-        title={'네이버 리뷰수'}
+        title={'네이버 리뷰 수'}
         value={replyNumNaver}
         setValue={setReplyNumNaver}
         valueList={[
