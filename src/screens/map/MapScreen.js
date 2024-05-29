@@ -145,6 +145,7 @@ export default function MapScreen() {
       };
 
       if (selectedCategory !== '전체') {
+        console.log('selectedCategory:', selectedCategory);
         params.categories = [selectedCategory];
       }
 
@@ -670,19 +671,10 @@ export default function MapScreen() {
 
           {/* 카테고리 버튼들 */}
           <View style={{marginTop: 12}}>
-            {catrgory.map(cateLine => {
-              return (
-                <View style={styles.categoryLine}>
-                  {cateLine.map((name, index) => (
-                    <CategoryButton
-                      name={name}
-                      onPress={setSelectedCategory}
-                      selected={selectedCategory}
-                    />
-                  ))}
-                </View>
-              );
-            })}
+            <CategoryButton
+              onPress={setSelectedCategory}
+              selected={selectedCategory}
+            />
           </View>
         </View>
       </Modal>
