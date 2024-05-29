@@ -112,7 +112,7 @@ export default function LoginScreen() {
         <View style={styles.entire}>
           <View style={styles.container}>
             <View style={styles.textAndInput}>
-              <Text style={styles.samllText}>이메일 주소</Text>
+              <Text style={styles.samllText}>이메일</Text>
               <TextInput
                 ref={emailInputRef}
                 onSubmitEditing={endEmailInput}
@@ -124,9 +124,10 @@ export default function LoginScreen() {
                 }}
                 value={email}
                 style={styles.textinputBox}
+                placeholder=''
               />
             </View>
-            <View style={{height: 15}} />
+            <View style={{height: 20}} />
             <View style={styles.textAndInput}>
               <Text style={styles.samllText}>비밀 번호</Text>
               <TextInput
@@ -159,8 +160,12 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <View style={{height: 50}} />
-          <LongPrimaryButton text="로그인" action={login} disable={disable} />
+          <View style={{height: 40}} />
+          <LongPrimaryButton 
+            text="로그인하기" 
+            action={login} 
+            disable={disable} 
+          />
           <View
             style={{
               marginTop: 12,
@@ -176,7 +181,7 @@ export default function LoginScreen() {
                   padding: 30,
                   paddingVertical: 0,
                 }}>
-                <Text style={styles.samllText}>비밀번호 찾기</Text>
+                <Text style={styles.samllTextColor}>비밀번호 찾기</Text>
               </AnimatedButton>
               <AnimatedButton
                 onPress={() => {
@@ -220,10 +225,11 @@ const styles = StyleSheet.create({
   },
   samllText: {
     color: COLOR_TEXT70GRAY,
-    fontSize: 12,
-    fontWeight: 'normal',
+    fontSize: 14,
     textAlign: 'center',
     paddingVertical: 4,
+    fontWeight: 'bold',
+    marginBottom: 8,
   },
   samllTextColor: {
     color: COLOR_SECONDARY,
@@ -233,16 +239,18 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   textinputBox: {
-    padding: 0,
-    fontSize: 15,
-    height: 45,
+    height: 50,
+    borderColor: '#F8F8F8',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    backgroundColor: '#F8F8F8',
+    fontSize: 16,
     width: '100%',
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLOR_TEXT70GRAY,
   },
   showButton: {
     position: 'absolute',
-    right: 0,
+    right: 10,
     bottom: 8,
     padding: 5,
     // backgroundColor: 'red',
