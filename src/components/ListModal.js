@@ -147,15 +147,15 @@ const styles = StyleSheet.create({
   listButton: {
     // backgroundColor: 'blue',
     padding: 8,
-    paddingHorizontal: 16,
+    paddingHorizontal: 0,
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: 13,
     color: COLOR_TEXT_BLACK,
     fontWeight: 'normal',
   },
   buttonText2: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#A4D65E',
     fontWeight: 'normal',
   },

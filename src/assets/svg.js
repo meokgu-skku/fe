@@ -77,6 +77,44 @@ export const svgXml = {
       </svg>
     `,
   },
+  marker: {
+    _1: `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="8" r="7.75" fill="#0C4A0E" stroke="white" stroke-width="0.5"/>
+    <path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+    </svg>
+  `,
+    _2: `
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="8" cy="8" r="7.75" fill="#4496E2" stroke="white" stroke-width="0.5"/>
+  <path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+  </svg>
+  `,
+    _3: `
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="8" cy="8" r="7.75" fill="#05D352" stroke="white" stroke-width="0.5"/>
+<path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+</svg>
+`,
+    _4: `
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="8" cy="8" r="7.75" fill="#FFC803" stroke="white" stroke-width="0.5"/>
+<path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+</svg>
+`,
+    _5: `
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="8" cy="8" r="7.75" fill="#E256A9" stroke="white" stroke-width="0.5"/>
+<path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+</svg>
+`,
+    _6: `
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="8" cy="8" r="7.75" fill="#FF596E" stroke="white" stroke-width="0.5"/>
+<path d="M8 3L9.12257 6.45492H12.7553L9.81636 8.59017L10.9389 12.0451L8 9.90983L5.06107 12.0451L6.18364 8.59017L3.24472 6.45492H6.87743L8 3Z" fill="white"/>
+</svg>
+`,
+  },
   icon: {
     star: `
     <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -114,10 +152,10 @@ export const svgXml = {
     `,
     search: `
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="11" cy="11" r="7" stroke="#003C71" stroke-width="2"/>
-    <path d="M11 8C10.606 8 10.2159 8.0776 9.85195 8.22836C9.48797 8.37913 9.15726 8.6001 8.87868 8.87868C8.6001 9.15726 8.37913 9.48797 8.22836 9.85195C8.0776 10.2159 8 10.606 8 11" stroke="#003C71" stroke-width="2" stroke-linecap="round"/>
-    <path d="M20 20L17 17" stroke="#003C71" stroke-width="2" stroke-linecap="round"/>
-    </svg>
+    <circle cx="11" cy="11" r="7" stroke="#666666" stroke-width="2"/>
+    <path d="M11 8C10.606 8 10.2159 8.0776 9.85195 8.22836C9.48797 8.37913 9.15726 8.6001 8.87868 8.87868C8.6001 9.15726 8.37913 9.48797 8.22836 9.85195C8.0776 10.2159 8 10.606 8 11" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+    <path d="M20 20L17 17" stroke="#666666" stroke-width="2" stroke-linecap="round"/>
+    </svg>       
     `,
     persent: `
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

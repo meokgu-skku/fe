@@ -31,6 +31,7 @@ export default function SplashScreen() {
       // AsyncStorage(=디바이스에 저장하는 데이터)에 저장된 토큰을 가져온다.
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
+      const userId = await AsyncStorage.getItem('userId');
 
       //없으면 그만
       console.log('accessToken:', accessToken);
@@ -39,7 +40,7 @@ export default function SplashScreen() {
       }
 
       //토큰이 맞는지 확인 -> 헤더에 토큰 넣어서 백엔드 요청
-      const response = await axios.get(`${API_URL}/hello/security-test`, {
+      const response = await axios.get(`${API_URL}/v1/users/${userId}`, {
         headers: {Authorization: `Bearer ${accessToken}`},
       });
       console.log('response:', response.data.data);

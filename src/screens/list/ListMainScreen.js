@@ -67,13 +67,6 @@ export default function ListMainScreen() {
   });
   const [pageNumber, setPageNumber] = useState(0);
 
-  const catrgory = [
-    ['한식', '양식', '일식', '중식'],
-    ['분식', '치킨', '피자', '버거'],
-    ['아시안', '카페', '전체', ''],
-  ];
-
-  //TODO: 서버에서 데이터 받아오기
   //임시 데이터
   const [storeDartDatas, setStoreDartDatas] = useState([]);
 
@@ -87,7 +80,7 @@ export default function ListMainScreen() {
     }
   };
 
-  //TODO: 필터링 하는 함수
+  //필터링 하는 함수
   const getStoreDatas = async p => {
     try {
       // console.log('context.accessToken:', context.accessToken);
@@ -104,15 +97,14 @@ export default function ListMainScreen() {
         like = true;
       }
 
-      //TODO: 필터 조건 추가하기
-
       const params = {
         discountForSkku: discountForSkku,
         like: like,
-        page: pageNumber,
+        page: p,
       };
 
       if (selectedCategory !== '전체') {
+        // console.log('selectedCategory:', selectedCategory, pageNumber);
         params.categories = [selectedCategory];
       }
 
@@ -225,8 +217,8 @@ export default function ListMainScreen() {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
-
-      // console.log('response:', response.data.data.restaurants.content[0]);
+      console.log('queryString:', queryString);
+      console.log('response:', response.data.data);
 
       if (p == 0) {
         setStoreDartDatas(response.data.data.restaurants.content);
@@ -254,7 +246,7 @@ export default function ListMainScreen() {
   }, []);
 
   useEffect(() => {
-    setStoreDartDatas([]);
+    // setStoreDartDatas([]);
     getStoreDatas(0);
   }, [
     selectedCategory,
@@ -698,19 +690,10 @@ export default function ListMainScreen() {
 
           {/* 카테고리 버튼들 */}
           <View style={{marginTop: 12}}>
-            {catrgory.map(cateLine => {
-              return (
-                <View style={styles.categoryLine}>
-                  {cateLine.map((name, index) => (
-                    <CategoryButton
-                      name={name}
-                      onPress={setSelectedCategory}
-                      selected={selectedCategory}
-                    />
-                  ))}
-                </View>
-              );
-            })}
+            <CategoryButton
+              onPress={setSelectedCategory}
+              selected={selectedCategory}
+            />
           </View>
         </View>
       </Modal>
