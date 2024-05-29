@@ -61,14 +61,10 @@ export default function StoreDetailScreen(props) {
   const [reviewCount, setReviewCount] = useState(4);
   const [modalVisible, setModalVisible] = useState(false);
 
-  useEffect(() => {
-    restaurantDetail();
-    handleHeartPress();
-  }, []);
-
   useFocusEffect(
     useCallback(() => {
       restaurantDetail();
+      handleHeartPress();
     }, []),
   );
   useEffect(() => {
@@ -97,7 +93,7 @@ export default function StoreDetailScreen(props) {
       const data = response.data.data;
       const dataReview = responseReview.data.data;
 
-      console.log('Restaurant heart:', data.restaurant);
+      console.log('data: ', data.restaurant);
 
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
@@ -123,10 +119,6 @@ export default function StoreDetailScreen(props) {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
-      // setIsHearted(newHeartedState);
-      // setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
-
-      console.log('isLike: ', ret.data);
     } catch (error) {
       console.error('Error updating heart count:', error);
     }
