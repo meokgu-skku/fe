@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Linking,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -60,11 +61,6 @@ export default function StoreDetailScreen(props) {
   const [menuCount, setMenuCount] = useState(4);
   const [reviewCount, setReviewCount] = useState(4);
   const [modalVisible, setModalVisible] = useState(false);
-
-  useEffect(() => {
-    restaurantDetail();
-    handleHeartPress();
-  }, []);
 
   useFocusEffect(
     useCallback(() => {
@@ -123,13 +119,16 @@ export default function StoreDetailScreen(props) {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
-      // setIsHearted(newHeartedState);
-      // setHeartCount(newHeartedState ? heartCount + 1 : heartCount - 1);
 
       console.log('isLike: ', ret.data);
     } catch (error) {
       console.error('Error updating heart count:', error);
     }
+  };
+
+  const handlePhonePress = () => {
+    const phoneNumber = restaurant.restaurant.detailInfo.contactNumber;
+    Linking.openURL(`tel:${phoneNumber}`);
   };
 
   const handleLoadMoreMenus = () => {
@@ -151,7 +150,6 @@ export default function StoreDetailScreen(props) {
           <ImageModal
             swipeToDismiss={true}
             modalImageResizeMode="contain"
-            // resizeMode="contain"
             imageBackgroundColor="transparent"
             overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
             source={{uri: item.imageUrl}}
@@ -233,7 +231,6 @@ export default function StoreDetailScreen(props) {
             <ImageModal
               swipeToDismiss={true}
               modalImageResizeMode="contain"
-              // resizeMode="contain"
               imageBackgroundColor="transparent"
               overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
               source={{uri: item}}
@@ -259,15 +256,6 @@ export default function StoreDetailScreen(props) {
             source={{uri: restaurant.restaurant.representativeImageUrl}}
             style={styles.storeImage}
           />
-          {/* <ImageModal
-            swipeToDismiss={true}
-            modalImageResizeMode="contain"
-            imageBackgroundColor="transparent"
-            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-            resizeMode="cover"
-            style={styles.storeImage}
-            source={{uri: restaurant.restaurant.representativeImageUrl}}
-          /> */}
         </View>
         <View style={styles.storeInfo}>
           <View style={styles.storeHeader}>
@@ -411,7 +399,7 @@ export default function StoreDetailScreen(props) {
         contentContainerStyle={styles.entire}
       />
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -422,7 +410,7 @@ export default function StoreDetailScreen(props) {
             전화번호: {restaurant.restaurant.detailInfo.contactNumber}
           </Text>
           <View style={styles.sectionItem}>
-            <TouchableHighlight style={styles.callButton}>
+            <TouchableHighlight style={styles.callButton} onPress={handlePhonePress}>
               <Text style={styles.textStyle}>전화</Text>
             </TouchableHighlight>
             <TouchableHighlight
@@ -662,9 +650,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   modalView: {
-    top: 350,
+    top: 40,
     margin: 20,
     backgroundColor: 'white',
+    height: 110,
     borderRadius: 20,
     padding: 20,
     alignItems: 'center',
@@ -678,19 +667,24 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   callButton: {
+    backgroundColor: COLOR_GRAY,
+    height: 30,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginHorizontal: 10,
     elevation: 2,
+    alignItems: 'center',
   },
   closeButton: {
     backgroundColor: COLOR_PRIMARY,
+    height: 30,
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginHorizontal: 10,
     elevation: 2,
+    alignItems: 'center',
   },
   textStyle: {
     color: 'white',
