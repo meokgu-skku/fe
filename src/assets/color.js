@@ -1,6 +1,6 @@
-export const COLOR_PRIMARY = '#003C71';
-export const COLOR_SECONDARY = '#A4D65E';
-export const COLOR_BACKGROUND = '#F5F5F5'; //FFFFFF
+export const COLOR_PRIMARY = '#2D4B33';
+export const COLOR_SECONDARY = '#3e6746';
+export const COLOR_BACKGROUND = '#e2e2e2'; //FFFFFF
 export const COLOR_TEXT_BLACK = '#000000';
 export const COLOR_TEXT_DARKGRAY = '#535353';
 export const COLOR_GRAY = '#888888';

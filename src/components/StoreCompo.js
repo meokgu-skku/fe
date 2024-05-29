@@ -80,20 +80,29 @@ export default function StoreCompo(props) {
           }}>
           <Text
             style={{
-              fontSize: 17,
+              fontSize: 15,
               color: COLOR_TEXT_BLACK,
-              fontWeight: 'bold',
+              // fontWeight: 'bold',
+              fontFamily: 'NanumSquareRoundR',
+              // fontFamily: 'NIXGONFONTS M 2.0',
               alignSelf: 'flex-start',
             }}>
             {storeData.name}
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 2,
+            }}>
             <SvgXml xml={svgXml.icon.star} width="15" height="15" style={{}} />
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 11,
                 color: COLOR_TEXT70GRAY,
-                fontWeight: 'bold',
+                // fontWeight: 'bold',
+                fontFamily: 'NanumSquareRoundB',
+                // fontFamily: 'NIXGONFONTS M 2.0',
                 alignSelf: 'center',
                 marginLeft: 7,
               }}>
@@ -107,9 +116,10 @@ export default function StoreCompo(props) {
             />
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 11,
                 color: COLOR_TEXT70GRAY,
-                fontWeight: 'bold',
+                // fontWeight: 'bold',
+                fontFamily: 'NanumSquareRoundB',
                 alignSelf: 'center',
                 marginLeft: 7,
               }}>
@@ -121,8 +131,10 @@ export default function StoreCompo(props) {
             storeData.categories.length ? (
               <Text
                 style={{
-                  fontSize: 13,
+                  fontSize: 12,
                   color: COLOR_GRAY,
+                  fontFamily: 'NanumSquareRoundB',
+                  marginVertical: 2,
                 }}>
                 {storeData.categories[0]}
               </Text>
@@ -134,6 +146,7 @@ export default function StoreCompo(props) {
               style={{
                 fontSize: 13,
                 color: COLOR_TEXT_BLACK,
+                fontFamily: 'NIXGONFONTS M 2.0',
               }}>
               {storeData.representativeMenu.name}
             </Text>
@@ -148,6 +161,7 @@ export default function StoreCompo(props) {
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
+                  fontFamily: 'NanumSquareRoundR',
                 }}>
                 {storeData.representativeReviewContent}
               </Text>
@@ -158,6 +172,7 @@ export default function StoreCompo(props) {
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT70GRAY,
+                  fontFamily: 'NanumSquareRoundR',
                 }}>
                 {'아직 작성된 리뷰가 없어요!'}
               </Text>
@@ -166,6 +181,7 @@ export default function StoreCompo(props) {
                 style={{
                   fontSize: 11,
                   color: COLOR_TEXT60GRAY,
+                  fontFamily: 'NanumSquareRoundR',
                 }}>
                 {`먹구스꾸에서 ${storeData.name} 리뷰 쓰고 첫 리뷰의 주인공이 되어보세요!`}
               </Text>
