@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   dart: {
     padding: 3,
     alignItems: 'center',
+    fontFamily: 'NanumSquareRoundR',
     backgroundColor: COLOR_PRIMARY,
     borderRadius: 8,
     borderBottomLeftRadius: 0,
