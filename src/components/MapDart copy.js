@@ -21,48 +21,66 @@ export default function MapDart(props) {
   const navigation = useNavigation();
   const {data, onPress} = props;
 
-  const n = Math.floor(Math.random() * 6);
-
   return (
     <Marker
       coordinate={{latitude: data.latitude, longitude: data.longitude}}
-      anchor={{x: 0.5, y: 0}}
+      anchor={{x: 0, y: 1}}
       onPress={() => {
         onPress(data);
         console.log('marker pressed', data.name);
       }}>
-      <View style={styles.dart}>
-        {n === 0 ? (
-          <SvgXml xml={svgXml.marker._1} width="20" height="20" />
-        ) : n === 1 ? (
-          <SvgXml xml={svgXml.marker._2} width="20" height="20" />
-        ) : n === 2 ? (
-          <SvgXml xml={svgXml.marker._3} width="20" height="20" />
-        ) : n === 3 ? (
-          <SvgXml xml={svgXml.marker._4} width="20" height="20" />
-        ) : n === 4 ? (
-          <SvgXml xml={svgXml.marker._5} width="20" height="20" />
-        ) : n === 5 ? (
-          <SvgXml xml={svgXml.marker._6} width="20" height="20" />
-        ) : null}
+      <View>
+        <View style={styles.dart}>
+          <Text style={styles.dartText} numberOfLines={1}>
+            {data.name}
+          </Text>
 
-        <Text style={styles.dartText} numberOfLines={2}>
-          {data.name}
-        </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <SvgXml xml={svgXml.icon.star} width="15" height="15" />
+            <Text
+              style={{
+                fontSize: 12,
+                color: COLOR_WHITE,
+                fontWeight: 'bold',
+                alignSelf: 'center',
+                marginLeft: 3,
+                marginTop: -1,
+              }}>
+              {data.ratingAvg.toString()}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.triangle} />
       </View>
     </Marker>
   );
 }
 
 const styles = StyleSheet.create({
+  triangle: {
+    width: 0,
+    height: 0,
+    borderStyle: 'solid',
+    borderRightWidth: 8,
+    borderTopWidth: 8,
+    borderRightColor: 'transparent',
+    borderTopColor: COLOR_PRIMARY,
+  },
   dart: {
+    padding: 3,
     alignItems: 'center',
-    justifyContent: 'center',
+    fontFamily: 'NanumSquareRoundR',
+    backgroundColor: COLOR_PRIMARY,
+    borderRadius: 8,
+    borderBottomLeftRadius: 0,
   },
   dartText: {
     fontSize: 12,
-    maxWidth: 50,
-    color: COLOR_TEXT_BLACK,
-    textAlign: 'center',
+    color: COLOR_WHITE,
+    maxWidth: 100,
   },
 });
