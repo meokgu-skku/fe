@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, Animated, StyleSheet} from 'react-native';
 import {usePressAnimation} from '../assets/UsePressAnimation';
-import {COLOR_GRAY} from '../assets/color';
+import {COLOR_GRAY, COLOR_DISABLE_GRAY} from '../assets/color';
 
 const AnimatedButton = ({
   children,
@@ -34,7 +34,7 @@ const AnimatedButton = ({
 
 const styles = StyleSheet.create({
   disabledButton: {
-    backgroundColor: COLOR_GRAY,
+    backgroundColor: COLOR_DISABLE_GRAY,
   },
 });
 

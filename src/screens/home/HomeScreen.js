@@ -18,6 +18,7 @@ import {
   Pressable,
 } from 'react-native';
 import {
+  COLOR_HOME_BACKGROUND,
   COLOR_WHITE,
   COLOR_BACKGROUND,
   COLOR_GRAY,
@@ -110,7 +111,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   entire: {
-    backgroundColor: COLOR_BACKGROUND,
+    backgroundColor: COLOR_HOME_BACKGROUND,
     // justifyContent: 'center',
     alignItems: 'center',
   },
