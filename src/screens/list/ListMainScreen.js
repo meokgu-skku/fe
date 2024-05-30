@@ -88,21 +88,17 @@ export default function ListMainScreen() {
 
       setPageNumber(p + 1);
 
-      let discountForSkku = false;
-      if (selectSale) {
-        discountForSkku = true;
-      }
-
-      let like = false;
-      if (likedStore) {
-        like = true;
-      }
-
       const params = {
-        discountForSkku: discountForSkku,
-        like: like,
         page: p,
       };
+
+      if (selectSale) {
+        params.discountForSkku = true;
+      }
+
+      if (likedStore) {
+        params.like = true;
+      }
 
       if (selectedCategory !== '전체') {
         // console.log('selectedCategory:', selectedCategory, pageNumber);
@@ -218,8 +214,10 @@ export default function ListMainScreen() {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
-      console.log('queryString:', queryString);
-      console.log('response:', response.data.data);
+      // console.log('queryString:', queryString);
+      // console.log('response:', response.data.data);
+
+      console.log('page:', p);
 
       if (p == 0) {
         setStoreDartDatas(response.data.data.restaurants.content);

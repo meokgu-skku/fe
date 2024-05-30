@@ -80,7 +80,11 @@ export default function MyPageScreen() {
         },
       }));
 
-      setMyReviews(prevReviews => [...prevReviews, ...reviews]);
+      if (page === 0) {
+        setMyReviews(reviews);
+      } else {
+        setMyReviews(prevReviews => [...prevReviews, ...reviews]);
+      }
       setHasMoreReviews(response.data.data.reviews.content.length > 0);
     } catch (error) {
       console.error('Failed to fetch reviews:', error);
@@ -109,7 +113,11 @@ export default function MyPageScreen() {
         id: store.id,
       }));
 
-      setMyStoresData(prevStores => [...prevStores, ...stores]);
+      if (page === 0) {
+        setMyStoresData(stores);
+      } else {
+        setMyStoresData(prevStores => [...prevStores, ...stores]);
+      }
       setHasMoreStores(!response.data.data.restaurants.last);
     } catch (error) {
       console.error('Failed to fetch liked stores:', error);
@@ -158,7 +166,7 @@ export default function MyPageScreen() {
           source={
             profileImageUrl
               ? {uri: profileImageUrl}
-              : require('../../assets/images/skku.png')
+              : require('../../assets/images/logo.png')
           }
         />
         <TouchableOpacity
@@ -217,6 +225,7 @@ const styles = StyleSheet.create({
   myPageItemLayout: {
     marginTop: 20,
     marginBottom: 10,
+    borderRadius: 15,
   },
   text6: {
     fontSize: 20,

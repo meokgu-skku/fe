@@ -125,24 +125,17 @@ export default function MapScreen() {
     try {
       // console.log('context.accessToken:', context.accessToken);
 
-      let discountForSkku = false;
-      if (selectSale) {
-        discountForSkku = true;
-      }
-
-      let like = false;
-      if (likedStore) {
-        like = true;
-      }
-
-      //TODO: 필터 조건 추가하기
-
       const params = {
-        discountForSkku: discountForSkku,
-        like: like,
-        sort: 'BASIC',
         size: 30,
       };
+
+      if (selectSale) {
+        params.discountForSkku = true;
+      }
+
+      if (likedStore) {
+        params.like = true;
+      }
 
       if (selectedCategory !== '전체') {
         console.log('selectedCategory:', selectedCategory);

@@ -161,7 +161,7 @@ export default function UserDataChangeScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={require('../../assets/images/skku.png')}
+          source={require('../../assets/images/logo.png')}
         />
 
         <View style={styles.inputContainer}>
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
   myPageItemLayout: {
     marginTop: 20,
     marginBottom: 50,
+    borderRadius: 15,
   },
   inputContainer: {
     width: '85%',

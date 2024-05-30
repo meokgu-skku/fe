@@ -75,15 +75,12 @@ export default function SplashScreen() {
   //이 함수형 컴포넌트가 화면에 보여지는 부분
   return (
     <View style={styles.entire}>
-      <View style={{flexDirection: 'row', marginTop: 100}}>
-        <Text style={styles.textMain}>{'맛있는 음식을'}</Text>
-        <Text style={styles.textMainColor}>{' 먹구스꾸'}</Text>
+      <View style={styles.box}>
+        <Image
+          source={require('../../assets/images/splashLogo.png')}
+          style={styles.image}
+        />
       </View>
-      <Image
-        source={require('../../assets/images/image.png')}
-        style={styles.image}
-      />
-
       <View style={styles.buttonContainer}>
         <LongPrimaryButton text="시작하기" action={pressButton} />
       </View>
@@ -96,6 +93,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_WHITE,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    flex: 1,
+    // backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textMainColor: {
     fontSize: 33,
@@ -111,15 +115,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 110,
+    // position: 'absolute',
+    // bottom: 110,
+    height: 100,
+    // backgroundColor: 'red',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
-    width: 400,
-    height: 400,
-    marginTop: 25,
+    width: 250,
+    height: 200,
+    marginTop: 50,
   },
 });
