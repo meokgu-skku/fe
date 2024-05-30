@@ -32,7 +32,7 @@ export default function MapDart(props) {
         console.log('marker pressed', data.name);
       }}>
       <View style={styles.dart}>
-        {n === 0 ? (
+        {/* {n === 0 ? (
           <SvgXml xml={svgXml.marker._1} width="20" height="20" />
         ) : n === 1 ? (
           <SvgXml xml={svgXml.marker._2} width="20" height="20" />
@@ -44,9 +44,9 @@ export default function MapDart(props) {
           <SvgXml xml={svgXml.marker._5} width="20" height="20" />
         ) : n === 5 ? (
           <SvgXml xml={svgXml.marker._6} width="20" height="20" />
-        ) : null}
-
-        <Text style={styles.dartText} numberOfLines={2}>
+        ) : null} */}
+        <SvgXml xml={svgXml.marker._1} width="18" height="18" />
+        <Text style={styles.dartText} numberOfLines={1}>
           {data.name}
         </Text>
       </View>
@@ -60,9 +60,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   dartText: {
-    fontSize: 12,
-    maxWidth: 50,
+    fontSize: 11,
+    maxWidth: 80,
     color: COLOR_TEXT_BLACK,
     textAlign: 'center',
+    fontFamily: 'NanumSquareRoundB',
   },
 });

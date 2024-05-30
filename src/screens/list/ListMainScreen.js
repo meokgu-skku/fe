@@ -17,6 +17,7 @@ import {
   COLOR_PRIMARY,
   COLOR_TEXT_BLACK,
   COLOR_TEXT70GRAY,
+  COLOR_HOME_BACKGROUND,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
@@ -796,9 +797,10 @@ const styles = StyleSheet.create({
   textInput: {
     marginLeft: 10,
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#888888',
     padding: 0,
+    fontFamily: 'NanumSquareRoundB',
   },
   filterButton: {
     flexDirection: 'row',
@@ -807,6 +809,8 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 7,
     borderRadius: 15,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
     // elevation: 4,
   },
   filterButtonSelected: {
@@ -816,19 +820,23 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingHorizontal: 7,
     borderRadius: 15,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
     // elevation: 4,
   },
   filterText: {
     marginLeft: 1,
     fontSize: 12,
     color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterTextActive: {
     marginLeft: 1,
     fontSize: 12,
     color: '#FFFFFF',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   filterTextFade: {
     marginLeft: 1,

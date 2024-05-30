@@ -12,6 +12,7 @@ import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {
   COLOR_BACKGROUND,
+  COLOR_HOME_BACKGROUND,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_TEXT_BLACK,
@@ -205,7 +206,7 @@ export default function MyPageScreen() {
 
 const styles = StyleSheet.create({
   entire: {
-    backgroundColor: COLOR_BACKGROUND,
+    backgroundColor: COLOR_HOME_BACKGROUND,
     alignItems: 'center',
     flex: 1,
   },
@@ -219,24 +220,28 @@ const styles = StyleSheet.create({
   },
   text6: {
     fontSize: 20,
-    color: COLOR_TEXT70GRAY,
+    color: COLOR_TEXT_BLACK,
     marginLeft: 20,
     marginRight: 5,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   text7: {
     fontSize: 12,
     color: COLOR_TEXT70GRAY,
     marginRight: 6,
+    fontFamily: 'NanumSquareRoundB',
   },
   text8: {
     fontSize: 12,
     color: COLOR_TEXT70GRAY,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   text6Position: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   arrowIcon: {
     width: 20,

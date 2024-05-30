@@ -799,9 +799,10 @@ const styles = StyleSheet.create({
   textInput: {
     marginLeft: 10,
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#888888',
     padding: 0,
+    fontFamily: 'NanumSquareRoundB',
   },
   filterButton: {
     flexDirection: 'row',
@@ -811,6 +812,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderRadius: 15,
     elevation: 4,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
   },
   filterButtonSelected: {
     flexDirection: 'row',
@@ -820,18 +823,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderRadius: 15,
     elevation: 4,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
   },
   filterText: {
     marginLeft: 1,
     fontSize: 12,
     color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterTextActive: {
     marginLeft: 1,
-    fontSize: 12,
+    fontSize: 11,
     color: '#FFFFFF',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterTextFade: {
     marginLeft: 1,

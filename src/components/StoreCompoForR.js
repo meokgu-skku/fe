@@ -55,8 +55,8 @@ export default function StoreCompoForR(props) {
         }
       }
       onPress={() => {
-        console.log('가게 상세 페이지로 이동', storeData);
-        // navigation.navigate('StoreDetail', {data: storeData});
+        // console.log('가게 상세 페이지로 이동', storeData);
+        navigation.navigate('StoreDetail', {data: storeData});
       }}>
       <View style={{flexDirection: 'row'}}>
         <View style={styles.imageContainer}>
@@ -88,14 +88,14 @@ export default function StoreCompoForR(props) {
           <Text style={styles.storeName} numberOfLines={1}>
             {storeInfo.name}
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginVertical: 2,
+            }}>
+            <SvgXml xml={svgXml.icon.star} width="15" height="15" style={{}} />
             <Text style={styles.reviewText}>
-              <SvgXml
-                xml={svgXml.icon.star}
-                width="15"
-                height="15"
-                style={{}}
-              />
               {storeInfo.ratingAvg} ({storeInfo.reviewCount})
             </Text>
             <SvgXml
@@ -107,7 +107,7 @@ export default function StoreCompoForR(props) {
             <Text style={styles.heartText}>{storeInfo.likeCount}</Text>
           </View>
           <Text style={styles.reviewerName}>
-            {storeData.firstReview.reviewer} 님
+            {storeData.firstReview.reviewer + '님'}
           </Text>
           <Text style={styles.reviewContent} numberOfLines={4}>
             {storeData.firstReview.body}
@@ -135,27 +135,43 @@ const styles = StyleSheet.create({
     height: windowWidth / 4,
   },
   storeName: {
-    fontSize: 19,
-    color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
     width: 245,
+    fontSize: 15,
+    color: COLOR_TEXT_BLACK,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundR',
+    // fontFamily: 'NIXGONFONTS M 2.0',
+    alignSelf: 'flex-start',
   },
   reviewText: {
-    fontSize: 16,
+    fontSize: 11,
     color: COLOR_TEXT70GRAY,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
+    // fontFamily: 'NIXGONFONTS M 2.0',
+    alignSelf: 'center',
     marginLeft: 7,
   },
   heartText: {
-    fontSize: 16,
+    fontSize: 11,
     color: COLOR_TEXT70GRAY,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
+    // fontFamily: 'NIXGONFONTS M 2.0',
+    alignSelf: 'center',
     marginLeft: 7,
   },
   reviewerName: {
-    fontSize: 14,
+    fontSize: 12,
     color: COLOR_TEXT70GRAY,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
+    marginVertical: 6,
+    marginBottom: 10,
   },
   reviewContent: {
-    fontSize: 15,
-    color: COLOR_TEXT60GRAY,
+    fontSize: 14,
+    color: COLOR_TEXT_BLACK,
+    fontFamily: 'NanumSquareRoundB',
   },
 });
