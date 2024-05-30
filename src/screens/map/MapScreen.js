@@ -125,24 +125,17 @@ export default function MapScreen() {
     try {
       // console.log('context.accessToken:', context.accessToken);
 
-      let discountForSkku = false;
-      if (selectSale) {
-        discountForSkku = true;
-      }
-
-      let like = false;
-      if (likedStore) {
-        like = true;
-      }
-
-      //TODO: 필터 조건 추가하기
-
       const params = {
-        discountForSkku: discountForSkku,
-        like: like,
-        sort: 'BASIC',
         size: 30,
       };
+
+      if (selectSale) {
+        params.discountForSkku = true;
+      }
+
+      if (likedStore) {
+        params.like = true;
+      }
 
       if (selectedCategory !== '전체') {
         console.log('selectedCategory:', selectedCategory);
@@ -799,9 +792,10 @@ const styles = StyleSheet.create({
   textInput: {
     marginLeft: 10,
     flex: 1,
-    fontSize: 12,
+    fontSize: 13,
     color: '#888888',
     padding: 0,
+    fontFamily: 'NanumSquareRoundB',
   },
   filterButton: {
     flexDirection: 'row',
@@ -811,6 +805,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderRadius: 15,
     elevation: 4,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
   },
   filterButtonSelected: {
     flexDirection: 'row',
@@ -820,18 +816,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     borderRadius: 15,
     elevation: 4,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
   },
   filterText: {
     marginLeft: 1,
     fontSize: 12,
     color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterTextActive: {
     marginLeft: 1,
-    fontSize: 12,
+    fontSize: 11,
     color: '#FFFFFF',
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterTextFade: {
     marginLeft: 1,

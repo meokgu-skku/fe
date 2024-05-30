@@ -107,8 +107,9 @@ const styles = StyleSheet.create({
   },
   myReviewTitle: {
     fontSize: 20,
-    color: COLOR_TEXT70GRAY,
-    fontWeight: '700',
+    color: COLOR_PRIMARY,
+    // fontWeight: '700',
+    fontFamily: 'NIXGONFONTS M 2.0',
   },
   noReviewText: {
     marginTop: 20,

@@ -12,6 +12,7 @@ import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
 import {
   COLOR_BACKGROUND,
+  COLOR_HOME_BACKGROUND,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_TEXT_BLACK,
@@ -79,7 +80,11 @@ export default function MyPageScreen() {
         },
       }));
 
-      setMyReviews(prevReviews => [...prevReviews, ...reviews]);
+      if (page === 0) {
+        setMyReviews(reviews);
+      } else {
+        setMyReviews(prevReviews => [...prevReviews, ...reviews]);
+      }
       setHasMoreReviews(response.data.data.reviews.content.length > 0);
     } catch (error) {
       console.error('Failed to fetch reviews:', error);
@@ -108,7 +113,11 @@ export default function MyPageScreen() {
         id: store.id,
       }));
 
-      setMyStoresData(prevStores => [...prevStores, ...stores]);
+      if (page === 0) {
+        setMyStoresData(stores);
+      } else {
+        setMyStoresData(prevStores => [...prevStores, ...stores]);
+      }
       setHasMoreStores(!response.data.data.restaurants.last);
     } catch (error) {
       console.error('Failed to fetch liked stores:', error);
@@ -157,7 +166,7 @@ export default function MyPageScreen() {
           source={
             profileImageUrl
               ? {uri: profileImageUrl}
-              : require('../../assets/images/skku.png')
+              : require('../../assets/images/logo.png')
           }
         />
         <TouchableOpacity
@@ -205,7 +214,7 @@ export default function MyPageScreen() {
 
 const styles = StyleSheet.create({
   entire: {
-    backgroundColor: COLOR_BACKGROUND,
+    backgroundColor: COLOR_HOME_BACKGROUND,
     alignItems: 'center',
     flex: 1,
   },
@@ -216,27 +225,32 @@ const styles = StyleSheet.create({
   myPageItemLayout: {
     marginTop: 20,
     marginBottom: 10,
+    borderRadius: 15,
   },
   text6: {
     fontSize: 20,
-    color: COLOR_TEXT70GRAY,
+    color: COLOR_TEXT_BLACK,
     marginLeft: 20,
     marginRight: 5,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   text7: {
     fontSize: 12,
     color: COLOR_TEXT70GRAY,
     marginRight: 6,
+    fontFamily: 'NanumSquareRoundB',
   },
   text8: {
     fontSize: 12,
     color: COLOR_TEXT70GRAY,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   text6Position: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   arrowIcon: {
     width: 20,
