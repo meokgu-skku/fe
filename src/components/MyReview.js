@@ -63,6 +63,7 @@ export default function MyReview(props) {
             pagingEnabled
             onScroll={handleScroll}
             scrollEventThrottle={16}
+            scrollEnabled={myReviews.length > 1}
             ref={scrollViewRef}>
             {myReviews.map((reviewData, index) => {
               return (
