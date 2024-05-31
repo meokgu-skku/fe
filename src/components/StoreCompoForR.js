@@ -86,7 +86,7 @@ export default function StoreCompoForR(props) {
         </View>
         <View style={{flex: 1, marginLeft: 12}}>
           <Text style={styles.storeName} numberOfLines={1}>
-            {storeInfo.name}.1
+            {storeInfo.name}
           </Text>
           <View
             style={{
