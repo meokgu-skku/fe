@@ -129,11 +129,9 @@ export default function MyPageScreen() {
       fetchUserInfo();
       setReviewPage(0);
       setStorePage(0);
-      // setMyReviews([]);
-      // setMyStoresData([]);
-      // fetchMyReviews(0);
-      // fetchLikedStores(0);
-    }, []),
+      fetchMyReviews(0);
+      fetchLikedStores(0);
+    }, [])
   );
 
   useEffect(() => {
