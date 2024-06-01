@@ -61,6 +61,19 @@ export default function StoreCompo(props) {
         navigation.navigate('StoreDetail', {data: storeData});
       }}>
       <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            position: 'absolute',
+            width: windowWidth / 3,
+            height: windowWidth / 3,
+            backgroundColor: COLOR_BACKGROUND,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: 0.5,
+          }}>
+          <SvgXml xml={svgXml.icon.noImage} width="140" height="140" />
+        </View>
         <Image
           resizeMode="cover"
           style={{

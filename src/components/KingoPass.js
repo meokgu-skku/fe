@@ -70,17 +70,30 @@ export default function KingoPass(props) {
                 console.log('킹고패스 페이지로 이동');
                 navigation.navigate('StoreDetail', {data: data});
               }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  width: 140,
+                  height: 140,
+                  backgroundColor: COLOR_BACKGROUND,
+                  borderRadius: 10,
+                }}>
+                <SvgXml xml={svgXml.icon.noImage} width="140" height="140" />
+              </View>
               <Image
                 source={{
                   uri: data.representativeImageUrl,
                 }}
                 resizeMode="cover"
                 style={{
+                  position: 'absolute',
                   width: 140,
                   height: 140,
+                  // backgroundColor: COLOR_PRIMARY,
                   borderRadius: 10,
                 }}
               />
+
               <View
                 style={{
                   position: 'absolute',
@@ -91,6 +104,7 @@ export default function KingoPass(props) {
                   opacity: 0.4,
                 }}
               />
+
               <View
                 style={{
                   position: 'absolute',
