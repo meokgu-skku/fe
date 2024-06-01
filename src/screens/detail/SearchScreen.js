@@ -20,6 +20,7 @@ import {
   COLOR_TEXT_BLACK,
   COLOR_TEXT70GRAY,
   COLOR_TEXT60GRAY,
+  COLOR_DISABLE_GRAY
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
@@ -117,7 +118,7 @@ export default function SearchScreen(props) {
     <>
       <Header title={'검색'} isBackButton={true} />
       <View style={styles.entire}>
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center', marginBottom: 20}}>
           {/* 검색창 */}
           <View
             style={{
@@ -175,7 +176,7 @@ export default function SearchScreen(props) {
                 style={{
                   fontSize: 16,
                   color: COLOR_TEXT_BLACK,
-                  fontWeight: 'bold',
+                  fontFamily: 'NanumSquareRoundEB'
                 }}>
                 최근 검색어
               </Text>
@@ -189,7 +190,7 @@ export default function SearchScreen(props) {
                   }
                 }}
                 style={{marginLeft: 10}}>
-                <Text style={{fontSize: 12, color: COLOR_TEXT60GRAY}}>
+                <Text style={{fontSize: 12, color: COLOR_TEXT60GRAY, fontFamily: ''}}>
                   전체 삭제
                 </Text>
               </AnimatedButton>
@@ -214,20 +215,6 @@ export default function SearchScreen(props) {
                           navigation.goBack();
                         }}>
                         <Text style={styles.recentText}>{item.query}</Text>
-                        <AnimatedButton
-                          onPress={() => {
-                            console.log('삭제');
-                            deleteRecentSearch(item.query);
-                            setRecentSearch(prevQueries =>
-                              prevQueries.filter(q => q.query !== item.query),
-                            );
-                          }}>
-                          <SvgXml
-                            xml={svgXml.icon.close}
-                            width="18"
-                            height="18"
-                          />
-                        </AnimatedButton>
                       </AnimatedButton>
 
                       <View style={{width: 16}} />
@@ -287,16 +274,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 3,
-    paddingHorizontal: 7,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 15,
-    backgroundColor: COLOR_PRIMARY,
-    height: 24,
+    backgroundColor: COLOR_WHITE,
+    borderColor: COLOR_DISABLE_GRAY,
+    borderWidth: 1,
+    height: 30,
   },
   recentText: {
-    fontSize: 12,
-    color: COLOR_WHITE,
-    marginRight: 5,
+    fontSize: 15,
+    color: COLOR_TEXT_BLACK,
+    textAlign: 'center',
+    lineHeight: 20,
+    fontFamily: 'NanumSquareRound',
   },
   searchArea: {
     // backgroundColor: 'blue',
