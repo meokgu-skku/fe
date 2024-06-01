@@ -69,9 +69,8 @@ export default function SearchScreen(props) {
         headers: {Authorization: `Bearer ${context.accessToken}`},
       });
 
-      console.log('response:', response.data.results);
-
-      setAutoCompleteData(response.data.results);
+      const limitedResults = response.data.results.slice(0, 5);
+      setAutoCompleteData(limitedResults);
     } catch (e) {
       console.log('error', e);
     }
@@ -118,7 +117,10 @@ export default function SearchScreen(props) {
     <>
       <Header title={'검색'} isBackButton={true} />
       <View style={styles.entire}>
-        <View style={{alignItems: 'center', marginBottom: 20}}>
+        <View style={{
+          alignItems: 'center', 
+          marginBottom: searchText.length == 0 ? 20: 0,
+        }}>
           {/* 검색창 */}
           <View
             style={{
@@ -238,6 +240,8 @@ export default function SearchScreen(props) {
                     }}>
                     <SvgXml xml={svgXml.icon.search} width="18" height="18" />
                     <Text style={styles.buttonText}>{item.org_display}</Text>
+                    <View style={{flex: 1}} />
+                    <Text style={styles.categoryText}>{item.category}</Text>
                   </AnimatedButton>
                 );
               }}
@@ -256,10 +260,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textInput: {
-    marginLeft: 10,
+    marginLeft: 4,
     flex: 1,
-    fontSize: 12,
+    fontSize: 14,
     color: COLOR_TEXT_BLACK,
+    fontFamily: 'NanumSquareRound',
     padding: 0,
   },
   recentHeader: {
@@ -300,15 +305,25 @@ const styles = StyleSheet.create({
     width: windowWidth,
   },
   listButton: {
-    // backgroundColor: 'blue',
+    marginStart: 18,
     padding: 8,
     paddingHorizontal: 16,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 12,
+    fontSize: 13,
     color: COLOR_TEXT_BLACK,
-    fontWeight: 'normal',
+    marginStart: 6,
+    fontFamily: 'NanumSquareRound',
     marginLeft: 2,
   },
+  categoryText: {
+    fontSize: 12,
+    color: COLOR_PRIMARY,
+    marginStart: 6,
+    fontFamily: 'NanumSquareRoundEB',
+    textAlign: 'right',
+    marginBottom: 2.5,
+  }
 });
