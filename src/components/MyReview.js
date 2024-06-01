@@ -50,7 +50,7 @@ export default function MyReview(props) {
 
   return (
     <View style={styles.myReview}>
-      <Text style={styles.myReviewTitle}>내 리뷰</Text>
+      <Text style={styles.myReviewTitle}>내가 작성한 리뷰</Text>
       {myReviews.length === 0 ? (
         <Text style={styles.noReviewText}>리뷰가 없습니다</Text>
       ) : (
