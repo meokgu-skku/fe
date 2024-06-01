@@ -17,6 +17,7 @@ import {
   TextInput,
   FlatList,
   Pressable,
+  TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
 import {
@@ -141,10 +142,12 @@ export default function ReviewWriteScreen(props) {
       <Header title={'리뷰 쓰기'} isBackButton={true} />
       <View contentContainerStyle={styles.entire}>
         <View style={styles.headerContainer}>
-          <Text style={styles.storeName}>{storeData.name}</Text>
+          <Text style={styles.storeName} numberOfLines={1}>
+            {storeData.name}
+          </Text>
           <View style={styles.starContainer}>
             {[...Array(5)].map((_, index) => (
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 key={index}
                 onPress={() => {
                   setRating(index + 1);
@@ -158,9 +161,9 @@ export default function ReviewWriteScreen(props) {
                   }
                   width="24"
                   height="24"
-                  style={{marginLeft: 7}}
+                  style={{marginLeft: 2}}
                 />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             ))}
           </View>
         </View>
@@ -254,6 +257,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: COLOR_TEXT_BLACK,
+    maxWidth: (windowWidth * 3) / 5,
   },
   starContainer: {
     flexDirection: 'row',
