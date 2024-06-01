@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, StyleSheet, Pressable, ScrollView} from 'react-native';
 import {
@@ -96,7 +97,7 @@ export default function StoreCompoForR(props) {
             }}>
             <SvgXml xml={svgXml.icon.star} width="15" height="15" style={{}} />
             <Text style={styles.reviewText}>
-              {storeInfo.ratingAvg} ({storeInfo.reviewCount})
+              {storeInfo.ratingAvg.toFixed(1)} ({storeInfo.reviewCount})
             </Text>
             <SvgXml
               xml={svgXml.icon.heart}
@@ -109,11 +110,16 @@ export default function StoreCompoForR(props) {
           <Text style={styles.reviewerName}>
             {storeData.firstReview.reviewer + '님'}
           </Text>
-          <ScrollView style={styles.reviewContent}>
-            <Text style={styles.reviewBody}>
-              {storeData.firstReview.body}
-            </Text>
-          </ScrollView>
+          <Text
+            numberOfLines={4}
+            style={{
+              fontSize: 11,
+              color: COLOR_TEXT60GRAY,
+              fontFamily: 'NanumSquareRoundR',
+              width: 245,
+            }}>
+            {storeData.firstReview.body}
+          </Text>
         </View>
       </View>
     </Pressable>
@@ -170,24 +176,5 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumSquareRoundB',
     marginVertical: 6,
     marginBottom: 10,
-  },
-//     reviewContent: {
-//     fontSize: 14,
-//     color: COLOR_TEXT_BLACK,
-//     fontFamily: 'NanumSquareRoundB',
-//     },
-  reviewContent: {
-    fontSize: 14,
-    color: COLOR_TEXT_BLACK,
-    fontFamily: 'NanumSquareRoundB',
-    marginTop: 4,
-    maxHeight: 180,
-    padding: 4,
-  },
-  reviewBody: {
-    fontSize: 15,
-    color: COLOR_TEXT70GRAY,
-    flexWrap: 'wrap',
-    marginRight: 10,
   },
 });
