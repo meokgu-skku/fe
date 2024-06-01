@@ -44,7 +44,7 @@ export default function StoreCompo(props) {
 
   const scrollViewRef = useRef();
 
-  const {storeData, index, addPadding} = props;
+  const {storeData, index, addPadding, fade} = props;
 
   console.log('storeData', storeData);
   return (
@@ -86,6 +86,18 @@ export default function StoreCompo(props) {
             uri: storeData.representativeImageUrl,
           }}
         />
+
+        {fade ? (
+          <View
+            style={{
+              position: 'absolute',
+              width: windowWidth / 3,
+              height: windowWidth / 3,
+              backgroundColor: 'rgba(0, 0, 0, 0.3)',
+              borderRadius: 10,
+            }}
+          />
+        ) : null}
         <View
           style={{
             flex: 1,
