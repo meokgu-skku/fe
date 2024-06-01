@@ -1,6 +1,6 @@
 import React, {useContext, useRef} from 'react';
 import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
-import {COLOR_WHITE, COLOR_TEXT70GRAY} from '../assets/color';
+import {COLOR_WHITE, COLOR_TEXT70GRAY, COLOR_PRIMARY} from '../assets/color';
 import {useNavigation} from '@react-navigation/native';
 import AppContext from './AppContext';
 import {Dimensions} from 'react-native';
@@ -69,7 +69,7 @@ export default function MyStore(props) {
                     width: 140,
                     height: 140,
                     backgroundColor: '#000000',
-                    opacity: 0.3,
+                    opacity: 0.4,
                   }}
                 />
                 <View
@@ -83,8 +83,12 @@ export default function MyStore(props) {
                     numberOfLines={1}
                     style={{
                       fontSize: 20,
+                      // color: COLOR_WHITE,
+                      // fontWeight: 'bold',
                       color: COLOR_WHITE,
-                      fontWeight: 'bold',
+                      // fontWeight: 'bold',
+                      fontFamily: 'NIXGONFONTS M 2.0',
+                      // textAlign: 'left',
                       margin: 10,
                     }}>
                     {data.name}
@@ -109,8 +113,9 @@ const styles = StyleSheet.create({
   kingopassTitle: {
     fontSize: 20,
     marginLeft: 26,
-    color: COLOR_TEXT70GRAY,
-    fontWeight: '700',
+    color: COLOR_PRIMARY,
+    // fontWeight: '700',
+    fontFamily: 'NIXGONFONTS M 2.0',
     marginBottom: 10,
   },
   kingopassKard: {

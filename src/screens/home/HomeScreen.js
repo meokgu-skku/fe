@@ -103,7 +103,7 @@ export default function HomeScreen() {
         <TodayPick todaysPick={todaysPick} />
         <FoodCategory />
         <KingoPass passData={kingoPassData} />
-        <View style={{height: 100}} />
+        <View style={{height: 30}} />
       </ScrollView>
     </>
   );

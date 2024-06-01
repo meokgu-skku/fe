@@ -32,6 +32,7 @@ import {
   COLOR_LIGHTGRAY,
   COLOR_ORANGE,
   COLOR_SECONDARY,
+  COLOR_HOME_BACKGROUND,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
@@ -154,14 +155,27 @@ export default function StoreDetailScreen(props) {
     <>
       <View key={item.name} style={styles.sectionItem}>
         {item.imageUrl ? (
-          <ImageModal
-            swipeToDismiss={true}
-            modalImageResizeMode="contain"
-            imageBackgroundColor="transparent"
-            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-            source={{uri: item.imageUrl}}
-            style={styles.menuImage}
-          />
+          <>
+            <ImageModal
+              swipeToDismiss={true}
+              modalImageResizeMode="contain"
+              imageBackgroundColor="transparent"
+              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+              source={{uri: item.imageUrl}}
+              style={styles.menuImage}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                backgroundColor: '#000000',
+                opacity: 0.4,
+                width: 90,
+                height: 90,
+                borderRadius: 12,
+                marginVertical: 12,
+              }}
+            />
+          </>
         ) : (
           <View style={styles.menuImagePlaceholder}>
             <Text style={styles.menuImagePlaceholderText}>
@@ -172,7 +186,7 @@ export default function StoreDetailScreen(props) {
         <View style={styles.menuTextContainer}>
           <Text style={styles.menuTitle}>{item.name}</Text>
           <Text style={styles.menuDescription}>{item.description}</Text>
-          <Text style={styles.menuPrice}>{item.price} 원</Text>
+          <Text style={styles.menuPrice}>{item.price}원</Text>
         </View>
       </View>
       <View style={styles.horizontalDivider} />
@@ -202,7 +216,7 @@ export default function StoreDetailScreen(props) {
 
     return (
       <>
-        <View key={item.id} style={styles.sectionItem}>
+        <View key={item.id} style={styles.sectionItem2}>
           <View style={styles.reviewTextContainer}>
             <View
               style={{
@@ -258,16 +272,29 @@ export default function StoreDetailScreen(props) {
           <ImageModal
             swipeToDismiss={true}
             modalImageResizeMode="contain"
+            // resizeMode="contain"
             imageBackgroundColor="transparent"
             overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
             source={{uri: restaurant.restaurant.representativeImageUrl}}
             style={styles.storeImage}
           />
+          <View
+            style={{
+              position: 'absolute',
+              width: windowWidth,
+              height: 240,
+              backgroundColor: '#000000',
+              opacity: 0.4,
+            }}
+          />
         </View>
         <View style={styles.storeInfo}>
           <View style={styles.storeHeader}>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}>
               <Text style={styles.storeName}>{restaurant.restaurant.name}</Text>
               <Text style={styles.storeCategory}>
                 {restaurant.restaurant.categories}
@@ -275,7 +302,7 @@ export default function StoreDetailScreen(props) {
             </View>
             <View style={styles.sectionTitle}>
               <View style={styles.sectionTitle}>
-                <Text style={styles.storeReview}>찜 {heartCount}</Text>
+                <Text style={styles.storeReview}>{'찜 ' + heartCount}</Text>
                 <Text style={styles.storeReview}>·</Text>
                 <Text style={styles.storeReview}>
                   리뷰 {restaurant.restaurant.reviewCount}
@@ -339,7 +366,12 @@ export default function StoreDetailScreen(props) {
             </AnimatedButton>
           </View>
           <View style={styles.horizontalDivider} />
-          <View style={{flexDirection: 'row', marginTop: 6}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              marginTop: 6,
+              alignItems: 'center',
+            }}>
             <SvgXml
               style={styles.contactButtonIcon}
               xml={svgXml.icon.location}
@@ -353,7 +385,7 @@ export default function StoreDetailScreen(props) {
               <Text style={styles.copyButtonText}>복사</Text>
             </TouchableOpacity>
           </View>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <SvgXml
               style={styles.contactButtonIcon}
               xml={svgXml.icon.phone}
@@ -429,7 +461,9 @@ export default function StoreDetailScreen(props) {
             전화번호: {restaurant.restaurant.detailInfo.contactNumber}
           </Text>
           <View style={styles.sectionItem}>
-            <TouchableHighlight style={styles.callButton} onPress={handlePhonePress}>
+            <TouchableHighlight
+              style={styles.callButton}
+              onPress={handlePhonePress}>
               <Text style={styles.textStyle}>전화</Text>
             </TouchableHighlight>
             <TouchableHighlight
@@ -448,7 +482,7 @@ export default function StoreDetailScreen(props) {
 
 const styles = StyleSheet.create({
   entire: {
-    backgroundColor: COLOR_BACKGROUND,
+    backgroundColor: COLOR_HOME_BACKGROUND,
     alignItems: 'center',
     marginHorizontal: -3,
   },
@@ -464,7 +498,8 @@ const styles = StyleSheet.create({
   storeInfo: {
     width: '100%',
     padding: 16,
-    backgroundColor: COLOR_WHITE,
+    backgroundColor: COLOR_BACKGROUND,
+    // backgroundColor: '#ffffff',
     elevation: 3,
     marginBottom: 16,
   },
@@ -473,26 +508,31 @@ const styles = StyleSheet.create({
   },
   storeName: {
     fontSize: 24,
-    color: COLOR_TEXT_BLACK,
-    fontWeight: 'bold',
+    color: COLOR_PRIMARY,
+    // fontWeight: 'bold',
+    fontFamily: 'NIXGONFONTS M 2.0',
     marginVertical: 6,
   },
   storeCategory: {
     fontSize: 16,
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 10,
+    fontFamily: 'NanumSquareRoundB',
+    marginBottom: 10,
   },
   storeReview: {
-    fontSize: 15,
+    fontSize: 13,
     color: COLOR_TEXT70GRAY,
     marginBottom: 16,
     marginRight: 6,
+    fontFamily: 'NanumSquareRoundB',
   },
   storeReviewNaver: {
     fontSize: 14,
     color: COLOR_GRAY,
     marginTop: 3,
-    marginRight: 4,
+    marginBottom: 16,
+    marginRight: 6,
     fontFamily: 'NanumSquareRoundB',
   },
   contactContainer: {
@@ -510,9 +550,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   contactButtonText: {
-    fontSize: 15,
+    fontSize: 12,
     marginTop: 4,
     color: COLOR_TEXT70GRAY,
+    fontFamily: 'NanumSquareRoundB',
   },
   verticalDivider: {
     width: 1,
@@ -526,7 +567,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_LIGHTGRAY,
   },
   storeAddress: {
-    fontSize: 15,
+    fontSize: 13,
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 8,
     fontFamily: 'NanumSquareRoundB',
@@ -537,7 +578,7 @@ const styles = StyleSheet.create({
     marginVertical: 7,
   },
   storePhoneNum: {
-    fontSize: 15,
+    fontSize: 13,
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 8,
     fontFamily: 'NanumSquareRoundB',
@@ -548,6 +589,7 @@ const styles = StyleSheet.create({
     marginLeft: 7,
     color: COLOR_GRAY,
     textDecorationLine: 'underline',
+    fontFamily: 'NanumSquareRoundB',
   },
   section: {
     width: '92%',
@@ -563,23 +605,30 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     flexDirection: 'row',
+    marginTop: 2,
   },
   sectionTitleText: {
     marginTop: 2,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: COLOR_TEXT_BLACK,
+    // fontWeight: 'bold',
+    fontFamily: 'NIXGONFONTS M 2.0',
+    color: COLOR_PRIMARY,
     marginRight: 5,
   },
   sectionTitleNumText: {
     marginTop: 2,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: COLOR_GRAY,
+    // fontWeight: 'bold',
+    fontFamily: 'NIXGONFONTS M 2.0',
+    color: '#636363',
   },
   sectionItem: {
     flexDirection: 'row',
     height: 120,
+  },
+  sectionItem2: {
+    flexDirection: 'row',
+    // height: 100,
   },
   menuImage: {
     width: 90,
@@ -608,33 +657,40 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   menuTitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: COLOR_TEXT_BLACK,
-    fontWeight: '500',
+    // fontWeight: '500',
+    fontFamily: 'NIXGONFONTS M 2.0',
     flexWrap: 'wrap',
   },
   menuDescription: {
-    fontSize: 16,
+    fontSize: 12,
     color: COLOR_TEXT_DARKGRAY,
     flexWrap: 'wrap',
+    fontFamily: 'NanumSquareRoundB',
+    marginVertical: 6,
   },
   menuPrice: {
-    fontSize: 17,
+    fontSize: 13,
     color: COLOR_TEXT_BLACK,
-    fontWeight: '600',
+    // fontWeight: '600',
+    fontFamily: 'NIXGONFONTS M 2.0',
   },
   reviewTextContainer: {
     justifyContent: 'center',
     marginVertical: 12,
+    // backgroundColor: 'blue',
   },
   reviewAuthor: {
     fontSize: 17,
     color: COLOR_TEXT_BLACK,
     marginRight: 4,
+    fontFamily: 'NanumSquareRoundB',
   },
   reviewAuthor2: {
     fontSize: 12,
-    color: COLOR_GRAY,
+    color: '#636363',
+    fontFamily: 'NanumSquareRoundB',
   },
   reviewAuthorImage: {
     width: 30,
@@ -657,13 +713,16 @@ const styles = StyleSheet.create({
   },
   reviewStats: {
     fontSize: 12,
-    color: COLOR_TEXT60GRAY,
+    color: '#636363',
     marginRight: 6,
+    fontFamily: 'NanumSquareRoundB',
   },
   reviewText: {
     fontSize: 15,
     color: COLOR_TEXT_BLACK,
-    marginTop: 6,
+    marginTop: 15,
+    fontFamily: 'NanumSquareRoundB',
+    marginVertical: 10,
   },
   reviewImage: {
     width: 80,

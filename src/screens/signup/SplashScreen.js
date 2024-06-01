@@ -31,6 +31,7 @@ export default function SplashScreen() {
       // AsyncStorage(=디바이스에 저장하는 데이터)에 저장된 토큰을 가져온다.
       const accessToken = await AsyncStorage.getItem('accessToken');
       const refreshToken = await AsyncStorage.getItem('refreshToken');
+      const userId = await AsyncStorage.getItem('userId');
 
       //없으면 그만
       console.log('accessToken:', accessToken);
@@ -39,7 +40,7 @@ export default function SplashScreen() {
       }
 
       //토큰이 맞는지 확인 -> 헤더에 토큰 넣어서 백엔드 요청
-      const response = await axios.get(`${API_URL}/hello/security-test`, {
+      const response = await axios.get(`${API_URL}/v1/users/${userId}`, {
         headers: {Authorization: `Bearer ${accessToken}`},
       });
       console.log('response:', response.data.data);
@@ -74,15 +75,12 @@ export default function SplashScreen() {
   //이 함수형 컴포넌트가 화면에 보여지는 부분
   return (
     <View style={styles.entire}>
-      <View style={{flexDirection: 'row', marginTop: 100}}>
-        <Text style={styles.textMain}>{'맛있는 음식을'}</Text>
-        <Text style={styles.textMainColor}>{' 먹구스꾸'}</Text>
+      <View style={styles.box}>
+        <Image
+          source={require('../../assets/images/splashLogo.png')}
+          style={styles.image}
+        />
       </View>
-      <Image
-        source={require('../../assets/images/image.png')}
-        style={styles.image}
-      />
-
       <View style={styles.buttonContainer}>
         <LongPrimaryButton text="시작하기" action={pressButton} />
       </View>
@@ -95,6 +93,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLOR_WHITE,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  box: {
+    flex: 1,
+    // backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textMainColor: {
     fontSize: 33,
@@ -110,15 +115,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 110,
+    // position: 'absolute',
+    // bottom: 110,
+    height: 100,
+    // backgroundColor: 'red',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   image: {
-    width: 400,
-    height: 400,
-    marginTop: 25,
+    width: 250,
+    height: 200,
+    marginTop: 50,
   },
 });

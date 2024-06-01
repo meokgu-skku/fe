@@ -17,6 +17,8 @@ import {
   COLOR_GRAY,
   COLOR_RED,
   COLOR_BLUE,
+  COLOR_HOME_BACKGROUND,
+  COLOR_TEXT_BLACK,
 } from '../../assets/color';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import Header from '../../components/Header';
@@ -159,7 +161,7 @@ export default function UserDataChangeScreen() {
         <Image
           style={[styles.myPageItem, styles.myPageItemLayout]}
           resizeMode="cover"
-          source={require('../../assets/images/skku.png')}
+          source={require('../../assets/images/logo.png')}
         />
 
         <View style={styles.inputContainer}>
@@ -187,7 +189,7 @@ export default function UserDataChangeScreen() {
         <View style={styles.inputContainer}>
           <Text style={styles.label}>대표 이메일</Text>
           <TextInput
-            style={[styles.input, styles.disabledInput]}
+            style={[styles.input2, styles.disabledInput]}
             value={email}
             editable={false}
           />
@@ -225,6 +227,7 @@ const styles = StyleSheet.create({
   myPageItemLayout: {
     marginTop: 20,
     marginBottom: 50,
+    borderRadius: 15,
   },
   inputContainer: {
     width: '85%',
@@ -235,23 +238,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    fontSize: 16,
-    color: COLOR_TEXT70GRAY,
+    fontSize: 14,
+    color: COLOR_TEXT_BLACK,
     marginBottom: 8,
+    fontFamily: 'NanumSquareRoundB',
   },
   input: {
-    borderWidth: 1,
-    borderColor: COLOR_GRAY,
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
     borderRadius: 12,
     padding: 10,
-    fontSize: 16,
+    fontSize: 14,
     backgroundColor: COLOR_WHITE,
     width: '100%',
     height: 45,
+    fontFamily: 'NanumSquareRoundEB',
+  },
+  input2: {
+    borderWidth: 1.5,
+    borderColor: COLOR_PRIMARY,
+    borderRadius: 12,
+    padding: 10,
+    fontSize: 14,
+    backgroundColor: COLOR_TEXT_BLACK,
+    width: '100%',
+    height: 45,
+    fontFamily: 'NanumSquareRoundEB',
   },
   disabledInput: {
-    backgroundColor: '#e0e0e0',
-    color: COLOR_GRAY,
+    backgroundColor: COLOR_HOME_BACKGROUND,
+    color: COLOR_TEXT_BLACK,
     height: 45,
   },
   checkButton: {
@@ -265,7 +281,8 @@ const styles = StyleSheet.create({
   },
   checkButtonText: {
     color: COLOR_WHITE,
-    fontSize: 15,
+    fontSize: 12,
+    fontFamily: 'NanumSquareRoundB',
   },
   duplicateMessage: {
     fontSize: 14,
@@ -281,8 +298,9 @@ const styles = StyleSheet.create({
   },
   updateButtonText: {
     color: COLOR_WHITE,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   footer: {
     flexDirection: 'row',
@@ -292,6 +310,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     color: COLOR_PRIMARY,
-    fontSize: 16,
+    fontSize: 14,
+    fontFamily: 'NanumSquareRoundB',
   },
 });

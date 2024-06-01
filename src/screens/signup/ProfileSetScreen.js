@@ -83,6 +83,7 @@ export default function ProfileSetScreen(props) {
       navigation.navigate('BottomTab');
     } catch (error) {
       console.log('Error:', error);
+      console.log('Error response:', error.response.data);
     }
   };
 
@@ -153,7 +154,7 @@ export default function ProfileSetScreen(props) {
                 style={{width: 150, height: 150, borderRadius: 75}}
               />
             ) : (
-              <SvgXml width={104} height={102} xml={svgXml.icon.camera} />
+              <SvgXml width={200} height={200} xml={svgXml.icon.camera} />
             )}
           </AnimatedButton>
           <View style={styles.container}>
@@ -172,7 +173,7 @@ export default function ProfileSetScreen(props) {
             </View>
           </View>
 
-          <View style={{height: 80}} />
+          <View style={{height: 40}} />
           <LongPrimaryButton
             text={'회원가입'}
             action={signUp}
@@ -218,18 +219,21 @@ const styles = StyleSheet.create({
   },
   samllText: {
     color: COLOR_TEXT70GRAY,
-    fontSize: 12,
-    fontWeight: 'normal',
+    fontSize: 14,
     textAlign: 'center',
     paddingVertical: 4,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   textinputBox: {
-    padding: 0,
-    fontSize: 15,
-    height: 45,
+    height: 50,
+    borderColor: '#F8F8F8',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 15,
+    backgroundColor: '#F8F8F8',
+    fontSize: 16,
     width: '100%',
-    borderBottomWidth: 0.5,
-    borderBottomColor: COLOR_TEXT70GRAY,
   },
   showButton: {
     position: 'absolute',

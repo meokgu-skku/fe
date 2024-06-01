@@ -41,7 +41,8 @@ export default function Header(props) {
         style={{
           color: COLOR_WHITE,
           fontSize: 16,
-          fontWeight: 'bold',
+          // fontWeight: 'bold',
+          fontFamily: 'NanumSquareRoundB',
           textAlign: 'center',
         }}>
         {title}
