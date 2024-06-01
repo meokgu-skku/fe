@@ -235,8 +235,12 @@ export default function MapScreen() {
       console.log('response:', response.data.data.restaurants.content[0]);
 
       setStoreDartDatas(response.data.data.restaurants.content);
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

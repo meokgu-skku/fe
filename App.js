@@ -10,6 +10,7 @@ import React, {useState} from 'react';
 import {SafeAreaView, ScrollView, Text, View, StyleSheet} from 'react-native';
 import MainStackNavigator from './src/navigation/MainStackNavigator';
 import 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 
 export default function App() {
   const [accessToken, setAccessToken] = useState('');
@@ -40,6 +41,7 @@ export default function App() {
   return (
     <AppContext.Provider value={tokens}>
       <MainStackNavigator />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </AppContext.Provider>
   );
 }

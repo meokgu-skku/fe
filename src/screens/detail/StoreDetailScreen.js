@@ -160,7 +160,11 @@ export default function StoreDetailScreen(props) {
 
       console.log('isReviewLike: ', ret.data);
     } catch (error) {
-      console.error('Error updating review liked:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
 
       const rollbackReviewList = reviewList.map((item) =>
         item.id === review.item.id

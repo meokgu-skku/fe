@@ -71,8 +71,12 @@ export default function SearchScreen(props) {
 
       const limitedResults = response.data.results.slice(0, 5);
       setAutoCompleteData(limitedResults);
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -85,12 +89,12 @@ export default function SearchScreen(props) {
       console.log('response:', response.data.data.recentQueries);
 
       setRecentSearch(response.data.data.recentQueries);
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        console.log('Axios error:', e.response ? e.response.data : e.message);
-      } else {
-        console.log('splash error', e.message);
-      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -104,12 +108,12 @@ export default function SearchScreen(props) {
       });
 
       console.log('response:', response.data);
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        console.log('Axios error:', e.response ? e.response.data : e.message);
-      } else {
-        console.log('splash error', e.message);
-      }
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

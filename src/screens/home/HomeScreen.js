@@ -69,8 +69,12 @@ export default function HomeScreen() {
       // console.log('response:', response.data.data.restaurants.content[0]);
 
       setkingoPassData(response.data.data.restaurants.content);
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -85,8 +89,12 @@ export default function HomeScreen() {
       console.log('response:', response.data.data.restaurants);
 
       setTodaysPick(response.data.data.restaurants);
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

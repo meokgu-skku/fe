@@ -60,7 +60,11 @@ export default function UserDataChangeScreen(props) {
         setNickname(response.data.data.userDto.nickname);
         setEmail(response.data.data.userDto.email);
       } catch (error) {
-        console.error('Failed to fetch user info:', error);
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: error.response.data.message,
+        });
       }
     };
 
@@ -84,6 +88,11 @@ export default function UserDataChangeScreen(props) {
     } catch (error) {
       setDuplicateMessage('이미 사용 중인 닉네임입니다.');
       setMessageColor(COLOR_RED);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -142,8 +151,11 @@ export default function UserDataChangeScreen(props) {
         ]);
       }
     } catch (error) {
-      console.error('Failed to delete user:', error);
-      Alert.alert('오류', '회원탈퇴 중 오류가 발생했습니다.', [{text: '확인'}]);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -197,7 +209,11 @@ export default function UserDataChangeScreen(props) {
         }),
       );
     } catch (error) {
-      console.log('Error during logout:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
