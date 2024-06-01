@@ -96,7 +96,7 @@ export default function StoreDetailScreen(props) {
       const data = response.data.data;
       const dataReview = responseReview.data.data;
 
-      console.log('Restaurant heart:', data.restaurant);
+      console.log('storedata: ', data);
 
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
@@ -139,6 +139,38 @@ export default function StoreDetailScreen(props) {
     Alert.alert('클립보드에 복사되었습니다.');
   }
 
+  const handleReviewLikedState = async (review) => {
+    try {
+      const newReviewLikedState = !review.item.isLike;
+      const updatedReviewList = reviewList.map((item) =>
+        item.id === review.item.id
+          ? { ...item, isLike: newReviewLikedState, likeCount: newReviewLikedState ? item.likeCount + 1 : item.likeCount - 1 }
+          : item
+      );
+      setReviewList(updatedReviewList);
+      const ret = await axios.post(
+        `${API_URL}/v1/restaurants/reviews/${review.item.id}/like`,
+        {
+          isLike: newReviewLikedState,
+        },
+        {
+          headers: {Authorization: `Bearer ${context.accessToken}`},
+        },
+      );
+
+      console.log('isReviewLike: ', ret.data);
+    } catch (error) {
+      console.error('Error updating review liked:', error);
+
+      const rollbackReviewList = reviewList.map((item) =>
+        item.id === review.item.id
+          ? { ...item, isLike: review.item.isLike, likeCount: review.item.likeCount }
+          : item
+      );
+      setReviewList(rollbackReviewList);
+    }
+  }
+
   const handleLoadMoreMenus = () => {
     setMenuCount(menuCount + 4);
   };
@@ -154,35 +186,24 @@ export default function StoreDetailScreen(props) {
   const renderMenuItem = ({item}) => (
     <>
       <View key={item.name} style={styles.sectionItem}>
-        {item.imageUrl ? (
-          <>
-            <ImageModal
-              swipeToDismiss={true}
-              modalImageResizeMode="contain"
-              imageBackgroundColor="transparent"
-              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-              source={{uri: item.imageUrl}}
-              style={styles.menuImage}
-            />
-            <View
-              style={{
-                position: 'absolute',
-                backgroundColor: '#000000',
-                opacity: 0.4,
-                width: 90,
-                height: 90,
-                borderRadius: 12,
-                marginVertical: 12,
-              }}
-            />
-          </>
-        ) : (
-          <View style={styles.menuImagePlaceholder}>
-            <Text style={styles.menuImagePlaceholderText}>
-              음식 사진 준비중
-            </Text>
+        <View style={{
+            position: 'absolute',
+            opacity: 1,
+            width: 90,
+            height: 90,
+            borderRadius: 12,
+            marginVertical: 12,
+          }}>
+            <SvgXml xml={svgXml.icon.noImage} width={90} height={90} style={{marginTop: 5}}/>
           </View>
-        )}
+        <ImageModal
+          swipeToDismiss={true}
+          modalImageResizeMode="contain"
+          imageBackgroundColor="transparent"
+          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+          source={{uri: item.imageUrl}}
+          style={styles.menuImage}
+        />
         <View style={styles.menuTextContainer}>
           <Text style={styles.menuTitle}>{item.name}</Text>
           <Text style={styles.menuDescription}>{item.description}</Text>
@@ -196,7 +217,8 @@ export default function StoreDetailScreen(props) {
   const renderReviewItem = ({item}) => {
     const rating = item.rating;
     const likeCount = item.likeCount;
-    const viewCount = item.viewCount;
+
+    console.log("review: ", item);
 
     const renderStars = () => {
       const stars = [];
@@ -236,30 +258,47 @@ export default function StoreDetailScreen(props) {
                 )}
                 <Text style={styles.reviewAuthor}>{item.username}</Text>
                 <Text style={styles.reviewAuthor2}>님</Text>
+                <TouchableOpacity
+                  style={styles.contactButton}
+                  onPress={() => handleReviewLikedState({item})}>
+                  <SvgXml xml={item.isLike ? svgXml.icon.thumbupOn : svgXml.icon.thumbupOff} width={20} height={20} />
+                </TouchableOpacity>
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.reviewStats}>{`좋아요 ${likeCount}`}</Text>
                 {renderStars()}
               </View>
             </View>
-            <Text style={styles.reviewText}>{item.content}</Text>
+            <View style={{flexDirection: 'row'}}>
+              
+              {item.imageUrls.length > 0 ? (
+                <>
+                  <Text style={styles.reviewText}>{item.content}</Text>
+                  <FlatList
+                    horizontal
+                    data={item.imageUrls}
+                    renderItem={({item}) => (
+                      <ImageModal
+                        swipeToDismiss={true}
+                        modalImageResizeMode="contain"
+                        imageBackgroundColor="transparent"
+                        overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+                        source={{uri: item}}
+                        style={styles.reviewImage}
+                      />
+                    )}
+                    keyExtractor={(image, index) => `${item.id}-${index}`}
+                  />
+              </>
+              ) : (
+                <>
+                  <Text style={styles.reviewText2}>{item.content}</Text>
+                </>
+              )}
+              
+            </View>
           </View>
         </View>
-        <FlatList
-          horizontal
-          data={item.imageUrls}
-          renderItem={({item}) => (
-            <ImageModal
-              swipeToDismiss={true}
-              modalImageResizeMode="contain"
-              imageBackgroundColor="transparent"
-              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-              source={{uri: item}}
-              style={styles.reviewImage}
-            />
-          )}
-          keyExtractor={(image, index) => `${item.id}-${index}`}
-        />
         <View style={styles.horizontalDivider} />
       </>
     );
@@ -269,24 +308,24 @@ export default function StoreDetailScreen(props) {
     <>
       <View style={styles.entire}>
         <View style={styles.storeImageContainer}>
-          <ImageModal
-            swipeToDismiss={true}
-            modalImageResizeMode="contain"
-            // resizeMode="contain"
-            imageBackgroundColor="transparent"
-            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-            source={{uri: restaurant.restaurant.representativeImageUrl}}
-            style={styles.storeImage}
-          />
-          <View
-            style={{
-              position: 'absolute',
-              width: windowWidth,
-              height: 240,
-              backgroundColor: '#000000',
-              opacity: 0.4,
-            }}
-          />
+        <ImageModal
+          swipeToDismiss={true}
+          modalImageResizeMode="contain"
+          // resizeMode="contain"
+          imageBackgroundColor="transparent"
+          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+          source={{uri: restaurant.restaurant.representativeImageUrl}}
+          style={styles.storeImage}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            width: windowWidth,
+            height: 240,
+            backgroundColor: '#000000',
+            opacity: 0.4,
+          }}
+        />
         </View>
         <View style={styles.storeInfo}>
           <View style={styles.storeHeader}>
@@ -378,12 +417,14 @@ export default function StoreDetailScreen(props) {
               width={24}
               height={24}
             />
-            <Text style={styles.storeAddress}>
-              위치: {restaurant.restaurant.detailInfo.address}
-            </Text>
-            <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.address)}}>
-              <Text style={styles.copyButtonText}>복사</Text>
-            </TouchableOpacity>
+            <View style={styles.copyContainer}>
+              <Text style={styles.storeAddress}>
+                위치: {restaurant.restaurant.detailInfo.address}
+              </Text>
+              <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.address)}}>
+                <Text style={styles.copyButtonText}>복사</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <SvgXml
@@ -528,9 +569,8 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumSquareRoundB',
   },
   storeReviewNaver: {
-    fontSize: 14,
-    color: COLOR_GRAY,
-    marginTop: 3,
+    fontSize: 13,
+    color: COLOR_TEXT70GRAY,
     marginBottom: 16,
     marginRight: 6,
     fontFamily: 'NanumSquareRoundB',
@@ -582,6 +622,10 @@ const styles = StyleSheet.create({
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 8,
     fontFamily: 'NanumSquareRoundB',
+  },
+  copyContainer: {
+    flexDirection: 'row',
+    width: 315,
   },
   copyButtonText: {
     fontSize: 13,
@@ -641,14 +685,9 @@ const styles = StyleSheet.create({
     height: 90,
     borderRadius: 12,
     marginVertical: 12,
+    paddingTop: 8,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  menuImagePlaceholderText: {
-    textAlign: 'center',
-    color: COLOR_SECONDARY,
-    fontSize: 16,
-    margin: 5,
   },
   menuTextContainer: {
     marginLeft: 10,
@@ -679,7 +718,6 @@ const styles = StyleSheet.create({
   reviewTextContainer: {
     justifyContent: 'center',
     marginVertical: 12,
-    // backgroundColor: 'blue',
   },
   reviewAuthor: {
     fontSize: 17,
@@ -689,6 +727,7 @@ const styles = StyleSheet.create({
   },
   reviewAuthor2: {
     fontSize: 12,
+    marginRight: 5,
     color: '#636363',
     fontFamily: 'NanumSquareRoundB',
   },
@@ -723,12 +762,20 @@ const styles = StyleSheet.create({
     marginTop: 15,
     fontFamily: 'NanumSquareRoundB',
     marginVertical: 10,
+    width: 265,
+  },
+  reviewText2: {
+    fontSize: 15,
+    color: COLOR_TEXT_BLACK,
+    marginTop: 15,
+    fontFamily: 'NanumSquareRoundB',
+    marginVertical: 10,
   },
   reviewImage: {
     width: 80,
     height: 80,
     borderRadius: 12,
-    margin: 7,
+    margin: 5,
   },
   loadMoreText: {
     textAlign: 'center',
