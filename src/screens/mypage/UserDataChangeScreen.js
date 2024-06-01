@@ -16,6 +16,7 @@ import {
   COLOR_WHITE,
   COLOR_GRAY,
   COLOR_RED,
+  COLOR_NAVY,
   COLOR_BLUE,
   COLOR_HOME_BACKGROUND,
   COLOR_TEXT_BLACK,
@@ -25,12 +26,18 @@ import Header from '../../components/Header';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
 import axios from 'axios';
-import {API_URL} from '@env';
+import {API_URL, IMG_URL} from '@env';
+import AnimatedButton from '../../components/AnimationButton';
+import ImagePicker from 'react-native-image-crop-picker';
+import RNFS from 'react-native-fs';
+import {SvgXml} from 'react-native-svg';
+import {svgXml} from '../../assets/svg';
 
 export default function UserDataChangeScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
+  const [profileImage, setProfileImage] = useState('');
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [duplicateMessage, setDuplicateMessage] = useState('');
@@ -83,6 +90,7 @@ export default function UserDataChangeScreen() {
       const response = await axios.patch(
         `${API_URL}/v1/users`,
         {
+          profileImageUrl: profileImage,
           nickname: nickname,
         },
         {
@@ -91,9 +99,11 @@ export default function UserDataChangeScreen() {
       );
 
       if (response.status === 200) {
-        Alert.alert('성공', '닉네임이 성공적으로 변경되었습니다.', [
-          {text: '확인', onPress: () => navigation.goBack()},
-        ]);
+        Alert.alert(
+          '성공',
+          '닉네임/프로필 이미지가 성공적으로 변경되었습니다.',
+          [{text: '확인', onPress: () => navigation.goBack()}],
+        );
       }
     } catch (error) {
       console.error('Failed to update nickname:', error);
@@ -135,6 +145,41 @@ export default function UserDataChangeScreen() {
     }
   };
 
+  const uploadImage = async image => {
+    let imageData = '';
+    await RNFS.readFile(image.path, 'base64')
+      .then(data => {
+        // console.log('encoded', data);
+        imageData = data;
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    // console.log('token:', signUpData.token);
+    try {
+      const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
+        images: [
+          {
+            imageData: imageData,
+            location: 'test',
+          },
+        ],
+      });
+
+      console.log('response image:', response.data);
+
+      if (response.data.result != 'SUCCESS') {
+        console.log('Error: No return data');
+        return;
+      }
+
+      setProfileImage(response.data.data[0].imageUrl);
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
   const logout = async () => {
     try {
       await AsyncStorage.removeItem('accessToken');
@@ -158,12 +203,28 @@ export default function UserDataChangeScreen() {
     <>
       <Header title={'내 정보 수정'} isBackButton={true} />
       <ScrollView contentContainerStyle={styles.entire}>
-        <Image
-          style={[styles.myPageItem, styles.myPageItemLayout]}
-          resizeMode="cover"
-          source={require('../../assets/images/logo.png')}
-        />
-
+        <AnimatedButton
+          style={styles.profile}
+          onPress={() => {
+            // console.log('프로필 사진 변경', profileImage);
+            ImagePicker.openPicker({
+              width: 400,
+              height: 400,
+              cropping: true,
+              cropperCircleOverlay: true,
+            }).then(image => {
+              uploadImage(image);
+            });
+          }}>
+          {profileImage ? (
+            <Image
+              source={{uri: profileImage}}
+              style={{width: 100, height: 100, borderRadius: 75}}
+            />
+          ) : (
+            <SvgXml width={100} height={100} xml={svgXml.icon.camera} />
+          )}
+        </AnimatedButton>
         <View style={styles.inputContainer}>
           <Text style={styles.label}>닉네임</Text>
           <View style={styles.inputWithButton}>
@@ -312,5 +373,13 @@ const styles = StyleSheet.create({
     color: COLOR_PRIMARY,
     fontSize: 14,
     fontFamily: 'NanumSquareRoundB',
+  },
+  profile: {
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+    marginBottom: 10,
   },
 });
