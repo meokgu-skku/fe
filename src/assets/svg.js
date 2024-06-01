@@ -258,25 +258,38 @@ export const svgXml = {
     </svg>
     `,
     camera: `
-    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g filter="url(#filter0_d_90_1892)">
+    <svg width="122" height="123" viewBox="0 0 122 123" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g filter="url(#filter0_d_0_1)">
     <path d="M60 111C89.8234 111 114 86.8234 114 57C114 27.1766 89.8234 3 60 3C30.1766 3 6 27.1766 6 57C6 86.8234 30.1766 111 60 111Z" fill="white"/>
     <path d="M60 74C77.53 74 92.115 81.912 95.325 92.384C104.391 83.333 110 70.822 110 57C110 29.386 87.614 7 60 7C32.386 7 10 29.386 10 57C10 70.822 15.609 83.334 24.675 92.384C27.885 81.912 42.47 74 60 74Z" fill="#2D4B33"/>
     <path d="M95.3248 92.583C92.1148 81.998 77.5298 74 59.9998 74C42.4698 74 27.8848 81.998 24.6748 92.583C33.7208 101.711 46.2078 107.356 59.9998 107.356C73.7918 107.356 86.2788 101.711 95.3248 92.583Z" fill="white"/>
     <path d="M60 67C69.3888 67 77 59.3888 77 50C77 40.6112 69.3888 33 60 33C50.6112 33 43 40.6112 43 50C43 59.3888 50.6112 67 60 67Z" fill="white"/>
     </g>
+    <g filter="url(#filter1_d_0_1)">
+    <path d="M102 111C108.627 111 114 105.627 114 99C114 92.3726 108.627 87 102 87C95.3726 87 90 92.3726 90 99C90 105.627 95.3726 111 102 111Z" fill="#2D4B33"/>
+    <path d="M102 103C102.909 103 103.682 102.681 104.319 102.045C104.955 101.409 105.273 100.636 105.273 99.7268C105.273 98.8177 104.955 98.0449 104.319 97.4083C103.682 96.7722 102.909 96.4541 102 96.4541C101.091 96.4541 100.318 96.7722 99.6815 97.4083C99.0453 98.0449 98.7273 98.8177 98.7273 99.7268C98.7273 100.636 99.0453 101.409 99.6815 102.045C100.318 102.681 101.091 103 102 103ZM102 101.545C101.491 101.545 101.061 101.369 100.709 101.018C100.358 100.666 100.182 100.236 100.182 99.7268C100.182 99.2177 100.358 98.7874 100.709 98.4359C101.061 98.0844 101.491 97.9086 102 97.9086C102.509 97.9086 102.939 98.0844 103.291 98.4359C103.642 98.7874 103.818 99.2177 103.818 99.7268C103.818 100.236 103.642 100.666 103.291 101.018C102.939 101.369 102.509 101.545 102 101.545ZM96.1818 105.545C95.7818 105.545 95.4395 105.403 95.1549 105.118C94.8698 104.833 94.7273 104.49 94.7273 104.09V95.3632C94.7273 94.9632 94.8698 94.6209 95.1549 94.3363C95.4395 94.0512 95.7818 93.9086 96.1818 93.9086H98.4727L99.8182 92.4541H104.182L105.527 93.9086H107.818C108.218 93.9086 108.561 94.0512 108.846 94.3363C109.13 94.6209 109.273 94.9632 109.273 95.3632V104.09C109.273 104.49 109.13 104.833 108.846 105.118C108.561 105.403 108.218 105.545 107.818 105.545H96.1818ZM107.818 104.09V95.3632H104.873L103.545 93.9086H100.455L99.1273 95.3632H96.1818V104.09H107.818Z" fill="white"/>
+    </g>
     <defs>
-    <filter id="filter0_d_90_1892" x="0" y="0" width="120" height="120" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <filter id="filter0_d_0_1" x="0" y="0" width="120" height="120" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
     <feFlood flood-opacity="0" result="BackgroundImageFix"/>
     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
     <feOffset dy="3"/>
     <feGaussianBlur stdDeviation="3"/>
     <feColorMatrix type="matrix" values="0 0 0 0 0.0431373 0 0 0 0 0.0392157 0 0 0 0 0.117647 0 0 0 0.16 0"/>
-    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_90_1892"/>
-    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_90_1892" result="shape"/>
+    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
+    </filter>
+    <filter id="filter1_d_0_1" x="82" y="83" width="40" height="40" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+    <feOffset dy="4"/>
+    <feGaussianBlur stdDeviation="4"/>
+    <feColorMatrix type="matrix" values="0 0 0 0 0.752941 0 0 0 0 0 0 0 0 0 0.172549 0 0 0 0.16 0"/>
+    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_1"/>
+    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_1" result="shape"/>
     </filter>
     </defs>
-    </svg>
+    </svg>    
     `,
     prodileDefault: `
     <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
