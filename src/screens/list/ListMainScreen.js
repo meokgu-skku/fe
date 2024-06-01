@@ -19,6 +19,7 @@ import {
   COLOR_TEXT70GRAY,
   COLOR_HOME_BACKGROUND,
 } from '../../assets/color';
+import Toast from 'react-native-toast-message';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';

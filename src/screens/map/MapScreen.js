@@ -27,6 +27,7 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
+import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {Svg, SvgXml} from 'react-native-svg';
