@@ -1,10 +1,18 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, StyleSheet, Pressable, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  ScrollView,
+  Image,
+} from 'react-native';
 import {
   COLOR_TEXT70GRAY,
   COLOR_TEXT_BLACK,
   COLOR_TEXT60GRAY,
+  COLOR_BACKGROUND,
 } from '../assets/color';
 import {useNavigation} from '@react-navigation/native';
 import {Dimensions} from 'react-native';
@@ -24,6 +32,9 @@ export default function StoreCompoForR(props) {
   const {storeData, index} = props;
 
   const [storeInfo, setStoreInfo] = useState([]);
+  const [naverRatingAvg, setNaverRatingAvg] = useState(0);
+
+  const [score, setScore] = useState(0);
 
   const restaurantDetail = async () => {
     console.log('Id: ', storeData.restaurantId);
@@ -37,6 +48,8 @@ export default function StoreCompoForR(props) {
 
       console.log('Restaurant heart:', response.data.data.restaurant);
       setStoreInfo(response.data.data.restaurant);
+      setScore(response.data.data.restaurant.ratingAvg);
+      setNaverRatingAvg(response.data.data.restaurant.naverRatingAvg);
     } catch (error) {
       console.error('Error fetching restaurant details:', error);
     }
@@ -61,12 +74,21 @@ export default function StoreCompoForR(props) {
       }}>
       <View style={{flexDirection: 'row'}}>
         <View style={styles.imageContainer}>
+          <View
+            style={{
+              position: 'absolute',
+              width: windowWidth / 4,
+              height: windowWidth / 4,
+              backgroundColor: COLOR_BACKGROUND,
+              borderRadius: 10,
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderWidth: 0.5,
+            }}>
+            <SvgXml xml={svgXml.icon.noImage} width="100" height="100" />
+          </View>
           {storeData.image ? (
-            <ImageModal
-              swipeToDismiss={true}
-              modalImageResizeMode="contain"
-              imageBackgroundColor="transparent"
-              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+            <Image
               resizeMode="cover"
               style={styles.image}
               source={{
@@ -74,11 +96,7 @@ export default function StoreCompoForR(props) {
               }}
             />
           ) : (
-            <ImageModal
-              swipeToDismiss={true}
-              modalImageResizeMode="contain"
-              imageBackgroundColor="transparent"
-              overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+            <Image
               resizeMode="cover"
               style={styles.image}
               source={{uri: storeInfo.representativeImageUrl}}
@@ -97,7 +115,7 @@ export default function StoreCompoForR(props) {
             }}>
             <SvgXml xml={svgXml.icon.star} width="15" height="15" style={{}} />
             <Text style={styles.reviewText}>
-              {storeInfo.ratingAvg.toFixed(1)} ({storeInfo.reviewCount})
+              {score.toFixed(1)} ({storeInfo.reviewCount})
             </Text>
             <SvgXml
               xml={svgXml.icon.heart}
@@ -106,6 +124,27 @@ export default function StoreCompoForR(props) {
               style={{marginLeft: 7}}
             />
             <Text style={styles.heartText}>{storeInfo.likeCount}</Text>
+            <SvgXml
+              xml={svgXml.icon.naver}
+              width={15}
+              height={15}
+              style={{marginLeft: 10}}
+            />
+            <Text
+              style={{
+                fontSize: 11,
+                color: COLOR_TEXT70GRAY,
+                // fontWeight: 'bold',
+                fontFamily: 'NanumSquareRoundB',
+                // fontFamily: 'NIXGONFONTS M 2.0',
+                alignSelf: 'center',
+                marginLeft: 3,
+              }}>
+              {naverRatingAvg.toFixed(1) +
+                ' (' +
+                storeInfo.naverReviewCount +
+                ')'}
+            </Text>
           </View>
           <Text style={styles.reviewerName}>
             {storeData.firstReview.reviewer + '님'}
