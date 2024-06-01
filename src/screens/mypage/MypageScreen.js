@@ -78,6 +78,7 @@ export default function MyPageScreen() {
           reviewer: review.username,
           body: review.content,
         },
+        restaurantId: review.restaurantId,
       }));
 
       if (page === 0) {

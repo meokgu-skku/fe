@@ -25,10 +25,10 @@ export default function StoreCompoForR(props) {
   const [storeInfo, setStoreInfo] = useState([]);
 
   const restaurantDetail = async () => {
-    console.log('Id: ', storeData.id);
+    console.log('Id: ', storeData.restaurantId);
     try {
       const response = await axios.get(
-        `${API_URL}/v1/restaurants/${storeData.id}`,
+        `${API_URL}/v1/restaurants/${storeData.restaurantId}`,
         {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
@@ -56,7 +56,7 @@ export default function StoreCompoForR(props) {
       }
       onPress={() => {
         // console.log('가게 상세 페이지로 이동', storeData);
-        navigation.navigate('StoreDetail', {data: storeData});
+        navigation.navigate('StoreDetail', {data: storeInfo});
       }}>
       <View style={{flexDirection: 'row'}}>
         <View style={styles.imageContainer}>
