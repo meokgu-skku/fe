@@ -27,7 +27,6 @@ export default function MapDart(props) {
     <Marker
       coordinate={{latitude: data.latitude, longitude: data.longitude}}
       anchor={{x: 0.5, y: 0}}
-      tracksViewChanges={false}
       onPress={() => {
         onPress(data);
         console.log('marker pressed', data.name);
