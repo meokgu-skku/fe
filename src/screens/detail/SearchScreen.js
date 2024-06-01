@@ -41,6 +41,17 @@ import AppContext from '../../components/AppContext';
 
 const windowWidth = Dimensions.get('window').width;
 
+const parseHighlightedText = (text) => {
+  const parts = text.split(/(<strong>|<\/strong>)/g);
+  return parts.map((part, index) => {
+    if (part === '<strong>') return <Text key={index} style={{ fontFamily: 'NanumSquareRoundEB' }}>{parts[index + 1]}</Text>;
+    if (part === '</strong>') return null;
+    if (parts[index - 1] === '<strong>') return null;
+    return <Text key={index}>{part}</Text>;
+  });
+};
+
+
 export default function SearchScreen(props) {
   const navigation = useNavigation();
   const context = useContext(AppContext);
@@ -251,7 +262,7 @@ export default function SearchScreen(props) {
                       navigation.goBack();
                     }}>
                     <SvgXml xml={svgXml.icon.search} width="18" height="18" />
-                    <Text style={styles.buttonText}>{item.org_display}</Text>
+                    <Text style={styles.buttonText}>{parseHighlightedText(item.highlighted_display)}</Text>
                     <View style={{flex: 1}} />
                     <Text style={styles.categoryText}>{item.category}</Text>
                   </AnimatedButton>
