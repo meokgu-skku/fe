@@ -216,7 +216,7 @@ export default function ListMainScreen() {
         },
       );
       // console.log('queryString:', queryString);
-      // console.log('response:', response.data.data);
+      console.log('response:', response.data.data);
 
       console.log('page:', p);
 
