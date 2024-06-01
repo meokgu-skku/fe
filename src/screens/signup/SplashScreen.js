@@ -27,6 +27,8 @@ export default function SplashScreen() {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
+  const [buttonView, setButtonView] = useState(false);
+
   const tryAutoLogin = async () => {
     try {
       // AsyncStorage(=디바이스에 저장하는 데이터)에 저장된 토큰을 가져온다.
@@ -37,6 +39,7 @@ export default function SplashScreen() {
       //없으면 그만
       console.log('accessToken:', accessToken);
       if (accessToken == null) {
+        setButtonView(true);
         return;
       }
 
@@ -49,6 +52,7 @@ export default function SplashScreen() {
       //토큰이 맞지 않으면 그만
       if (!response.data.data) {
         console.log('Error: No return data');
+        setButtonView(true);
         return;
       }
 
@@ -59,11 +63,12 @@ export default function SplashScreen() {
       //화면 이동
       navigation.navigate('BottomTab');
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: error.response.data.message,
-      });
+      setButtonView(true);
+      // Toast.show({
+      //   type: 'error',
+      //   text1: 'Error',
+      //   text2: error.response.data.message,
+      // });
     }
   };
 
@@ -86,9 +91,11 @@ export default function SplashScreen() {
           style={styles.image}
         />
       </View>
-      <View style={styles.buttonContainer}>
-        <LongPrimaryButton text="시작하기" action={pressButton} />
-      </View>
+      {buttonView ? (
+        <View style={styles.buttonContainer}>
+          <LongPrimaryButton text="시작하기" action={pressButton} />
+        </View>
+      ) : null}
     </View>
   );
 }
