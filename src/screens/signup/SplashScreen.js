@@ -57,8 +57,12 @@ export default function SplashScreen() {
 
       //화면 이동
       navigation.navigate('BottomTab');
-    } catch (e) {
-      console.log('error', e);
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

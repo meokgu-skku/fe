@@ -83,8 +83,11 @@ export default function ProfileSetScreen(props) {
 
       navigation.navigate('BottomTab');
     } catch (error) {
-      console.log('Error:', error);
-      console.log('Error response:', error.response.data);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
@@ -119,7 +122,11 @@ export default function ProfileSetScreen(props) {
 
       setProfileImage(response.data.data[0].imageUrl);
     } catch (error) {
-      console.log('Error:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

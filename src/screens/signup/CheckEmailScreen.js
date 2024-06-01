@@ -69,7 +69,11 @@ export default function CheckEmailScreen(props) {
         token: response.data.data.token,
       });
     } catch (error) {
-      console.log('Error:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

@@ -34,6 +34,7 @@ import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
+import Toast from 'react-native-toast-message';
 
 export default function SignupScreen() {
   const navigation = useNavigation();
@@ -107,8 +108,12 @@ export default function SignupScreen() {
         });
       }
     } catch (error) {
-      const errorResponse = AxiosError.response;
-      console.log(errorResponse);
+      console.log(error.response.data);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

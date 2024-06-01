@@ -56,8 +56,11 @@ export default function FindPasswordScreen() {
         });
       }
     } catch (error) {
-      const errorResponse = AxiosError.response;
-      console.log(errorResponse);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
