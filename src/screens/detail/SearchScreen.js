@@ -176,9 +176,9 @@ export default function SearchScreen(props) {
             <View style={styles.recentHeader}>
               <Text
                 style={{
-                  fontSize: 16,
+                  fontSize: 15,
                   color: COLOR_TEXT_BLACK,
-                  fontFamily: 'NanumSquareRoundEB'
+                  fontFamily: 'NanumSquareRoundB'
                 }}>
                 최근 검색어
               </Text>
@@ -192,7 +192,7 @@ export default function SearchScreen(props) {
                   }
                 }}
                 style={{marginLeft: 10}}>
-                <Text style={{fontSize: 12, color: COLOR_TEXT60GRAY, fontFamily: ''}}>
+                <Text style={{fontSize: 12, color: COLOR_TEXT60GRAY, fontFamily: 'NanumSquareRoundB', marginBottom: 4}}>
                   전체 삭제
                 </Text>
               </AnimatedButton>
@@ -219,7 +219,7 @@ export default function SearchScreen(props) {
                         <Text style={styles.recentText}>{item.query}</Text>
                       </AnimatedButton>
 
-                      <View style={{width: 16}} />
+                      <View style={{width: 7}} />
                     </>
                   );
                 })}
@@ -279,20 +279,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: 12,
+    paddingVertical: 7,
     borderRadius: 15,
     backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_DISABLE_GRAY,
+    borderColor: COLOR_PRIMARY,
     borderWidth: 1,
     height: 30,
   },
   recentText: {
-    fontSize: 15,
+    fontSize: 13,
     color: COLOR_TEXT_BLACK,
     textAlign: 'center',
-    lineHeight: 20,
-    fontFamily: 'NanumSquareRound',
+    lineHeight: 16,
+    fontFamily: 'NanumSquareRoundB',
   },
   searchArea: {
     // backgroundColor: 'blue',
