@@ -18,6 +18,7 @@ import {
   COLOR_TEXT_BLACK,
   COLOR_TEXT70GRAY,
   COLOR_HOME_BACKGROUND,
+  COLOR_BLUE,
 } from '../../assets/color';
 import Toast from 'react-native-toast-message';
 import AnimatedButton from '../../components/AnimationButton';
@@ -285,8 +286,7 @@ export default function ListMainScreen() {
               justifyContent: 'center',
             }}
             onPress={() => {
-              setSearch('');
-              navigation.navigate('Search', {setSearch: setSearch});
+              navigation.navigate('Search', {setSearch: setSearch, search: search});
             }}>
             <View
               style={{
@@ -799,9 +799,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     flex: 1,
     fontSize: 13,
-    color: '#888888',
+    color: COLOR_TEXT_BLACK,
     padding: 0,
-    fontFamily: 'NanumSquareRoundB',
+    fontFamily: 'NanumSquareRoundEB',
   },
   filterButton: {
     flexDirection: 'row',
