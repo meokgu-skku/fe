@@ -51,7 +51,7 @@ export default function StoreCompo(props) {
       key={index.toString()}
       style={{
         width: addPadding ? windowWidth - 32 : windowWidth - 32,
-        height: windowWidth / 3,
+        // height: windowWidth / 3,
         paddingHorizontal: addPadding,
         // backgroundColor: storeData.id % 2 === 0 ? 'red' : 'blue',
         // backgroundColor: 'blue',
@@ -156,33 +156,14 @@ export default function StoreCompo(props) {
 
           {storeData.representativeReviewContent ? (
             <>
-              <Text
-                numberOfLines={4}
-                style={{
-                  fontSize: 11,
-                  color: COLOR_TEXT60GRAY,
-                  fontFamily: 'NanumSquareRoundR',
-                }}>
+              <Text numberOfLines={3} style={styles.review}>
                 {storeData.representativeReviewContent}
               </Text>
             </>
           ) : (
             <>
-              <Text
-                style={{
-                  fontSize: 11,
-                  color: COLOR_TEXT70GRAY,
-                  fontFamily: 'NanumSquareRoundR',
-                }}>
-                {'아직 작성된 리뷰가 없어요!'}
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={{
-                  fontSize: 11,
-                  color: COLOR_TEXT60GRAY,
-                  fontFamily: 'NanumSquareRoundR',
-                }}>
+              <Text style={styles.review}>{'아직 작성된 리뷰가 없어요!'}</Text>
+              <Text numberOfLines={2} style={styles.review}>
                 {`먹구스꾸에서 ${storeData.name} 리뷰 쓰고 첫 리뷰의 주인공이 되어보세요!`}
               </Text>
             </>
@@ -199,5 +180,11 @@ const styles = StyleSheet.create({
     height: 0.5,
     backgroundColor: '#D9D9D9', // Change color as needed
     width: '100%', // Adjust width as needed
+  },
+  review: {
+    fontSize: 11,
+    color: COLOR_TEXT70GRAY,
+    fontFamily: 'NanumSquareRoundR',
+    marginRight: 5,
   },
 });
