@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   myPageItemLayout: {
     marginTop: 20,
     marginBottom: 10,
-    borderRadius: 15,
+    borderRadius: 50,
   },
   text6: {
     fontSize: 20,

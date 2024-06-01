@@ -90,6 +90,7 @@ export default function UserDataChangeScreen() {
       const response = await axios.patch(
         `${API_URL}/v1/users`,
         {
+          profileImageUrl: profileImage,
           nickname: nickname,
         },
         {
@@ -98,9 +99,11 @@ export default function UserDataChangeScreen() {
       );
 
       if (response.status === 200) {
-        Alert.alert('성공', '닉네임이 성공적으로 변경되었습니다.', [
-          {text: '확인', onPress: () => navigation.goBack()},
-        ]);
+        Alert.alert(
+          '성공',
+          '닉네임/프로필 이미지가 성공적으로 변경되었습니다.',
+          [{text: '확인', onPress: () => navigation.goBack()}],
+        );
       }
     } catch (error) {
       console.error('Failed to update nickname:', error);
@@ -219,7 +222,7 @@ export default function UserDataChangeScreen() {
               style={{width: 100, height: 100, borderRadius: 75}}
             />
           ) : (
-            <SvgXml width={200} height={200} xml={svgXml.icon.camera} />
+            <SvgXml width={100} height={100} xml={svgXml.icon.camera} />
           )}
         </AnimatedButton>
         <View style={styles.inputContainer}>
@@ -374,11 +377,9 @@ const styles = StyleSheet.create({
   profile: {
     width: 100,
     height: 100,
-    borderRadius: 75,
-    borderWidth: 0.7,
-    borderColor: COLOR_NAVY,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 50,
+    marginTop: 30,
+    marginBottom: 10,
   },
 });

@@ -150,8 +150,9 @@ export default function ProfileSetScreen(props) {
             }}>
             {profileImage ? (
               <Image
+                resizeMode="contain"
                 source={{uri: profileImage}}
-                style={{width: 150, height: 150, borderRadius: 75}}
+                style={{borderRadius: 75, width: 150, height: 150}}
               />
             ) : (
               <SvgXml width={200} height={200} xml={svgXml.icon.camera} />
