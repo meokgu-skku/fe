@@ -51,7 +51,7 @@ export default function ListMainScreen() {
   const [priceRangeModalVisible, setPriceRangeModalVisible] = useState(false);
   const [sortModalVisible, setSortModalVisible] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [storeScore, setStoreScore] = useState('전체');
   const [storeScoreNaver, setStoreScoreNaver] = useState('전체');
   const [replyNum, setReplyNum] = useState('전체');
@@ -74,10 +74,10 @@ export default function ListMainScreen() {
   const checkCategory = async () => {
     const srcCategory = await AsyncStorage.getItem('category');
     if (srcCategory) {
-      setSelectedCategory(srcCategory);
+      setSelectedCategory([srcCategory]);
       await AsyncStorage.setItem('category', '');
     } else {
-      setSelectedCategory('전체');
+      setSelectedCategory([]);
     }
   };
 
@@ -100,9 +100,9 @@ export default function ListMainScreen() {
         params.like = true;
       }
 
-      if (selectedCategory !== '전체') {
+      if (selectedCategory.length > 0) {
         // console.log('selectedCategory:', selectedCategory, pageNumber);
-        params.categories = [selectedCategory];
+        params.categories = selectedCategory;
       }
 
       switch (storeScore) {
@@ -319,7 +319,7 @@ export default function ListMainScreen() {
                 ,
                 {
                   backgroundColor:
-                    selectedCategory !== '전체'
+                    selectedCategory.length > 0
                       ? COLOR_PRIMARY
                       : categoryModalVisible
                       ? '#D9D9D9'
@@ -330,7 +330,7 @@ export default function ListMainScreen() {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
               }}>
-              {selectedCategory === '전체' ? (
+              {selectedCategory.length == 0 ? (
                 <>
                   <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
                   <Text style={styles.filterText}>{'카테고리'}</Text>
@@ -338,9 +338,7 @@ export default function ListMainScreen() {
               ) : (
                 <>
                   <SvgXml xml={svgXml.icon.shopColor} width="20" height="20" />
-                  <Text style={styles.filterTextActive}>
-                    {selectedCategory}
-                  </Text>
+                  <Text style={styles.filterTextActive}>{'카테고리'}</Text>
                 </>
               )}
             </AnimatedButton>
@@ -680,7 +678,7 @@ export default function ListMainScreen() {
               style={{padding: 4}}
               onPress={() => {
                 console.log('새로고침');
-                setSelectedCategory('전체');
+                setSelectedCategory([]);
                 setCategoryModalVisible(false);
               }}>
               <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
@@ -691,7 +689,7 @@ export default function ListMainScreen() {
           <View style={{marginTop: 12}}>
             <CategoryButton
               onPress={setSelectedCategory}
-              selected={selectedCategory}
+              data={selectedCategory}
             />
           </View>
         </View>
