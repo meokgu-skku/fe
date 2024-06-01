@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
+import {SvgXml} from 'react-native-svg';
+import {svgXml} from '../../assets/svg';
 import {
   COLOR_BACKGROUND,
   COLOR_HOME_BACKGROUND,
@@ -132,7 +134,7 @@ export default function MyPageScreen() {
       setStorePage(0);
       fetchMyReviews(0);
       fetchLikedStores(0);
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -159,19 +161,23 @@ export default function MyPageScreen() {
     <>
       <Header title={'내 프로필'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
-        <Image
-          style={[styles.myPageItem, styles.myPageItemLayout]}
-          resizeMode="cover"
-          source={
-            profileImageUrl
-              ? {uri: profileImageUrl}
-              : require('../../assets/images/logo.png')
-          }
-        />
+        {profileImageUrl != '' ? (
+          <Image
+            style={[styles.myPageItem]}
+            resizeMode="cover"
+            source={{uri: profileImageUrl}}
+          />
+        ) : (
+          <Image
+            style={[styles.myPageItemLayout]}
+            resizeMode="cover"
+            source={require('../../assets/images/logo.png')}
+          />
+        )}
         <TouchableOpacity
           style={styles.text6Position}
           onPress={() => {
-            navigation.navigate('UserDataChange');
+            navigation.navigate('UserDataChange', {data: profileImageUrl});
           }}>
           <Text style={styles.text6}>{nickname}</Text>
           <Image
@@ -220,8 +226,13 @@ const styles = StyleSheet.create({
   myPageItem: {
     width: 100,
     height: 100,
+    marginTop: 20,
+    marginBottom: 10,
+    borderRadius: 50,
   },
   myPageItemLayout: {
+    width: 100,
+    height: 100,
     marginTop: 20,
     marginBottom: 10,
     borderRadius: 15,

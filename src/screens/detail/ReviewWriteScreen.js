@@ -17,6 +17,7 @@ import {
   TextInput,
   FlatList,
   Pressable,
+  TouchableWithoutFeedback,
   Alert,
 } from 'react-native';
 import {
@@ -57,7 +58,7 @@ export default function ReviewWriteScreen(props) {
   const [showRatingError, setShowRatingError] = useState(false);
   const [showContentError, setShowContentError] = useState(false);
   const [showImageError, setShowImageError] = useState(false);
-  const [reviewImage, setReviewImage] = useState([]);
+  const [reviewImage, setReviewImage] = useState('');
 
   console.log('storeData:', 2);
 
@@ -76,7 +77,7 @@ export default function ReviewWriteScreen(props) {
         `${API_URL}/v1/restaurants/${storeData.id}/reviews`,
         {
           content: reviewContent,
-          imageUrls: reviewImage,
+          imageUrls: [reviewImage],
           rating: rating,
         },
         {
@@ -122,10 +123,7 @@ export default function ReviewWriteScreen(props) {
         console.log('response image:', response.data);
 
         if (response.data.result === 'SUCCESS') {
-          setReviewImage(prevImages => [
-            ...prevImages,
-            response.data.data[0].imageUrl,
-          ]);
+          setReviewImage(response.data.data[0].imageUrl);
           break;
         }
         count += 1;
@@ -139,29 +137,17 @@ export default function ReviewWriteScreen(props) {
     }
   };
 
-  const removeImage = index => {
-    setReviewImage(prevImages => prevImages.filter((_, i) => i !== index));
-  };
-
-  const DottedLine = () => {
-    return (
-      <View style={styles.dottedContainer}>
-        {[...Array(20)].map((_, index) => (
-          <View key={index} style={styles.dot} />
-        ))}
-      </View>
-    );
-  };
-
   return (
     <>
       <Header title={'리뷰 쓰기'} isBackButton={true} />
       <View contentContainerStyle={styles.entire}>
         <View style={styles.headerContainer}>
-          <Text style={styles.storeName}>{storeData.name}</Text>
+          <Text style={styles.storeName} numberOfLines={1}>
+            {storeData.name}
+          </Text>
           <View style={styles.starContainer}>
             {[...Array(5)].map((_, index) => (
-              <TouchableOpacity
+              <TouchableWithoutFeedback
                 key={index}
                 onPress={() => {
                   setRating(index + 1);
@@ -175,9 +161,9 @@ export default function ReviewWriteScreen(props) {
                   }
                   width="24"
                   height="24"
-                  style={{marginLeft: 7}}
+                  style={{marginLeft: 2}}
                 />
-              </TouchableOpacity>
+              </TouchableWithoutFeedback>
             ))}
           </View>
         </View>
@@ -189,10 +175,10 @@ export default function ReviewWriteScreen(props) {
             style={styles.photoButton}
             onPress={() => {
               console.log('리뷰 사진 추가', reviewImage);
-              if (reviewImage.length >= 3) {
-                console.log('Error: Maximum 3 images allowed');
-                return;
-              }
+              // if (reviewImage.) {
+              //   console.log('Error: Maximum 3 images allowed');
+              //   return;
+              // }
               ImagePicker.openPicker({
                 width: 400,
                 height: 400,
@@ -206,8 +192,18 @@ export default function ReviewWriteScreen(props) {
                   console.error('Image Picker Error:', error);
                 });
             }}>
-            <SvgXml xml={svgXml.icon.camera} width={24} height={24} />
-            <Text style={styles.photoButtonText}>사진 첨부하기</Text>
+            {reviewImage ? (
+              <View style={styles.imageWrapper}>
+                <Image source={{uri: reviewImage}} style={styles.image} />
+                <TouchableOpacity
+                  style={styles.removeButton}
+                  onPress={() => setReviewImage('')}>
+                  <Text style={styles.removeButtonText}>X</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <SvgXml xml={svgXml.icon.reviewCamera} width={50} height={50} />
+            )}
           </AnimatedButton>
           {showImageError && (
             <Text style={styles.errorText}>사진은 최대 3개만 넣어주세요</Text>
@@ -225,22 +221,7 @@ export default function ReviewWriteScreen(props) {
           {showContentError && (
             <Text style={styles.errorText}>리뷰 내용을 작성해주세요</Text>
           )}
-          <DottedLine />
-          <ScrollView alwaysBounceHorizontal style={styles.imageScrollView}>
-            <View style={styles.imageContainer}>
-              {reviewImage.map((image, index) => (
-                <View key={index} style={styles.imageWrapper}>
-                  <Image source={{uri: image}} style={styles.image} />
-                  <TouchableOpacity
-                    style={styles.removeButton}
-                    onPress={() => removeImage(index)}>
-                    <Text style={styles.removeButtonText}>X</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-          </ScrollView>
-          <DottedLine />
+
           <TouchableOpacity
             style={styles.submitButton}
             onPress={handleReviewSubmit}>
@@ -267,13 +248,17 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   Container: {
-    width: '100%',
+    // width: '100%',
     marginHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   storeName: {
     fontSize: 22,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NIXGONFONTS M 2.0',
     color: COLOR_TEXT_BLACK,
+    maxWidth: (windowWidth * 3) / 5,
   },
   starContainer: {
     flexDirection: 'row',
@@ -282,14 +267,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLOR_WHITE,
-    borderColor: COLOR_PRIMARY,
-    borderWidth: 1,
+    backgroundColor: COLOR_LIGHTGRAY,
+    // borderColor: COLOR_PRIMARY,
+    // borderWidth: 1,
     padding: 12,
     borderRadius: 8,
     marginTop: 6,
-    marginBottom: 16,
-    width: '92%',
+    marginBottom: 0,
+    width: 130,
+    height: 130,
   },
   photoButtonText: {
     color: COLOR_PRIMARY,
@@ -305,12 +291,12 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     position: 'relative',
-    marginRight: 8,
+    // marginRight: 8,
   },
   image: {
-    width: 120,
-    height: 120,
-    borderRadius: 10,
+    width: 130,
+    height: 130,
+    borderRadius: 8,
   },
   removeButton: {
     position: 'absolute',
@@ -330,7 +316,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     padding: 12,
-    width: '92%',
+    fontFamily: 'NanumSquareRoundB',
+    // width: '92%',
+    // marginHorizontal: 16,
     height: 160,
     textAlignVertical: 'top',
     marginVertical: 16,
@@ -367,7 +355,8 @@ const styles = StyleSheet.create({
   },
   submitButtonText: {
     color: COLOR_WHITE,
+    fontFamily: 'NanumSquareRoundEB',
     fontSize: 18,
-    fontWeight: '600',
+    // fontWeight: '600',
   },
 });
