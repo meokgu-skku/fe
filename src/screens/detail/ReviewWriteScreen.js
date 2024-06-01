@@ -133,7 +133,11 @@ export default function ReviewWriteScreen(props) {
         Alert.alert('오류', '이미지 업로드에 실패했습니다!', [{text: '확인'}]);
       }
     } catch (error) {
-      console.log('Error:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 

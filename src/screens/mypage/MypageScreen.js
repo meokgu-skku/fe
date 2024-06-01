@@ -55,7 +55,11 @@ export default function MyPageScreen() {
       setProfileImageUrl(response.data.data.userDto.profileImageUrl);
       setEmail(response.data.data.userDto.email);
     } catch (error) {
-      console.error('Failed to fetch user info:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.response.data.message,
+      });
     }
   };
 
