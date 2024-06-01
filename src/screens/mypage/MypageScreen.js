@@ -163,18 +163,16 @@ export default function MyPageScreen() {
       <ScrollView contentContainerStyle={styles.entire}>
         {profileImageUrl != '' ? (
           <Image
-            style={[styles.myPageItem, styles.myPageItemLayout]}
+            style={[styles.myPageItem]}
             resizeMode="cover"
-            source={
-              profileImageUrl
-                ? {uri: profileImageUrl}
-                : require('../../assets/images/logo.png')
-            }
+            source={{uri: profileImageUrl}}
           />
         ) : (
-          <View style={[styles.myPageItem, styles.myPageItemLayout]}>
-            <SvgXml xml={svgXml.icon.prodileDefault} width="100" height="100" />
-          </View>
+          <Image
+            style={[styles.myPageItemLayout]}
+            resizeMode="cover"
+            source={require('../../assets/images/logo.png')}
+          />
         )}
         <TouchableOpacity
           style={styles.text6Position}
@@ -228,11 +226,16 @@ const styles = StyleSheet.create({
   myPageItem: {
     width: 100,
     height: 100,
-  },
-  myPageItemLayout: {
     marginTop: 20,
     marginBottom: 10,
     borderRadius: 50,
+  },
+  myPageItemLayout: {
+    width: 100,
+    height: 100,
+    marginTop: 20,
+    marginBottom: 10,
+    borderRadius: 15,
   },
   text6: {
     fontSize: 20,
