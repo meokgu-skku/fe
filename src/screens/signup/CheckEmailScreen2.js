@@ -15,6 +15,7 @@ import {
   Keyboard,
   Pressable,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {
   COLOR_WHITE,
   COLOR_BACKGROUND,

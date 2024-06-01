@@ -20,8 +20,9 @@ import {
   COLOR_TEXT_BLACK,
   COLOR_TEXT70GRAY,
   COLOR_TEXT60GRAY,
-  COLOR_DISABLE_GRAY
+  COLOR_DISABLE_GRAY,
 } from '../../assets/color';
+import Toast from 'react-native-toast-message';
 import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/native';
@@ -121,10 +122,11 @@ export default function SearchScreen(props) {
     <>
       <Header title={'검색'} isBackButton={true} />
       <View style={styles.entire}>
-        <View style={{
-          alignItems: 'center', 
-          marginBottom: searchText.length == 0 ? 20: 0,
-        }}>
+        <View
+          style={{
+            alignItems: 'center',
+            marginBottom: searchText.length == 0 ? 20 : 0,
+          }}>
           {/* 검색창 */}
           <View
             style={{
@@ -182,7 +184,7 @@ export default function SearchScreen(props) {
                 style={{
                   fontSize: 15,
                   color: COLOR_TEXT_BLACK,
-                  fontFamily: 'NanumSquareRoundB'
+                  fontFamily: 'NanumSquareRoundB',
                 }}>
                 최근 검색어
               </Text>
@@ -196,7 +198,13 @@ export default function SearchScreen(props) {
                   }
                 }}
                 style={{marginLeft: 10}}>
-                <Text style={{fontSize: 12, color: COLOR_TEXT60GRAY, fontFamily: 'NanumSquareRoundB', marginBottom: 4}}>
+                <Text
+                  style={{
+                    fontSize: 12,
+                    color: COLOR_TEXT60GRAY,
+                    fontFamily: 'NanumSquareRoundB',
+                    marginBottom: 4,
+                  }}>
                   전체 삭제
                 </Text>
               </AnimatedButton>
@@ -284,18 +292,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 12,
-    paddingVertical: 7,
+    paddingVertical: 0,
     borderRadius: 15,
     backgroundColor: COLOR_WHITE,
     borderColor: COLOR_PRIMARY,
     borderWidth: 1,
-    height: 30,
+    height: 37,
   },
   recentText: {
     fontSize: 13,
     color: COLOR_TEXT_BLACK,
     textAlign: 'center',
-    lineHeight: 16,
+    // lineHeight: 16,
     fontFamily: 'NanumSquareRoundB',
   },
   searchArea: {
@@ -329,5 +337,5 @@ const styles = StyleSheet.create({
     fontFamily: 'NanumSquareRoundEB',
     textAlign: 'right',
     marginBottom: 2.5,
-  }
+  },
 });

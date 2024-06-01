@@ -20,6 +20,7 @@ import {
   Linking,
   Alert,
 } from 'react-native';
+import Toast from 'react-native-toast-message';
 import {
   COLOR_WHITE,
   COLOR_BACKGROUND,
@@ -134,18 +135,24 @@ export default function StoreDetailScreen(props) {
     Linking.openURL(`tel:${phoneNumber}`);
   };
 
-  const onCopy = (text) => {
+  const onCopy = text => {
     Clipboard.setString(text);
     Alert.alert('클립보드에 복사되었습니다.');
-  }
+  };
 
-  const handleReviewLikedState = async (review) => {
+  const handleReviewLikedState = async review => {
     try {
       const newReviewLikedState = !review.item.isLike;
-      const updatedReviewList = reviewList.map((item) =>
+      const updatedReviewList = reviewList.map(item =>
         item.id === review.item.id
-          ? { ...item, isLike: newReviewLikedState, likeCount: newReviewLikedState ? item.likeCount + 1 : item.likeCount - 1 }
-          : item
+          ? {
+              ...item,
+              isLike: newReviewLikedState,
+              likeCount: newReviewLikedState
+                ? item.likeCount + 1
+                : item.likeCount - 1,
+            }
+          : item,
       );
       setReviewList(updatedReviewList);
       const ret = await axios.post(
@@ -166,14 +173,18 @@ export default function StoreDetailScreen(props) {
         text2: error.response.data.message,
       });
 
-      const rollbackReviewList = reviewList.map((item) =>
+      const rollbackReviewList = reviewList.map(item =>
         item.id === review.item.id
-          ? { ...item, isLike: review.item.isLike, likeCount: review.item.likeCount }
-          : item
+          ? {
+              ...item,
+              isLike: review.item.isLike,
+              likeCount: review.item.likeCount,
+            }
+          : item,
       );
       setReviewList(rollbackReviewList);
     }
-  }
+  };
 
   const handleLoadMoreMenus = () => {
     setMenuCount(menuCount + 4);
@@ -190,7 +201,8 @@ export default function StoreDetailScreen(props) {
   const renderMenuItem = ({item}) => (
     <>
       <View key={item.name} style={styles.sectionItem}>
-        <View style={{
+        <View
+          style={{
             position: 'absolute',
             opacity: 1,
             width: 90,
@@ -198,8 +210,13 @@ export default function StoreDetailScreen(props) {
             borderRadius: 12,
             marginVertical: 12,
           }}>
-            <SvgXml xml={svgXml.icon.noImage} width={90} height={90} style={{marginTop: 5}}/>
-          </View>
+          <SvgXml
+            xml={svgXml.icon.noImage}
+            width={90}
+            height={90}
+            style={{marginTop: 5}}
+          />
+        </View>
         <ImageModal
           swipeToDismiss={true}
           modalImageResizeMode="contain"
@@ -222,7 +239,7 @@ export default function StoreDetailScreen(props) {
     const rating = item.rating;
     const likeCount = item.likeCount;
 
-    console.log("review: ", item);
+    console.log('review: ', item);
 
     const renderStars = () => {
       const stars = [];
@@ -265,7 +282,15 @@ export default function StoreDetailScreen(props) {
                 <TouchableOpacity
                   style={styles.contactButton}
                   onPress={() => handleReviewLikedState({item})}>
-                  <SvgXml xml={item.isLike ? svgXml.icon.thumbupOn : svgXml.icon.thumbupOff} width={20} height={20} />
+                  <SvgXml
+                    xml={
+                      item.isLike
+                        ? svgXml.icon.thumbupOn
+                        : svgXml.icon.thumbupOff
+                    }
+                    width={20}
+                    height={20}
+                  />
                 </TouchableOpacity>
               </View>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -274,7 +299,6 @@ export default function StoreDetailScreen(props) {
               </View>
             </View>
             <View style={{flexDirection: 'row'}}>
-              
               {item.imageUrls.length > 0 ? (
                 <>
                   <Text style={styles.reviewText}>{item.content}</Text>
@@ -293,13 +317,12 @@ export default function StoreDetailScreen(props) {
                     )}
                     keyExtractor={(image, index) => `${item.id}-${index}`}
                   />
-              </>
+                </>
               ) : (
                 <>
                   <Text style={styles.reviewText2}>{item.content}</Text>
                 </>
               )}
-              
             </View>
           </View>
         </View>
@@ -312,24 +335,24 @@ export default function StoreDetailScreen(props) {
     <>
       <View style={styles.entire}>
         <View style={styles.storeImageContainer}>
-        <ImageModal
-          swipeToDismiss={true}
-          modalImageResizeMode="contain"
-          // resizeMode="contain"
-          imageBackgroundColor="transparent"
-          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
-          source={{uri: restaurant.restaurant.representativeImageUrl}}
-          style={styles.storeImage}
-        />
-        <View
-          style={{
-            position: 'absolute',
-            width: windowWidth,
-            height: 240,
-            backgroundColor: '#000000',
-            opacity: 0.4,
-          }}
-        />
+          <ImageModal
+            swipeToDismiss={true}
+            modalImageResizeMode="contain"
+            // resizeMode="contain"
+            imageBackgroundColor="transparent"
+            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+            source={{uri: restaurant.restaurant.representativeImageUrl}}
+            style={styles.storeImage}
+          />
+          <View
+            style={{
+              position: 'absolute',
+              width: windowWidth,
+              height: 240,
+              backgroundColor: '#000000',
+              opacity: 0.4,
+            }}
+          />
         </View>
         <View style={styles.storeInfo}>
           <View style={styles.storeHeader}>
@@ -364,7 +387,8 @@ export default function StoreDetailScreen(props) {
                   <SvgXml xml={svgXml.icon.naver} width={15} height={15} />
                 </Text>
                 <Text style={styles.storeReviewNaver}>
-                  리뷰 {restaurant.restaurant.naverReviewCount} {')'}</Text>
+                  리뷰 {restaurant.restaurant.naverReviewCount} {')'}
+                </Text>
               </View>
             </View>
           </View>
@@ -425,7 +449,10 @@ export default function StoreDetailScreen(props) {
               <Text style={styles.storeAddress}>
                 위치: {restaurant.restaurant.detailInfo.address}
               </Text>
-              <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.address)}}>
+              <TouchableOpacity
+                onPress={() => {
+                  onCopy(restaurant.restaurant.detailInfo.address);
+                }}>
                 <Text style={styles.copyButtonText}>복사</Text>
               </TouchableOpacity>
             </View>
@@ -440,7 +467,10 @@ export default function StoreDetailScreen(props) {
             <Text style={styles.storePhoneNum}>
               전화번호: {restaurant.restaurant.detailInfo.contactNumber}
             </Text>
-            <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.contactNumber)}}>
+            <TouchableOpacity
+              onPress={() => {
+                onCopy(restaurant.restaurant.detailInfo.contactNumber);
+              }}>
               <Text style={styles.copyButtonText}>복사</Text>
             </TouchableOpacity>
           </View>

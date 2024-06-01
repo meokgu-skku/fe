@@ -24,6 +24,7 @@ import {
   COLOR_TEXT70GRAY,
   COLOR_SECONDARY,
 } from '../../assets/color';
+import Toast from 'react-native-toast-message';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';

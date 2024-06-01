@@ -26,6 +26,7 @@ import {
   COLOR_HOME_BACKGROUND,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
+import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';
 import axios from 'axios';
