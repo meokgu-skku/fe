@@ -42,7 +42,7 @@ import {astToReact} from 'react-native-svg/lib/typescript/xml';
 const windowWidth = Dimensions.get('window').width;
 
 export default function CategoryButton(props) {
-  const {onPress, selected} = props;
+  const {onPress, data} = props;
 
   const navigation = useNavigation();
   const context = useContext(AppContext);
@@ -59,9 +59,21 @@ export default function CategoryButton(props) {
             <AnimatedButton
               style={styles.buttonSet}
               onPress={async () => {
-                onPress(categroy);
+                if (data.includes(categroy)) {
+                  const filtered = data.filter(item => item !== categroy);
+                  onPress(filtered);
+                } else {
+                  onPress([...data, categroy]);
+                }
               }}>
-              <View key={index} style={styles.categroyButton}>
+              <View
+                key={index}
+                style={[
+                  styles.categroyButton,
+                  data.includes(categroy)
+                    ? {backgroundColor: COLOR_SECONDARY, borderRadius: 20}
+                    : null,
+                ]}>
                 {n === 1 ? (
                   <Image
                     style={styles.foodIcon}
@@ -108,9 +120,21 @@ export default function CategoryButton(props) {
             <AnimatedButton
               style={styles.buttonSet}
               onPress={async () => {
-                onPress(categroy);
+                if (data.includes(categroy)) {
+                  const filtered = data.filter(item => item !== categroy);
+                  onPress(filtered);
+                } else {
+                  onPress([...data, categroy]);
+                }
               }}>
-              <View key={index} style={styles.categroyButton}>
+              <View
+                key={index}
+                style={[
+                  styles.categroyButton,
+                  data.includes(categroy)
+                    ? {backgroundColor: COLOR_SECONDARY, borderRadius: 20}
+                    : null,
+                ]}>
                 {n === 1 ? (
                   <Image
                     style={styles.foodIcon}
@@ -182,8 +206,6 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     width: 50,
     height: 50,
-    backgroundColor: COLOR_SECONDARY,
-    borderRadius: 20,
   },
   categroyText2: {
     fontSize: 13,
@@ -196,6 +218,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 0,
+    // backgroundColor: 'red',
   },
   foodIcon: {
     width: 30,

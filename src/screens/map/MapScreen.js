@@ -64,7 +64,7 @@ export default function MapScreen() {
   const [myLocation, setMyLocation] = useState({latitude: 0, longitude: 0});
   const [storeData, setStoreData] = useState({});
 
-  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [storeScore, setStoreScore] = useState('전체');
   const [replyNum, setReplyNum] = useState('전체');
   const [priceRange, setPriceRange] = useState('전체');
@@ -137,9 +137,9 @@ export default function MapScreen() {
         params.like = true;
       }
 
-      if (selectedCategory !== '전체') {
-        console.log('selectedCategory:', selectedCategory);
-        params.categories = [selectedCategory];
+      if (selectedCategory.length > 0) {
+        // console.log('selectedCategory:', selectedCategory, pageNumber);
+        params.categories = selectedCategory;
       }
 
       switch (storeScore) {
@@ -345,7 +345,7 @@ export default function MapScreen() {
                 ,
                 {
                   backgroundColor:
-                    selectedCategory !== '전체'
+                    selectedCategory.length > 0
                       ? COLOR_PRIMARY
                       : categoryModalVisible
                       ? '#D9D9D9'
@@ -356,7 +356,7 @@ export default function MapScreen() {
                 console.log('press 카테고리');
                 setCategoryModalVisible(true);
               }}>
-              {selectedCategory === '전체' ? (
+              {selectedCategory.length == 0 ? (
                 <>
                   <SvgXml xml={svgXml.icon.shop} width="20" height="20" />
                   <Text style={styles.filterText}>{'카테고리'}</Text>
@@ -364,9 +364,7 @@ export default function MapScreen() {
               ) : (
                 <>
                   <SvgXml xml={svgXml.icon.shopColor} width="20" height="20" />
-                  <Text style={styles.filterTextActive}>
-                    {selectedCategory}
-                  </Text>
+                  <Text style={styles.filterTextActive}>{'카테고리'}</Text>
                 </>
               )}
             </AnimatedButton>
@@ -655,7 +653,7 @@ export default function MapScreen() {
               style={{padding: 4}}
               onPress={() => {
                 console.log('새로고침');
-                setSelectedCategory('전체');
+                setSelectedCategory([]);
                 setCategoryModalVisible(false);
               }}>
               <SvgXml xml={svgXml.icon.refresh} width="24" height="24" />
@@ -666,7 +664,7 @@ export default function MapScreen() {
           <View style={{marginTop: 12}}>
             <CategoryButton
               onPress={setSelectedCategory}
-              selected={selectedCategory}
+              data={selectedCategory}
             />
           </View>
         </View>
