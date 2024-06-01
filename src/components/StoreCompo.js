@@ -107,7 +107,10 @@ export default function StoreCompo(props) {
                 alignSelf: 'center',
                 marginLeft: 3,
               }}>
-              {storeData.ratingAvg + ' (' + storeData.reviewCount + ')'}
+              {storeData.ratingAvg.toFixed(1) +
+                ' (' +
+                storeData.reviewCount +
+                ')'}
             </Text>
             <SvgXml
               xml={svgXml.icon.heart}
