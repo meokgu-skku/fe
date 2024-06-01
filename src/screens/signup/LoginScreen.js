@@ -22,6 +22,8 @@ import {
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_SECONDARY,
+  COLOR_LIGHTGRAY,
+  COLOR_HOME_BACKGROUND,
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
@@ -128,7 +130,7 @@ export default function LoginScreen() {
                 }}
                 value={email}
                 style={styles.textinputBox}
-                placeholder=''
+                placeholder=""
               />
             </View>
             <View style={{height: 20}} />
@@ -165,10 +167,10 @@ export default function LoginScreen() {
           </View>
 
           <View style={{height: 40}} />
-          <LongPrimaryButton 
-            text="로그인하기" 
-            action={login} 
-            disable={disable} 
+          <LongPrimaryButton
+            text="로그인하기"
+            action={login}
+            disable={disable}
           />
           <View
             style={{
@@ -228,17 +230,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   samllText: {
-    color: COLOR_TEXT70GRAY,
+    color: COLOR_PRIMARY,
     fontSize: 14,
     textAlign: 'center',
     paddingVertical: 4,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
     marginBottom: 8,
   },
   samllTextColor: {
     color: COLOR_SECONDARY,
     fontSize: 12,
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
+    fontFamily: 'NanumSquareRoundB',
     textAlign: 'center',
     paddingVertical: 4,
   },
@@ -248,7 +252,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: COLOR_HOME_BACKGROUND,
     fontSize: 16,
     width: '100%',
   },

@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import {
   COLOR_WHITE,
+  COLOR_HOME_BACKGROUND,
   COLOR_BACKGROUND,
   COLOR_GRAY,
   COLOR_PRIMARY,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   samllText: {
-    color: COLOR_TEXT70GRAY,
+    color: COLOR_PRIMARY,
     fontSize: 14,
     textAlign: 'center',
     paddingVertical: 4,
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: COLOR_HOME_BACKGROUND,
     fontSize: 16,
     width: '100%',
   },

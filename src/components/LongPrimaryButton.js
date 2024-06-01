@@ -4,23 +4,34 @@ import {COLOR_WHITE, COLOR_PRIMARY, COLOR_DISABLE_GRAY} from '../assets/color';
 import AnimatedButton from './AnimationButton';
 
 export default function LongPrimaryButton(props) {
-  const { text, action, disable } = props;
+  const {text, action, disable} = props;
 
   return (
     <AnimatedButton
-      onPress={action}
-      style={[styles.buttonTest, disable && styles.buttonDisabled]}
-      disabled={disable}>
-      <Text style={[styles.buttonText, disable && styles.textDisabled]}>{text}</Text>
+      onPress={() => {
+        if (disable) return;
+        action();
+      }}
+      style={[
+        styles.buttonTest,
+        disable
+          ? {backgroundColor: COLOR_PRIMARY}
+          : {backgroundColor: COLOR_PRIMARY},
+      ]}
+      // disabled={disable}
+    >
+      <Text style={[styles.buttonText, disable && styles.textDisabled]}>
+        {text}
+      </Text>
     </AnimatedButton>
   );
 }
 
 const styles = StyleSheet.create({
   buttonTest: {
-    backgroundColor: COLOR_PRIMARY,
+    // backgroundColor: COLOR_PRIMARY,
     padding: 16,
-    borderRadius: 5,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
@@ -28,8 +39,9 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     color: COLOR_WHITE,
-    fontWeight: 'normal',
+    // fontWeight: 'normal',
     alignSelf: 'center',
+    fontFamily: 'NanumSquareRoundEB',
   },
   textDisabled: {
     color: COLOR_WHITE,
