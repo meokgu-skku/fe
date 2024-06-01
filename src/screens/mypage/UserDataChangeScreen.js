@@ -33,11 +33,13 @@ import RNFS from 'react-native-fs';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 
-export default function UserDataChangeScreen() {
+export default function UserDataChangeScreen(props) {
   const navigation = useNavigation();
   const context = useContext(AppContext);
 
-  const [profileImage, setProfileImage] = useState('');
+  const {route} = props;
+  // const profile = route.params?.profile;
+  const [profileImage, setProfileImage] = useState(route.params?.data);
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [duplicateMessage, setDuplicateMessage] = useState('');

@@ -179,7 +179,7 @@ export default function MyPageScreen() {
         <TouchableOpacity
           style={styles.text6Position}
           onPress={() => {
-            navigation.navigate('UserDataChange');
+            navigation.navigate('UserDataChange', {data: profileImageUrl});
           }}>
           <Text style={styles.text6}>{nickname}</Text>
           <Image
