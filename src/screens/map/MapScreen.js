@@ -301,7 +301,7 @@ export default function MapScreen() {
 
         <View style={{position: 'absolute', top: 6, alignItems: 'center'}}>
           {/* 검색창 */}
-          <AnimatedButton
+          {/* <AnimatedButton
             style={{
               width: windowWidth - 32,
               backgroundColor: 'white',
@@ -334,7 +334,7 @@ export default function MapScreen() {
                 </Text>
               )}
             </View>
-          </AnimatedButton>
+          </AnimatedButton> */}
 
           {/* 필터 버튼들*/}
           <ScrollView
