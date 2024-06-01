@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Header from '../../components/Header';
+import {SvgXml} from 'react-native-svg';
+import {svgXml} from '../../assets/svg';
 import {
   COLOR_BACKGROUND,
   COLOR_HOME_BACKGROUND,
@@ -132,7 +134,7 @@ export default function MyPageScreen() {
       setStorePage(0);
       fetchMyReviews(0);
       fetchLikedStores(0);
-    }, [])
+    }, []),
   );
 
   useEffect(() => {
@@ -159,15 +161,21 @@ export default function MyPageScreen() {
     <>
       <Header title={'내 프로필'} isBackButton={false} />
       <ScrollView contentContainerStyle={styles.entire}>
-        <Image
-          style={[styles.myPageItem, styles.myPageItemLayout]}
-          resizeMode="cover"
-          source={
-            profileImageUrl
-              ? {uri: profileImageUrl}
-              : require('../../assets/images/logo.png')
-          }
-        />
+        {profileImageUrl != '' ? (
+          <Image
+            style={[styles.myPageItem, styles.myPageItemLayout]}
+            resizeMode="cover"
+            source={
+              profileImageUrl
+                ? {uri: profileImageUrl}
+                : require('../../assets/images/logo.png')
+            }
+          />
+        ) : (
+          <View style={[styles.myPageItem, styles.myPageItemLayout]}>
+            <SvgXml xml={svgXml.icon.prodileDefault} width="100" height="100" />
+          </View>
+        )}
         <TouchableOpacity
           style={styles.text6Position}
           onPress={() => {
