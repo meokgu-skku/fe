@@ -46,6 +46,7 @@ export default function StoreCompo(props) {
 
   const {storeData, index, addPadding} = props;
 
+  console.log('storeData', storeData);
   return (
     <Pressable
       key={index.toString()}
@@ -104,7 +105,7 @@ export default function StoreCompo(props) {
                 fontFamily: 'NanumSquareRoundB',
                 // fontFamily: 'NIXGONFONTS M 2.0',
                 alignSelf: 'center',
-                marginLeft: 7,
+                marginLeft: 3,
               }}>
               {storeData.ratingAvg + ' (' + storeData.reviewCount + ')'}
             </Text>
@@ -121,9 +122,30 @@ export default function StoreCompo(props) {
                 // fontWeight: 'bold',
                 fontFamily: 'NanumSquareRoundB',
                 alignSelf: 'center',
-                marginLeft: 7,
+                marginLeft: 3,
               }}>
               {storeData.likeCount}
+            </Text>
+            <SvgXml
+              xml={svgXml.icon.naver}
+              width={15}
+              height={15}
+              style={{marginLeft: 10}}
+            />
+            <Text
+              style={{
+                fontSize: 11,
+                color: COLOR_TEXT70GRAY,
+                // fontWeight: 'bold',
+                fontFamily: 'NanumSquareRoundB',
+                // fontFamily: 'NIXGONFONTS M 2.0',
+                alignSelf: 'center',
+                marginLeft: 3,
+              }}>
+              {storeData.naverRatingAvg +
+                ' (' +
+                storeData.naverReviewCount +
+                ')'}
             </Text>
           </View>
 
