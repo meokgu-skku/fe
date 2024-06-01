@@ -46,7 +46,6 @@ export default function StoreCompo(props) {
 
   const {storeData, index, addPadding, fade} = props;
 
-  console.log('storeData', storeData);
   return (
     <Pressable
       key={index.toString()}

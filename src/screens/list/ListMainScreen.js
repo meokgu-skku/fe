@@ -641,7 +641,7 @@ export default function ListMainScreen() {
             ListHeaderComponent={listHeader}
             ListFooterComponent={() => <View style={{height: 16}} />}
             onEndReached={onEndReached}
-            onEndReachedThreshold={0.4}
+            onEndReachedThreshold={60}
             renderItem={({item, index}) => {
               return (
                 <View style={{alignItems: 'center'}}>
