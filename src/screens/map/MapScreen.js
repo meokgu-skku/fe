@@ -289,6 +289,7 @@ export default function MapScreen() {
                 latitude: myLocation.latitude,
                 longitude: myLocation.longitude,
               }}
+              tracksViewChanges={false}
             />
           ) : null}
         </MapView>
