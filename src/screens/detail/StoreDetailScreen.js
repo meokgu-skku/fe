@@ -18,6 +18,7 @@ import {
   FlatList,
   Pressable,
   Linking,
+  Alert,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -34,7 +35,7 @@ import {
 } from '../../assets/color';
 import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {SvgXml} from 'react-native-svg';
+import {ClipPath, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import Header from '../../components/Header';
 import AppContext from '../../components/AppContext';
@@ -43,6 +44,7 @@ import {API_URL} from '@env';
 import {Dimensions} from 'react-native';
 import ImageModal from 'react-native-image-modal';
 import {Modal, TouchableHighlight} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -130,6 +132,11 @@ export default function StoreDetailScreen(props) {
     const phoneNumber = restaurant.restaurant.detailInfo.contactNumber;
     Linking.openURL(`tel:${phoneNumber}`);
   };
+
+  const onCopy = (text) => {
+    Clipboard.setString(text);
+    Alert.alert('클립보드에 복사되었습니다.');
+  }
 
   const handleLoadMoreMenus = () => {
     setMenuCount(menuCount + 4);
@@ -275,13 +282,19 @@ export default function StoreDetailScreen(props) {
                 </Text>
               </View>
               <View style={styles.sectionTitle}>
+                <Text style={styles.storeReviewNaver}>{'('}</Text>
                 <Text style={styles.storeReviewNaver}>
-                  {'('} 네이버 평점 {restaurant.restaurant.naverRatingAvg}
+                  <SvgXml xml={svgXml.icon.naver} width={15} height={15} />
+                </Text>
+                <Text style={styles.storeReviewNaver}>
+                  평점 {restaurant.restaurant.naverRatingAvg}
                 </Text>
                 <Text style={styles.storeReviewNaver}>·</Text>
                 <Text style={styles.storeReviewNaver}>
-                  리뷰 {restaurant.restaurant.naverReviewCount} {')'}
+                  <SvgXml xml={svgXml.icon.naver} width={15} height={15} />
                 </Text>
+                <Text style={styles.storeReviewNaver}>
+                  리뷰 {restaurant.restaurant.naverReviewCount} {')'}</Text>
               </View>
             </View>
           </View>
@@ -307,12 +320,12 @@ export default function StoreDetailScreen(props) {
               <Text style={styles.contactButtonText}>찜</Text>
             </TouchableOpacity>
             <View style={styles.verticalDivider} />
-            <TouchableOpacity style={styles.contactButton}>
+            <View style={styles.contactButton}>
               <SvgXml xml={svgXml.icon.starGrey} width={24} height={24} />
               <Text style={styles.contactButtonText}>
                 {restaurant.restaurant.ratingAvg.toFixed(1)}
               </Text>
-            </TouchableOpacity>
+            </View>
             <View style={styles.verticalDivider} />
             <AnimatedButton
               style={styles.contactButton}
@@ -336,6 +349,9 @@ export default function StoreDetailScreen(props) {
             <Text style={styles.storeAddress}>
               위치: {restaurant.restaurant.detailInfo.address}
             </Text>
+            <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.address)}}>
+              <Text style={styles.copyButtonText}>복사</Text>
+            </TouchableOpacity>
           </View>
           <View style={{flexDirection: 'row'}}>
             <SvgXml
@@ -347,6 +363,9 @@ export default function StoreDetailScreen(props) {
             <Text style={styles.storePhoneNum}>
               전화번호: {restaurant.restaurant.detailInfo.contactNumber}
             </Text>
+            <TouchableOpacity onPress={() => {onCopy(restaurant.restaurant.detailInfo.contactNumber)}}>
+              <Text style={styles.copyButtonText}>복사</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.section}>
@@ -470,10 +489,11 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   storeReviewNaver: {
-    fontSize: 15,
+    fontSize: 14,
     color: COLOR_GRAY,
-    marginBottom: 16,
-    marginRight: 6,
+    marginTop: 3,
+    marginRight: 4,
+    fontFamily: 'NanumSquareRoundB',
   },
   contactContainer: {
     flexDirection: 'row',
@@ -509,7 +529,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 8,
-    flex: 1,
+    fontFamily: 'NanumSquareRoundB',
   },
   storeHours: {
     fontSize: 15,
@@ -519,7 +539,15 @@ const styles = StyleSheet.create({
   storePhoneNum: {
     fontSize: 15,
     color: COLOR_TEXT_DARKGRAY,
+    marginVertical: 8,
+    fontFamily: 'NanumSquareRoundB',
+  },
+  copyButtonText: {
+    fontSize: 13,
     marginVertical: 7,
+    marginLeft: 7,
+    color: COLOR_GRAY,
+    textDecorationLine: 'underline',
   },
   section: {
     width: '92%',

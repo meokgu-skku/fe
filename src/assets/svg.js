@@ -203,7 +203,7 @@ export const svgXml = {
     `,
     heartGrey: `
     <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M2.58504 5.82409L5.73385 8.75248C5.88386 8.89199 6.11614 8.89199 6.26615 8.75248L9.41496 5.82408C10.3112 4.9906 10.4198 3.60962 9.66482 2.64631L9.53653 2.48261C8.63943 1.33792 6.85274 1.53118 6.22117 2.84123C6.13188 3.02644 5.86812 3.02644 5.77883 2.84123C5.14726 1.53118 3.36057 1.33792 2.46347 2.48261L2.33518 2.64631C1.58024 3.60962 1.68882 4.9906 2.58504 5.82409Z" fill="#535353" stroke="#535353" stroke-width="0.7"/>
+    <path d="M2.58504 5.82409L5.73385 8.75248C5.88386 8.89199 6.11614 8.89199 6.26615 8.75248L9.41496 5.82408C10.3112 4.9906 10.4198 3.60962 9.66482 2.64631L9.53653 2.48261C8.63943 1.33792 6.85274 1.53118 6.22117 2.84123C6.13188 3.02644 5.86812 3.02644 5.77883 2.84123C5.14726 1.53118 3.36057 1.33792 2.46347 2.48261L2.33518 2.64631C1.58024 3.60962 1.68882 4.9906 2.58504 5.82409Z" fill="#CE0B39" stroke="#CE0B39" stroke-width="0.7"/>
     </svg>
     `,
     emptyHeartGrey: `
@@ -298,6 +298,19 @@ export const svgXml = {
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.5 4.5L4.5 13.5" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M4.5 4.5L13.5 13.5" stroke="#D9D9D9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    `,
+    naver: `
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <g clip-path="url(#clip0_403_243)">
+    <path d="M18 20H2C0.9 20 0 19.1 0 18V2C0 0.9 0.9 0 2 0H18C19.1 0 20 0.9 20 2V18C20 19.1 19.1 20 18 20Z" fill="#03C75A"/>
+    <path d="M11.35 10.25L8.50002 6.19995H6.15002V13.8H8.65002V9.74995L11.5 13.8H13.85V6.19995H11.35V10.25Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0_403_243">
+    <rect width="20" height="20" fill="white"/>
+    </clipPath>
+    </defs>
     </svg>
     `,
   },
