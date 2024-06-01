@@ -58,11 +58,20 @@ export default function SearchScreen(props) {
 
   const {route} = props;
   const setSearch = route.params?.setSearch;
+  const searchParam = route.params?.search;
 
   const [searchText, setSearchText] = useState('');
   const [recentSearch, setRecentSearch] = useState([]);
 
   const [autoCompleteData, setAutoCompleteData] = useState([]);
+
+  useEffect(() => {
+    if (searchParam) {
+      setSearchText(searchParam);
+      autocomplete(searchParam);
+    }
+    initRecentSearch();
+  }, [searchParam]);
 
   useEffect(() => {
     initRecentSearch();
