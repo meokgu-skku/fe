@@ -19,6 +19,7 @@ import {
   COLOR_WHITE,
   COLOR_BACKGROUND,
   COLOR_GRAY,
+  COLOR_HOME_BACKGROUND,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
   COLOR_SECONDARY,
@@ -224,7 +225,7 @@ export default function SignupScreen() {
             </View>
           </View>
 
-          <View style={{height: 20}} />
+          <View style={{height: 50}} />
           <LongPrimaryButton
             text={
               password === passwordCheck
@@ -241,10 +242,10 @@ export default function SignupScreen() {
               marginTop: 12,
               padding: 4,
             }}>
-            <Text style={styles.samllText}>
+            <Text style={styles.samllText2}>
               {'가입하시면 이용약관 및 개인정보 보호정책에'}
             </Text>
-            <Text style={[styles.samllText, {marginTop: -5}]}>
+            <Text style={[styles.samllText2, {marginTop: -5}]}>
               {'자동으로 동의하게 됩니다.'}
             </Text>
           </View>
@@ -275,12 +276,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   samllText: {
-    color: COLOR_TEXT70GRAY,
+    color: COLOR_PRIMARY,
     fontSize: 14,
     textAlign: 'center',
     paddingVertical: 4,
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
     marginBottom: 8,
+  },
+  samllText2: {
+    color: COLOR_TEXT70GRAY,
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 8,
+    // fontWeight: 'bold',
+    fontFamily: 'NanumSquareRoundB',
   },
   textinputBox: {
     height: 50,
@@ -288,7 +298,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: COLOR_HOME_BACKGROUND,
     fontSize: 16,
     width: '100%',
   },

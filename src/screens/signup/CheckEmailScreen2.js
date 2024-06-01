@@ -18,6 +18,7 @@ import {
 import {
   COLOR_WHITE,
   COLOR_BACKGROUND,
+  COLOR_HOME_BACKGROUND,
   COLOR_GRAY,
   COLOR_PRIMARY,
   COLOR_TEXT70GRAY,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 15,
-    backgroundColor: '#F8F8F8',
+    backgroundColor: COLOR_HOME_BACKGROUND,
     fontSize: 16,
     width: '100%',
   },

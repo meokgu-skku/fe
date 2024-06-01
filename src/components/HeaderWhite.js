@@ -40,7 +40,7 @@ export default function HeaderWhite(props) {
       ) : null}
       <Text
         style={{
-          color: COLOR_TEXT70GRAY,
+          color: COLOR_PRIMARY,
           fontSize: 16,
           fontWeight: 'bold',
           textAlign: 'center',
