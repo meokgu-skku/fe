@@ -69,6 +69,7 @@ export default function ListMainScreen() {
     longitude: 126.971458,
   });
   const [pageNumber, setPageNumber] = useState(0);
+  const [nextCursor, setNextCursor] = useState(null);
 
   //임시 데이터
   const [storeDartDatas, setStoreDartDatas] = useState([]);
@@ -91,7 +92,7 @@ export default function ListMainScreen() {
       setPageNumber(p + 1);
 
       const params = {
-        page: p,
+        size: 40,
       };
 
       if (selectSale) {
@@ -208,16 +209,24 @@ export default function ListMainScreen() {
         params.query = search;
       }
 
+      if (nextCursor) {
+        params.cursor = nextCursor.join(',');
+      }
+
       const queryString = new URLSearchParams(params).toString();
 
+      console.log('queryString:', queryString);
+
+      const startTime = Date.now();
       const response = await axios.get(
         `${API_URL}/v1/restaurants?${queryString}`,
         {
           headers: {Authorization: `Bearer ${context.accessToken}`},
         },
       );
-      // console.log('queryString:', queryString);
-      console.log('response:', response.data.data);
+      const endTime = Date.now(); // 응답 받은 시간 기록
+      const duration = endTime - startTime; // 응답 시간 계산
+      console.log('API response time:', duration, 'ms'); 
 
       console.log('page:', p);
 
@@ -228,6 +237,11 @@ export default function ListMainScreen() {
           ...storeDartDatas,
           ...response.data.data.restaurants.content,
         ]);
+      }
+
+      const newCursor = response.data.data.nextCursor;
+      if (newCursor) {
+        setNextCursor(newCursor);
       }
     } catch (error) {
       Toast.show({
