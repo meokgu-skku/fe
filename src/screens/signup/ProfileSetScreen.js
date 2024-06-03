@@ -60,7 +60,7 @@ export default function ProfileSetScreen(props) {
       // 회원가입 하고 토큰 저장하는 부분
       const response = await axios.post(`${API_URL}/v1/users/email/sign-up`, {
         email: signUpData.email,
-        nickname: signUpData.nickname,
+        nickname: nickname,
         password: signUpData.password,
         profileImageUrl: profileImage,
       });
@@ -103,8 +103,9 @@ export default function ProfileSetScreen(props) {
         console.error(err);
       });
 
-    console.log('token:', signUpData.token);
     try {
+      console.log('token:', signUpData.token);
+
       const response = await axios.post(`${IMG_URL}/v1/upload-image`, {
         images: [
           {
@@ -114,7 +115,7 @@ export default function ProfileSetScreen(props) {
         ],
       });
 
-      console.log('response image:', response.data);
+      console.log('response image:', response);
 
       if (response.data.result != 'SUCCESS') {
         console.log('Error: No return data');
@@ -123,6 +124,7 @@ export default function ProfileSetScreen(props) {
 
       setProfileImage(response.data.data[0].imageUrl);
     } catch (error) {
+      console.log('error:', error);
       Toast.show({
         type: 'error',
         text1: 'Error',
