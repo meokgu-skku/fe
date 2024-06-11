@@ -2,43 +2,55 @@
   "migIndex": 1,
   "data": [
     {
+      "path": "src/assets/fonts/NIXGONFONTS B 2.0.otf",
+      "sha1": "83a6e32eacb7d8e09b50753f2d71242575f340ff"
+    },
+    {
       "path": "src/assets/fonts/NIXGONFONTS B 2.0.ttf",
       "sha1": "88781c5d58a5cf741a7a49d4e52453174b2dfd26"
+    },
+    {
+      "path": "src/assets/fonts/NIXGONFONTS L 2.0.otf",
+      "sha1": "cc7f6981416e0cc79661ab3a9854d2c08f430031"
     },
     {
       "path": "src/assets/fonts/NIXGONFONTS L 2.0.ttf",
       "sha1": "32c01029ec1b3268583a67e67e59e72eff1a2bfc"
     },
     {
+      "path": "src/assets/fonts/NIXGONFONTS M 2.0.otf",
+      "sha1": "327e99bd6027f5b210daaa5769fa82ac4cfb03bb"
+    },
+    {
       "path": "src/assets/fonts/NIXGONFONTS M 2.0.ttf",
       "sha1": "970fb9df9c104cd4207a26b5a4b7f8a7657cb2d3"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareRoundB.otf",
+      "sha1": "f53cc19057757d5225551ededf8fa3c449891f2f"
     },
     {
       "path": "src/assets/fonts/NanumSquareRoundB.ttf",
       "sha1": "e92331df4c26e67374cb41c18d4bdf326db8e53d"
     },
     {
+      "path": "src/assets/fonts/NanumSquareRoundEB.otf",
+      "sha1": "ff91edc64134cc5bd08dd15a0a048e5ffb159da6"
+    },
+    {
       "path": "src/assets/fonts/NanumSquareRoundEB.ttf",
       "sha1": "4480112377baeea3de17a1d839da691d978927b7"
+    },
+    {
+      "path": "src/assets/fonts/NanumSquareRoundL.otf",
+      "sha1": "22d8cc00904d115e1ef898470a08605505d648b7"
     },
     {
       "path": "src/assets/fonts/NanumSquareRoundL.ttf",
       "sha1": "d5015ab895abdfd00f8a23105552f153cd953afa"
     },
     {
-      "path": "src/assets/fonts/NanumSquareRoundOTFB.otf",
-      "sha1": "f53cc19057757d5225551ededf8fa3c449891f2f"
-    },
-    {
-      "path": "src/assets/fonts/NanumSquareRoundOTFEB.otf",
-      "sha1": "ff91edc64134cc5bd08dd15a0a048e5ffb159da6"
-    },
-    {
-      "path": "src/assets/fonts/NanumSquareRoundOTFL.otf",
-      "sha1": "22d8cc00904d115e1ef898470a08605505d648b7"
-    },
-    {
-      "path": "src/assets/fonts/NanumSquareRoundOTFR.otf",
+      "path": "src/assets/fonts/NanumSquareRoundR.otf",
       "sha1": "16b0021a98c206f1f9c9e594a0aa1b6cdac51b56"
     },
     {

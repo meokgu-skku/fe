@@ -26,16 +26,16 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-    <key>NSExceptionDomains</key>
-    <dict>
-        <key>localhost</key>
-        <dict>
-            <key>NSExceptionAllowsInsecureHTTPLoads</key>
-            <true/>
-        </dict>
-    </dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
@@ -59,10 +59,6 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>NanumSquareRoundOTFB.otf</string>
-		<string>NanumSquareRoundOTFEB.otf</string>
-		<string>NanumSquareRoundOTFL.otf</string>
-		<string>NanumSquareRoundOTFR.otf</string>
 		<string>NanumSquareRoundB.ttf</string>
 		<string>NanumSquareRoundEB.ttf</string>
 		<string>NanumSquareRoundL.ttf</string>
@@ -70,6 +66,13 @@
 		<string>NIXGONFONTS B 2.0.ttf</string>
 		<string>NIXGONFONTS L 2.0.ttf</string>
 		<string>NIXGONFONTS M 2.0.ttf</string>
+		<string>NIXGONFONTS B 2.0.otf</string>
+		<string>NIXGONFONTS L 2.0.otf</string>
+		<string>NIXGONFONTS M 2.0.otf</string>
+		<string>NanumSquareRoundB.otf</string>
+		<string>NanumSquareRoundEB.otf</string>
+		<string>NanumSquareRoundL.otf</string>
+		<string>NanumSquareRoundR.otf</string>
 	</array>
 </dict>
 </plist>
