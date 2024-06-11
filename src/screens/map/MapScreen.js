@@ -15,6 +15,7 @@ import {
   ScrollView,
   StyleSheet,
   Switch,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -270,7 +271,7 @@ export default function MapScreen() {
         <MapView
           ref={mapRef}
           style={{flex: 1, width: windowWidth}}
-          provider={PROVIDER_GOOGLE}
+          provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : null}
           initialRegion={{
             latitude: 37.297861,
             longitude: 126.971458,
