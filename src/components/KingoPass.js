@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -118,7 +119,10 @@ export default function KingoPass(props) {
                     fontSize: 20,
                     color: COLOR_WHITE,
                     // fontWeight: 'bold',
-                    fontFamily: 'NIXGONFONTS M 2.0',
+                    fontFamily:
+                      Platform.OS == 'android'
+                        ? 'NIXGONFONTS M 2.0'
+                        : 'NIXGONM-Vb',
                     margin: 10,
                   }}>
                   {data.name}
@@ -159,7 +163,7 @@ const styles = StyleSheet.create({
     color: COLOR_PRIMARY,
     // fontWeight: '700',
     // fontFamily: 'NanumSquareRoundEB',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   line: {
     marginVertical: 8,

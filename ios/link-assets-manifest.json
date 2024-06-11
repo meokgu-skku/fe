@@ -2,18 +2,6 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/fonts/NIXGONFONTS B 2.0.otf",
-      "sha1": "83a6e32eacb7d8e09b50753f2d71242575f340ff"
-    },
-    {
-      "path": "src/assets/fonts/NIXGONFONTS B 2.0.ttf",
-      "sha1": "88781c5d58a5cf741a7a49d4e52453174b2dfd26"
-    },
-    {
-      "path": "src/assets/fonts/NIXGONFONTS L 2.0.otf",
-      "sha1": "cc7f6981416e0cc79661ab3a9854d2c08f430031"
-    },
-    {
       "path": "src/assets/fonts/NIXGONFONTS L 2.0.ttf",
       "sha1": "32c01029ec1b3268583a67e67e59e72eff1a2bfc"
     },

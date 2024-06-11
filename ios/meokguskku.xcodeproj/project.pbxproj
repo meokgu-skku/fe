@@ -14,7 +14,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		24FF5FC2D8604D8EADA9E3FF /* NanumSquareRoundEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */; };
-		302580A177DA4580AC90939C /* NIXGONFONTS B 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */; };
 		36959D8B8ACC471FAFB1E811 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */; };
 		441612EF72474A2092FA068D /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */; };
 		5DCD11AB597240188F9A4D29 /* NanumSquareRoundB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05A0D76595064C7D82FC26A9 /* NanumSquareRoundB.otf */; };
@@ -24,10 +23,8 @@
 		78FA4125F4D6437A86CCBD52 /* NIXGONFONTS M 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		97C7D1193E9F4EA6855FE19F /* NIXGONFONTS M 2.0.otf in Resources */ = {isa = PBXBuildFile; fileRef = EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */; };
-		BB64B95869AB4222947F44D3 /* NIXGONFONTS B 2.0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9A8CFB5D3E0E481C8B1F3C96 /* NIXGONFONTS B 2.0.otf */; };
 		CA647FF4BEAA425E8F0C713D /* NanumSquareRoundR.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF3E8CB4790F421288F1C7F9 /* NanumSquareRoundR.otf */; };
 		E8719396CD1D463E85321669 /* NIXGONFONTS L 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */; };
-		F774F7EE997149428E95A526 /* NIXGONFONTS L 2.0.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5D511F2A5F0B48D7B48C9E38 /* NIXGONFONTS L 2.0.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,12 +55,10 @@
 		3B4392A12AC88292D35C810B /* Pods-meokguskku.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku.debug.xcconfig"; path = "Target Support Files/Pods-meokguskku/Pods-meokguskku.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-meokguskku.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku.release.xcconfig"; path = "Target Support Files/Pods-meokguskku/Pods-meokguskku.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-meokguskku-meokguskkuTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku-meokguskkuTests.debug.xcconfig"; path = "Target Support Files/Pods-meokguskku-meokguskkuTests/Pods-meokguskku-meokguskkuTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5D511F2A5F0B48D7B48C9E38 /* NIXGONFONTS L 2.0.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS L 2.0.otf"; path = "../src/assets/fonts/NIXGONFONTS L 2.0.otf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-meokguskku.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-meokguskku.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundEB.otf; path = ../src/assets/fonts/NanumSquareRoundEB.otf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = meokguskku/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-meokguskku-meokguskkuTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku-meokguskkuTests.release.xcconfig"; path = "Target Support Files/Pods-meokguskku-meokguskkuTests/Pods-meokguskku-meokguskkuTests.release.xcconfig"; sourceTree = "<group>"; };
-		9A8CFB5D3E0E481C8B1F3C96 /* NIXGONFONTS B 2.0.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS B 2.0.otf"; path = "../src/assets/fonts/NIXGONFONTS B 2.0.otf"; sourceTree = "<group>"; };
 		AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundEB.ttf; path = ../src/assets/fonts/NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
 		BF3E8CB4790F421288F1C7F9 /* NanumSquareRoundR.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundR.otf; path = ../src/assets/fonts/NanumSquareRoundR.otf; sourceTree = "<group>"; };
 		CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundL.ttf; path = ../src/assets/fonts/NanumSquareRoundL.ttf; sourceTree = "<group>"; };
@@ -71,7 +66,6 @@
 		E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS M 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS M 2.0.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS M 2.0.otf"; path = "../src/assets/fonts/NIXGONFONTS M 2.0.otf"; sourceTree = "<group>"; };
-		F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS B 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS B 2.0.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,11 +178,8 @@
 				AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */,
 				CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */,
 				3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */,
-				F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */,
 				CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */,
 				E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */,
-				9A8CFB5D3E0E481C8B1F3C96 /* NIXGONFONTS B 2.0.otf */,
-				5D511F2A5F0B48D7B48C9E38 /* NIXGONFONTS L 2.0.otf */,
 				EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */,
 				05A0D76595064C7D82FC26A9 /* NanumSquareRoundB.otf */,
 				74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */,
@@ -297,11 +288,8 @@
 				0C1CA6FCEDA448C68F0E270A /* NanumSquareRoundEB.ttf in Resources */,
 				62CE87319A2D40128556CA6B /* NanumSquareRoundL.ttf in Resources */,
 				36959D8B8ACC471FAFB1E811 /* NanumSquareRoundR.ttf in Resources */,
-				302580A177DA4580AC90939C /* NIXGONFONTS B 2.0.ttf in Resources */,
 				E8719396CD1D463E85321669 /* NIXGONFONTS L 2.0.ttf in Resources */,
 				78FA4125F4D6437A86CCBD52 /* NIXGONFONTS M 2.0.ttf in Resources */,
-				BB64B95869AB4222947F44D3 /* NIXGONFONTS B 2.0.otf in Resources */,
-				F774F7EE997149428E95A526 /* NIXGONFONTS L 2.0.otf in Resources */,
 				97C7D1193E9F4EA6855FE19F /* NIXGONFONTS M 2.0.otf in Resources */,
 				5DCD11AB597240188F9A4D29 /* NanumSquareRoundB.otf in Resources */,
 				24FF5FC2D8604D8EADA9E3FF /* NanumSquareRoundEB.otf in Resources */,

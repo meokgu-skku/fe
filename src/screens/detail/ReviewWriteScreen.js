@@ -19,6 +19,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Alert,
+  Platform,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import {
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
   storeName: {
     fontSize: 22,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: COLOR_TEXT_BLACK,
     maxWidth: (windowWidth * 3) / 5,
   },

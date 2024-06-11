@@ -19,6 +19,7 @@ import {
   Pressable,
   Linking,
   Alert,
+  Platform,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import {
@@ -585,7 +586,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: COLOR_PRIMARY,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     marginVertical: 6,
   },
   storeCategory: {
@@ -689,7 +690,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 20,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: COLOR_PRIMARY,
     marginRight: 5,
   },
@@ -697,7 +698,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 20,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: '#636363',
   },
   sectionItem: {
@@ -733,7 +734,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLOR_TEXT_BLACK,
     // fontWeight: '500',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     flexWrap: 'wrap',
   },
   menuDescription: {
@@ -747,7 +748,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLOR_TEXT_BLACK,
     // fontWeight: '600',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   reviewTextContainer: {
     justifyContent: 'center',

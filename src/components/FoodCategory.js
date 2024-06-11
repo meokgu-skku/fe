@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     color: COLOR_PRIMARY,
     // fontWeight: '700',
     // fontFamily: 'NanumSquareRoundEB',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   line: {
     marginVertical: 8,
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     color: COLOR_TEXT_BLACK,
     // fontWeight: 'bold',
     // fontFamily: 'NanumSquareRoundEB',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   buttonSet: {
     justifyContent: 'center',
