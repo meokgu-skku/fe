@@ -30,7 +30,11 @@ import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  PROVIDER_DEFAULT,
+} from 'react-native-maps';
 import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
@@ -271,7 +275,9 @@ export default function MapScreen() {
         <MapView
           ref={mapRef}
           style={{flex: 1, width: windowWidth}}
-          provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : null}
+          provider={
+            Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+          }
           initialRegion={{
             latitude: 37.297861,
             longitude: 126.971458,
