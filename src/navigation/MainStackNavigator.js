@@ -6,7 +6,7 @@ import {
 
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {Easing, Linking, Platform, SafeAreaView, StatusBar} from 'react-native';
-import {COLOR_WHITE} from '../assets/color';
+import {COLOR_WHITE, COLOR_HOME_BACKGROUND} from '../assets/color';
 import SplashScreen from '../screens/signup/SplashScreen';
 import LoginScreen from '../screens/signup/LoginScreen';
 import FindPasswordScreen from '../screens/signup/FindPasswordScreen';
@@ -27,7 +27,7 @@ const MyTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: COLOR_WHITE,
+    background: COLOR_HOME_BACKGROUND,
   },
 };
 
