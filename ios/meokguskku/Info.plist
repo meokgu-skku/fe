@@ -37,12 +37,23 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<key>NSCameraUsageDescription</key>
+  <string>리뷰 이미지 업로드를 위해 카메라 접근 권한이 필요합니다.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
+	<string>위치 기반 서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
+	<!--  
+	<key>NSPhotoLibraryUsageDescription</key>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+  <dict>
+    <key>map</key>
+    <string>위치 기반 서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
+  </dict> -->
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>위치 기반 서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
+	<string>위치 기반 서비스 이용을 위해 위치 정보 접근 권한이 필요합니다.</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>리뷰/및 프로필 사진 업로드를 위해 갤러리 접근 권한이 필요합니다.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

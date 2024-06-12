@@ -91,13 +91,17 @@ export default function MapScreen() {
       return;
     }
 
-    const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    if (Platform.OS === 'ios') {
+      await Geolocation.requestAuthorization('always');
+    } else {
+      const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
-    try {
-      let result = await request(platformPermissions);
-      console.log(result);
-    } catch (err) {
-      console.warn(err);
+      try {
+        let result = await request(platformPermissions);
+        console.log(result);
+      } catch (err) {
+        console.warn(err);
+      }
     }
 
     Geolocation.getCurrentPosition(
@@ -120,11 +124,11 @@ export default function MapScreen() {
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
   const [storeDartDatas, setStoreDartDatas] = useState([]);
 
-  const catrgory = [
-    ['한식', '양식', '일식', '중식'],
-    ['분식', '치킨', '피자', '버거'],
-    ['아시안', '카페', '전체', ''],
-  ];
+  // const catrgory = [
+  //   ['한식', '양식', '일식', '중식'],
+  //   ['분식', '치킨', '피자', '버거'],
+  //   ['아시안', '카페', '전체', ''],
+  // ];
 
   //TODO: 필터링 하는 함수
   const getStoreDatas = async () => {
