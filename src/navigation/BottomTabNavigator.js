@@ -24,6 +24,7 @@ import {
 } from '../assets/color';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import {Safe} from '../components/Safe';
 
 import HomeScreen from '../screens/home/HomeScreen';
 import ListMainScreen from '../screens/list/ListMainScreen';
@@ -138,7 +139,7 @@ function MypageNavigator() {
 export default function BottomTabNavigator() {
   changeNavigationBarColor(COLOR_PRIMARY);
   return (
-    <>
+    <Safe color={COLOR_PRIMARY}>
       <StatusBar backgroundColor={COLOR_PRIMARY} />
       <BottomTab.Navigator
         initialRouteName="HomeNavigator"
@@ -230,6 +231,6 @@ export default function BottomTabNavigator() {
           }}
         />
       </BottomTab.Navigator>
-    </>
+    </Safe>
   );
 }
