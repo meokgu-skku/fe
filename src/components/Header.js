@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useCallback, useEffect} from 'react';
 import {
   View,
@@ -17,13 +18,19 @@ import AnimatedButton from './AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../assets/svg';
+import {StatusBarHeight} from './Safe';
 
 export default function Header(props) {
   const navigation = useNavigation();
-  const {title, isBackButton} = props;
+  const {title, isBackButton, noSafe} = props;
   return (
     <View
       style={{
+        paddingTop: noSafe
+          ? Platform.OS == 'android'
+            ? 0
+            : StatusBarHeight
+          : 0,
         backgroundColor: COLOR_PRIMARY,
         // height: 56,
         justifyContent: 'center',
@@ -38,6 +45,11 @@ export default function Header(props) {
             // backgroundColor: 'red',
             left: 6,
             padding: 10,
+            paddingTop: noSafe
+              ? Platform.OS == 'android'
+                ? 10
+                : 10 + StatusBarHeight
+              : 10,
           }}
           onPress={() => {
             navigation.goBack();
