@@ -427,6 +427,7 @@ export default function StoreDetailScreen(props) {
             <AnimatedButton
               style={styles.contactButton}
               onPress={() => {
+                console.log('리뷰 작성: ', restaurant.restaurant);
                 navigation.navigate('ReviewWrite', {
                   data: restaurant.restaurant,
                 });

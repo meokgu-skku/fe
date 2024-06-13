@@ -153,7 +153,7 @@ export default function ReviewWriteScreen(props) {
           </Text>
           <View style={styles.starContainer}>
             {[...Array(5)].map((_, index) => (
-              <TouchableWithoutFeedback
+              <Pressable
                 key={index}
                 onPress={() => {
                   setRating(index + 1);
@@ -169,7 +169,7 @@ export default function ReviewWriteScreen(props) {
                   height="24"
                   style={{marginLeft: 2}}
                 />
-              </TouchableWithoutFeedback>
+              </Pressable>
             ))}
           </View>
         </View>
