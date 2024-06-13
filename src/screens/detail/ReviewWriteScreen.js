@@ -145,7 +145,7 @@ export default function ReviewWriteScreen(props) {
 
   return (
     <>
-      <Header title={'리뷰 쓰기'} isBackButton={true} />
+      <Header title={'리뷰 쓰기'} isBackButton={true} noSafe={true} />
       <View contentContainerStyle={styles.entire}>
         <View style={styles.headerContainer}>
           <Text style={styles.storeName} numberOfLines={1}>
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontFamily: 'NanumSquareRoundB',
-    // width: '92%',
+    width: windowWidth - 32,
     // marginHorizontal: 16,
     height: 160,
     textAlignVertical: 'top',
