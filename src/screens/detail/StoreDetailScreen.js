@@ -19,6 +19,7 @@ import {
   Pressable,
   Linking,
   Alert,
+  Platform,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import {
@@ -47,6 +48,7 @@ import {Dimensions} from 'react-native';
 import ImageModal from 'react-native-image-modal';
 import {Modal, TouchableHighlight} from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {Safe} from '../../components/Safe';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -71,6 +73,7 @@ export default function StoreDetailScreen(props) {
       restaurantDetail();
     }, []),
   );
+
   useEffect(() => {
     setDisplayedMenuList(menuList.slice(0, menuCount));
   }, [menuList, menuCount]);
@@ -217,11 +220,11 @@ export default function StoreDetailScreen(props) {
             style={{marginTop: 5}}
           />
         </View>
-        <ImageModal
-          swipeToDismiss={true}
-          modalImageResizeMode="contain"
-          imageBackgroundColor="transparent"
-          overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+        <Image
+          // swipeToDismiss={true}
+          // modalImageResizeMode="contain"
+          // imageBackgroundColor="transparent"
+          // overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
           source={{uri: item.imageUrl}}
           style={styles.menuImage}
         />
@@ -306,11 +309,11 @@ export default function StoreDetailScreen(props) {
                     horizontal
                     data={item.imageUrls}
                     renderItem={({item}) => (
-                      <ImageModal
-                        swipeToDismiss={true}
-                        modalImageResizeMode="contain"
-                        imageBackgroundColor="transparent"
-                        overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+                      <Image
+                        // swipeToDismiss={true}
+                        // modalImageResizeMode="contain"
+                        // imageBackgroundColor="transparent"
+                        // overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
                         source={{uri: item}}
                         style={styles.reviewImage}
                       />
@@ -335,12 +338,12 @@ export default function StoreDetailScreen(props) {
     <>
       <View style={styles.entire}>
         <View style={styles.storeImageContainer}>
-          <ImageModal
-            swipeToDismiss={true}
-            modalImageResizeMode="contain"
-            // resizeMode="contain"
-            imageBackgroundColor="transparent"
-            overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
+          <Image
+            // swipeToDismiss={true}
+            // modalImageResizeMode="contain"
+            // // resizeMode="contain"
+            // imageBackgroundColor="transparent"
+            // overlayBackgroundColor="rgba(32, 32, 32, 0.9)"
             source={{uri: restaurant.restaurant.representativeImageUrl}}
             style={styles.storeImage}
           />
@@ -424,6 +427,7 @@ export default function StoreDetailScreen(props) {
             <AnimatedButton
               style={styles.contactButton}
               onPress={() => {
+                console.log('리뷰 작성: ', restaurant.restaurant);
                 navigation.navigate('ReviewWrite', {
                   data: restaurant.restaurant,
                 });
@@ -518,6 +522,7 @@ export default function StoreDetailScreen(props) {
       <Header
         title={restaurant.restaurant.name}
         isBackButton={true}
+        noSafe={true}
         style={{backgroundColor: 'trasparent'}}
       />
       <FlatList
@@ -559,7 +564,9 @@ const styles = StyleSheet.create({
   entire: {
     backgroundColor: COLOR_HOME_BACKGROUND,
     alignItems: 'center',
-    marginHorizontal: -3,
+    // flex: 1,
+    width: windowWidth,
+    // marginHorizontal: -3,
   },
   storeImageContainer: {
     // width: '100%',
@@ -585,7 +592,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: COLOR_PRIMARY,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     marginVertical: 6,
   },
   storeCategory: {
@@ -689,7 +696,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 20,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: COLOR_PRIMARY,
     marginRight: 5,
   },
@@ -697,7 +704,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
     fontSize: 20,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: '#636363',
   },
   sectionItem: {
@@ -733,7 +740,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLOR_TEXT_BLACK,
     // fontWeight: '500',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     flexWrap: 'wrap',
   },
   menuDescription: {
@@ -747,7 +754,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLOR_TEXT_BLACK,
     // fontWeight: '600',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   reviewTextContainer: {
     justifyContent: 'center',

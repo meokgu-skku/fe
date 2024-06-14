@@ -67,3 +67,7 @@ yarn-error.log
 node_modules
 
 .env
+
+#google map key
+ios/meokguskku/AppDelegate.mm
+android/app/src/main/AndroidManifest.xml

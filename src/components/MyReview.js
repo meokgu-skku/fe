@@ -6,7 +6,7 @@ import React, {
   useContext,
   useRef,
 } from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, Platform} from 'react-native';
 import {COLOR_WHITE, COLOR_PRIMARY, COLOR_TEXT70GRAY} from '../assets/color';
 import {useNavigation} from '@react-navigation/native';
 import AppContext from './AppContext';
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: COLOR_PRIMARY,
     // fontWeight: '700',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
   noReviewText: {
     marginTop: 20,

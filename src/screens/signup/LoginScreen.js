@@ -105,6 +105,7 @@ export default function LoginScreen() {
 
       navigation.navigate('BottomTab');
     } catch (error) {
+      // console.log('Error:', error);
       Toast.show({
         type: 'error',
         text1: 'Error',

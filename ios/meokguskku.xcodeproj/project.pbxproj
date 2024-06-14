@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* meokguskkuTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* meokguskkuTests.m */; };
+		0C1CA6FCEDA448C68F0E270A /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */; };
 		0C80B921A6F3F58F76C31292 /* libPods-meokguskku.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-meokguskku.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		7699B88040F8A987B510C191 /* libPods-meokguskku-meokguskkuTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-meokguskku-meokguskkuTests.a */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		ED60E2D3C2E5428CBE5AED4B /* NanumSquareRoundOTFB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 087BBE93991449DF92E61213 /* NanumSquareRoundOTFB.otf */; };
-		DB52FAF0E6A54334AB2B4686 /* NanumSquareRoundOTFEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3FE285E7E6DE42C5865381DA /* NanumSquareRoundOTFEB.otf */; };
-		04789163DD344DC6ACEB0A8A /* NanumSquareRoundOTFL.otf in Resources */ = {isa = PBXBuildFile; fileRef = DA99BCDF428649219BB1AC8A /* NanumSquareRoundOTFL.otf */; };
-		6A2E4ED960644F8593652D4D /* NanumSquareRoundOTFR.otf in Resources */ = {isa = PBXBuildFile; fileRef = 65A76281AE9648168C394204 /* NanumSquareRoundOTFR.otf */; };
-		441612EF72474A2092FA068D /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */; };
-		0C1CA6FCEDA448C68F0E270A /* NanumSquareRoundEB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */; };
-		62CE87319A2D40128556CA6B /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */; };
+		24FF5FC2D8604D8EADA9E3FF /* NanumSquareRoundEB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */; };
 		36959D8B8ACC471FAFB1E811 /* NanumSquareRoundR.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */; };
-		302580A177DA4580AC90939C /* NIXGONFONTS B 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */; };
-		E8719396CD1D463E85321669 /* NIXGONFONTS L 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */; };
+		441612EF72474A2092FA068D /* NanumSquareRoundB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */; };
+		5DCD11AB597240188F9A4D29 /* NanumSquareRoundB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 05A0D76595064C7D82FC26A9 /* NanumSquareRoundB.otf */; };
+		62CE87319A2D40128556CA6B /* NanumSquareRoundL.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */; };
+		65295E7D78B74AEEBC08851F /* NanumSquareRoundL.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1C6B42C5E19141E9895D2EC6 /* NanumSquareRoundL.otf */; };
+		7699B88040F8A987B510C191 /* libPods-meokguskku-meokguskkuTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-meokguskku-meokguskkuTests.a */; };
 		78FA4125F4D6437A86CCBD52 /* NIXGONFONTS M 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		97C7D1193E9F4EA6855FE19F /* NIXGONFONTS M 2.0.otf in Resources */ = {isa = PBXBuildFile; fileRef = EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */; };
+		CA647FF4BEAA425E8F0C713D /* NanumSquareRoundR.otf in Resources */ = {isa = PBXBuildFile; fileRef = BF3E8CB4790F421288F1C7F9 /* NanumSquareRoundR.otf */; };
+		E8719396CD1D463E85321669 /* NIXGONFONTS L 2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +41,7 @@
 		00E356EE1AD99517003FC87E /* meokguskkuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = meokguskkuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* meokguskkuTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = meokguskkuTests.m; sourceTree = "<group>"; };
+		05A0D76595064C7D82FC26A9 /* NanumSquareRoundB.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundB.otf; path = ../src/assets/fonts/NanumSquareRoundB.otf; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* meokguskku.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = meokguskku.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = meokguskku/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = meokguskku/AppDelegate.mm; sourceTree = "<group>"; };
@@ -48,24 +49,23 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = meokguskku/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = meokguskku/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-meokguskku-meokguskkuTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-meokguskku-meokguskkuTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C6B42C5E19141E9895D2EC6 /* NanumSquareRoundL.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundL.otf; path = ../src/assets/fonts/NanumSquareRoundL.otf; sourceTree = "<group>"; };
+		1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundB.ttf; path = ../src/assets/fonts/NanumSquareRoundB.ttf; sourceTree = "<group>"; };
+		3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundR.ttf; path = ../src/assets/fonts/NanumSquareRoundR.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-meokguskku.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku.debug.xcconfig"; path = "Target Support Files/Pods-meokguskku/Pods-meokguskku.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-meokguskku.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku.release.xcconfig"; path = "Target Support Files/Pods-meokguskku/Pods-meokguskku.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-meokguskku-meokguskkuTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku-meokguskkuTests.debug.xcconfig"; path = "Target Support Files/Pods-meokguskku-meokguskkuTests/Pods-meokguskku-meokguskkuTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-meokguskku.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-meokguskku.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundEB.otf; path = ../src/assets/fonts/NanumSquareRoundEB.otf; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = meokguskku/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-meokguskku-meokguskkuTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-meokguskku-meokguskkuTests.release.xcconfig"; path = "Target Support Files/Pods-meokguskku-meokguskkuTests/Pods-meokguskku-meokguskkuTests.release.xcconfig"; sourceTree = "<group>"; };
+		AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundEB.ttf; path = ../src/assets/fonts/NanumSquareRoundEB.ttf; sourceTree = "<group>"; };
+		BF3E8CB4790F421288F1C7F9 /* NanumSquareRoundR.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundR.otf; path = ../src/assets/fonts/NanumSquareRoundR.otf; sourceTree = "<group>"; };
+		CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = NanumSquareRoundL.ttf; path = ../src/assets/fonts/NanumSquareRoundL.ttf; sourceTree = "<group>"; };
+		CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS L 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS L 2.0.ttf"; sourceTree = "<group>"; };
+		E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS M 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS M 2.0.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		087BBE93991449DF92E61213 /* NanumSquareRoundOTFB.otf */ = {isa = PBXFileReference; name = "NanumSquareRoundOTFB.otf"; path = "../src/assets/fonts/NanumSquareRoundOTFB.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3FE285E7E6DE42C5865381DA /* NanumSquareRoundOTFEB.otf */ = {isa = PBXFileReference; name = "NanumSquareRoundOTFEB.otf"; path = "../src/assets/fonts/NanumSquareRoundOTFEB.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DA99BCDF428649219BB1AC8A /* NanumSquareRoundOTFL.otf */ = {isa = PBXFileReference; name = "NanumSquareRoundOTFL.otf"; path = "../src/assets/fonts/NanumSquareRoundOTFL.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		65A76281AE9648168C394204 /* NanumSquareRoundOTFR.otf */ = {isa = PBXFileReference; name = "NanumSquareRoundOTFR.otf"; path = "../src/assets/fonts/NanumSquareRoundOTFR.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundB.ttf"; path = "../src/assets/fonts/NanumSquareRoundB.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundEB.ttf"; path = "../src/assets/fonts/NanumSquareRoundEB.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundL.ttf"; path = "../src/assets/fonts/NanumSquareRoundL.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */ = {isa = PBXFileReference; name = "NanumSquareRoundR.ttf"; path = "../src/assets/fonts/NanumSquareRoundR.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */ = {isa = PBXFileReference; name = "NIXGONFONTS B 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS B 2.0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */ = {isa = PBXFileReference; name = "NIXGONFONTS L 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS L 2.0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */ = {isa = PBXFileReference; name = "NIXGONFONTS M 2.0.ttf"; path = "../src/assets/fonts/NIXGONFONTS M 2.0.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NIXGONFONTS M 2.0.otf"; path = "../src/assets/fonts/NIXGONFONTS M 2.0.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,23 +172,22 @@
 			sourceTree = "<group>";
 		};
 		F33C50BA69504B629BDE55B0 /* Resources */ = {
-			isa = "PBXGroup";
+			isa = PBXGroup;
 			children = (
-				087BBE93991449DF92E61213 /* NanumSquareRoundOTFB.otf */,
-				3FE285E7E6DE42C5865381DA /* NanumSquareRoundOTFEB.otf */,
-				DA99BCDF428649219BB1AC8A /* NanumSquareRoundOTFL.otf */,
-				65A76281AE9648168C394204 /* NanumSquareRoundOTFR.otf */,
 				1EA088AE07AA4A008F5DECC0 /* NanumSquareRoundB.ttf */,
 				AD65022AAA184922BE36CA7C /* NanumSquareRoundEB.ttf */,
 				CA822710062140ACB7F5B758 /* NanumSquareRoundL.ttf */,
 				3105D155E65943C28C5F5FDB /* NanumSquareRoundR.ttf */,
-				F5DCCE42A8B84492BF30E65D /* NIXGONFONTS B 2.0.ttf */,
 				CE1AB077A2FE48F1BC9E56AE /* NIXGONFONTS L 2.0.ttf */,
 				E734FDCFB6374063BE1E6506 /* NIXGONFONTS M 2.0.ttf */,
+				EE95F34BC81444CEAE8A7E42 /* NIXGONFONTS M 2.0.otf */,
+				05A0D76595064C7D82FC26A9 /* NanumSquareRoundB.otf */,
+				74704C3B020D4AC293BF0FF9 /* NanumSquareRoundEB.otf */,
+				1C6B42C5E19141E9895D2EC6 /* NanumSquareRoundL.otf */,
+				BF3E8CB4790F421288F1C7F9 /* NanumSquareRoundR.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -285,17 +284,17 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				ED60E2D3C2E5428CBE5AED4B /* NanumSquareRoundOTFB.otf in Resources */,
-				DB52FAF0E6A54334AB2B4686 /* NanumSquareRoundOTFEB.otf in Resources */,
-				04789163DD344DC6ACEB0A8A /* NanumSquareRoundOTFL.otf in Resources */,
-				6A2E4ED960644F8593652D4D /* NanumSquareRoundOTFR.otf in Resources */,
 				441612EF72474A2092FA068D /* NanumSquareRoundB.ttf in Resources */,
 				0C1CA6FCEDA448C68F0E270A /* NanumSquareRoundEB.ttf in Resources */,
 				62CE87319A2D40128556CA6B /* NanumSquareRoundL.ttf in Resources */,
 				36959D8B8ACC471FAFB1E811 /* NanumSquareRoundR.ttf in Resources */,
-				302580A177DA4580AC90939C /* NIXGONFONTS B 2.0.ttf in Resources */,
 				E8719396CD1D463E85321669 /* NIXGONFONTS L 2.0.ttf in Resources */,
 				78FA4125F4D6437A86CCBD52 /* NIXGONFONTS M 2.0.ttf in Resources */,
+				97C7D1193E9F4EA6855FE19F /* NIXGONFONTS M 2.0.otf in Resources */,
+				5DCD11AB597240188F9A4D29 /* NanumSquareRoundB.otf in Resources */,
+				24FF5FC2D8604D8EADA9E3FF /* NanumSquareRoundEB.otf in Resources */,
+				65295E7D78B74AEEBC08851F /* NanumSquareRoundL.otf in Resources */,
+				CA647FF4BEAA425E8F0C713D /* NanumSquareRoundR.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +518,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B4BSCLJVA5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = meokguskku/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -546,6 +546,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B4BSCLJVA5;
 				INFOPLIST_FILE = meokguskku/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

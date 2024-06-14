@@ -1,5 +1,12 @@
 import React, {useContext, useRef} from 'react';
-import {View, Text, ScrollView, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Image,
+  Platform,
+} from 'react-native';
 import {COLOR_WHITE, COLOR_TEXT70GRAY, COLOR_PRIMARY} from '../assets/color';
 import {useNavigation} from '@react-navigation/native';
 import AppContext from './AppContext';
@@ -87,7 +94,10 @@ export default function MyStore(props) {
                       // fontWeight: 'bold',
                       color: COLOR_WHITE,
                       // fontWeight: 'bold',
-                      fontFamily: 'NIXGONFONTS M 2.0',
+                      fontFamily:
+                        Platform.OS == 'android'
+                          ? 'NIXGONFONTS M 2.0'
+                          : 'NIXGONM-Vb',
                       // textAlign: 'left',
                       margin: 10,
                     }}>
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
     marginLeft: 26,
     color: COLOR_PRIMARY,
     // fontWeight: '700',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     marginBottom: 10,
   },
   kingopassKard: {

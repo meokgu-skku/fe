@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -123,8 +124,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingHorizontal: 10,
     color: COLOR_PRIMARY,
-    // fontWeight: 'bold',
-    // fontFamily: 'NanumSquareRoundEB',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
   },
 });

@@ -15,6 +15,7 @@ import {
   ScrollView,
   StyleSheet,
   Switch,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -29,7 +30,11 @@ import AnimatedButton from '../../components/AnimationButton';
 import Header from '../../components/Header';
 import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  PROVIDER_DEFAULT,
+} from 'react-native-maps';
 import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import MapDart from '../../components/MapDart';
@@ -86,13 +91,17 @@ export default function MapScreen() {
       return;
     }
 
-    const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    if (Platform.OS === 'ios') {
+      await Geolocation.requestAuthorization('always');
+    } else {
+      const platformPermissions = PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
-    try {
-      let result = await request(platformPermissions);
-      console.log(result);
-    } catch (err) {
-      console.warn(err);
+      try {
+        let result = await request(platformPermissions);
+        console.log(result);
+      } catch (err) {
+        console.warn(err);
+      }
     }
 
     Geolocation.getCurrentPosition(
@@ -115,11 +124,11 @@ export default function MapScreen() {
   //TODO: storeDartDatas를 서버에서 받아와서 저장해야함
   const [storeDartDatas, setStoreDartDatas] = useState([]);
 
-  const catrgory = [
-    ['한식', '양식', '일식', '중식'],
-    ['분식', '치킨', '피자', '버거'],
-    ['아시안', '카페', '전체', ''],
-  ];
+  // const catrgory = [
+  //   ['한식', '양식', '일식', '중식'],
+  //   ['분식', '치킨', '피자', '버거'],
+  //   ['아시안', '카페', '전체', ''],
+  // ];
 
   //TODO: 필터링 하는 함수
   const getStoreDatas = async () => {
@@ -270,7 +279,9 @@ export default function MapScreen() {
         <MapView
           ref={mapRef}
           style={{flex: 1, width: windowWidth}}
-          provider={PROVIDER_GOOGLE}
+          provider={
+            Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT
+          }
           initialRegion={{
             latitude: 37.297861,
             longitude: 126.971458,

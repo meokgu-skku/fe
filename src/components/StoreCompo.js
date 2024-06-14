@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
+  Platform,
 } from 'react-native';
 import {
   COLOR_WHITE,
@@ -195,7 +196,8 @@ export default function StoreCompo(props) {
               style={{
                 fontSize: 13,
                 color: COLOR_TEXT_BLACK,
-                fontFamily: 'NIXGONFONTS M 2.0',
+                fontFamily:
+                  Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
               }}>
               {storeData.representativeMenu.name}
             </Text>

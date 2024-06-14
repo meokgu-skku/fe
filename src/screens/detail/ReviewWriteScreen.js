@@ -19,6 +19,7 @@ import {
   Pressable,
   TouchableWithoutFeedback,
   Alert,
+  Platform,
 } from 'react-native';
 import Toast from 'react-native-toast-message';
 import {
@@ -144,7 +145,7 @@ export default function ReviewWriteScreen(props) {
 
   return (
     <>
-      <Header title={'리뷰 쓰기'} isBackButton={true} />
+      <Header title={'리뷰 쓰기'} isBackButton={true} noSafe={true} />
       <View contentContainerStyle={styles.entire}>
         <View style={styles.headerContainer}>
           <Text style={styles.storeName} numberOfLines={1}>
@@ -152,7 +153,7 @@ export default function ReviewWriteScreen(props) {
           </Text>
           <View style={styles.starContainer}>
             {[...Array(5)].map((_, index) => (
-              <TouchableWithoutFeedback
+              <Pressable
                 key={index}
                 onPress={() => {
                   setRating(index + 1);
@@ -168,7 +169,7 @@ export default function ReviewWriteScreen(props) {
                   height="24"
                   style={{marginLeft: 2}}
                 />
-              </TouchableWithoutFeedback>
+              </Pressable>
             ))}
           </View>
         </View>
@@ -261,7 +262,7 @@ const styles = StyleSheet.create({
   storeName: {
     fontSize: 22,
     // fontWeight: 'bold',
-    fontFamily: 'NIXGONFONTS M 2.0',
+    fontFamily: Platform.OS == 'android' ? 'NIXGONFONTS M 2.0' : 'NIXGONM-Vb',
     color: COLOR_TEXT_BLACK,
     maxWidth: (windowWidth * 3) / 5,
   },
@@ -322,7 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     fontFamily: 'NanumSquareRoundB',
-    // width: '92%',
+    width: windowWidth - 32,
     // marginHorizontal: 16,
     height: 160,
     textAlignVertical: 'top',
