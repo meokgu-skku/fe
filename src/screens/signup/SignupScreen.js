@@ -28,7 +28,7 @@ import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';
 import axios, {AxiosError} from 'axios';
-import HeaderWhite from '../../components/HeaderWhite';
+import Header from '../../components/Header';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
@@ -127,7 +127,12 @@ export default function SignupScreen() {
 
   return (
     <>
-      <HeaderWhite title={'회원가입'} isBackButton={true} />
+      <Header
+        color={'white'}
+        title={'회원가입'}
+        isBackButton={true}
+        noSafe={true}
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
@@ -269,6 +274,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '90%',
+    // marginTop: 80,
     // backgroundColor: 'green',
     alignItems: 'center',
     justifyContent: 'center',

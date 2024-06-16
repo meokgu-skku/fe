@@ -13,6 +13,7 @@ import {
   COLOR_BACKGROUND,
   COLOR_GRAY,
   COLOR_PRIMARY,
+  COLOR_TEXT_BLACK,
 } from '../assets/color';
 import AnimatedButton from './AnimationButton';
 import {useNavigation} from '@react-navigation/native';
@@ -22,7 +23,8 @@ import {StatusBarHeight} from './Safe';
 
 export default function Header(props) {
   const navigation = useNavigation();
-  const {title, isBackButton, noSafe} = props;
+  const {title, isBackButton, noSafe, color} = props;
+
   return (
     <View
       style={{
@@ -31,7 +33,7 @@ export default function Header(props) {
             ? 0
             : StatusBarHeight
           : 0,
-        backgroundColor: COLOR_PRIMARY,
+        backgroundColor: color == 'white' ? COLOR_BACKGROUND : COLOR_PRIMARY,
         // height: 56,
         justifyContent: 'center',
         alignItems: 'center',
@@ -54,12 +56,18 @@ export default function Header(props) {
           onPress={() => {
             navigation.goBack();
           }}>
-          <SvgXml xml={svgXml.button.goback} width="24" height="24" />
+          <SvgXml
+            xml={
+              color == 'white' ? svgXml.button.gobackGray : svgXml.button.goback
+            }
+            width="24"
+            height="24"
+          />
         </AnimatedButton>
       ) : null}
       <Text
         style={{
-          color: COLOR_WHITE,
+          color: color ? COLOR_TEXT_BLACK : COLOR_WHITE,
           fontSize: 16,
           // fontWeight: 'bold',
           fontFamily: 'NanumSquareRoundB',

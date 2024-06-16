@@ -30,7 +30,7 @@ import Toast from 'react-native-toast-message';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';
 import axios from 'axios';
-import HeaderWhite from '../../components/HeaderWhite';
+import Header from '../../components/Header';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
