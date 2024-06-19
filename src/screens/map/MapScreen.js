@@ -34,6 +34,7 @@ import MapView, {
   PROVIDER_GOOGLE,
   Marker,
   PROVIDER_DEFAULT,
+  MapPolyline,
 } from 'react-native-maps';
 import {Svg, SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
@@ -258,6 +259,18 @@ export default function MapScreen() {
     mapRef.current.animateCamera({heading: 0});
   };
 
+  const focusOnCoordinate = () => {
+    mapRef.current.animateToRegion(
+      {
+        latitude: myLocation.latitude,
+        longitude: myLocation.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      },
+      1000,
+    );
+  };
+
   useEffect(() => {
     getStoreDatas();
   }, [
@@ -271,6 +284,12 @@ export default function MapScreen() {
     replyNumNaver,
     search,
   ]);
+
+  useEffect(() => {
+    if (myLocation.latitude !== 0) {
+      focusOnCoordinate();
+    }
+  }, [myLocation]);
 
   return (
     <>
@@ -625,19 +644,30 @@ export default function MapScreen() {
 
         {/* 나침반 버튼*/}
         <AnimatedButton
-          style={[styles.cornerButton, {left: 16}]}
+          style={[styles.cornerButton, {left: 16, backgroundColor: 'white'}]}
           onPress={alignToNorth}>
           <SvgXml xml={svgXml.icon.compass} width="30" height="30" />
         </AnimatedButton>
 
         {/* gps 버튼*/}
         <AnimatedButton
-          style={[styles.cornerButton, {right: 16}]}
+          style={[
+            styles.cornerButton,
+            {
+              right: 16,
+              backgroundColor:
+                myLocation.latitude === 0 ? 'white' : COLOR_PRIMARY,
+            },
+          ]}
           onPress={() => {
             console.log('press gps');
             getMyLocation();
           }}>
-          <SvgXml xml={svgXml.icon.gps} width="24" height="24" />
+          {myLocation.latitude === 0 ? (
+            <SvgXml xml={svgXml.icon.gps} width="24" height="24" />
+          ) : (
+            <SvgXml xml={svgXml.icon.gpsWhite} width="24" height="24" />
+          )}
         </AnimatedButton>
       </View>
 
@@ -857,7 +887,6 @@ const styles = StyleSheet.create({
   cornerButton: {
     position: 'absolute',
     bottom: 16,
-    backgroundColor: 'white',
     borderRadius: 15,
     height: 30,
     width: 30,
