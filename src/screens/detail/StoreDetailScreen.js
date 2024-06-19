@@ -100,7 +100,7 @@ export default function StoreDetailScreen(props) {
       const data = response.data.data;
       const dataReview = responseReview.data.data;
 
-      console.log('storedata: ', data);
+      // console.log('storedata: ', data);
 
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
