@@ -201,6 +201,16 @@ export const svgXml = {
     <path d="M3 12H5" stroke="#003C71" stroke-width="2" stroke-linecap="round"/>
     </svg>
     `,
+    gpsWhite: `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="7" stroke="white" stroke-width="2"/>
+    <circle cx="12" cy="12" r="2" fill="white" stroke="white" stroke-width="2"/>
+    <path d="M12 5V3" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M19 12L21 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M12 21L12 19" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path d="M3 12H5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    `,
     refresh: `
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14 15L10 19L14 23" stroke="#535353" stroke-width="2"/>

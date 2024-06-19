@@ -100,7 +100,7 @@ export default function StoreDetailScreen(props) {
       const data = response.data.data;
       const dataReview = responseReview.data.data;
 
-      console.log('storedata: ', data);
+      // console.log('storedata: ', data);
 
       setRestaurant(data);
       setIsHearted(data.restaurant.isLike);
@@ -280,7 +280,7 @@ export default function StoreDetailScreen(props) {
                 ) : (
                   <View style={styles.reviewAuthorImagePlaceholder} />
                 )}
-                <Text style={styles.reviewAuthor}>{item.username}</Text>
+                <Text style={styles.reviewAuthor}>{' ' + item.username}</Text>
                 <Text style={styles.reviewAuthor2}>님</Text>
                 <TouchableOpacity
                   style={styles.contactButton}
@@ -364,7 +364,9 @@ export default function StoreDetailScreen(props) {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
               }}>
-              <Text style={styles.storeName}>{restaurant.restaurant.name}</Text>
+              <Text style={styles.storeName}>
+                {restaurant.restaurant.name + ' '}
+              </Text>
               <Text style={styles.storeCategory}>
                 {restaurant.restaurant.categories}
               </Text>
@@ -453,12 +455,13 @@ export default function StoreDetailScreen(props) {
               <Text style={styles.storeAddress}>
                 위치: {restaurant.restaurant.detailInfo.address}
               </Text>
-              <TouchableOpacity
+              <AnimatedButton
                 onPress={() => {
                   onCopy(restaurant.restaurant.detailInfo.address);
-                }}>
+                }}
+                style={styles.copyButton}>
                 <Text style={styles.copyButtonText}>복사</Text>
-              </TouchableOpacity>
+              </AnimatedButton>
             </View>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -468,15 +471,16 @@ export default function StoreDetailScreen(props) {
               width={24}
               height={24}
             />
-            <Text style={styles.storePhoneNum}>
+            <Text style={styles.storeAddress}>
               전화번호: {restaurant.restaurant.detailInfo.contactNumber}
             </Text>
-            <TouchableOpacity
+            <AnimatedButton
               onPress={() => {
                 onCopy(restaurant.restaurant.detailInfo.contactNumber);
-              }}>
+              }}
+              style={styles.copyButton}>
               <Text style={styles.copyButtonText}>복사</Text>
-            </TouchableOpacity>
+            </AnimatedButton>
           </View>
         </View>
         <View style={styles.section}>
@@ -525,10 +529,9 @@ export default function StoreDetailScreen(props) {
         noSafe={true}
         style={{backgroundColor: 'trasparent'}}
       />
-      <FlatList
-        ListHeaderComponent={ListHeader}
-        contentContainerStyle={styles.entire}
-      />
+      <ScrollView>
+        <ListHeader />
+      </ScrollView>
       <Modal
         animationType="fade"
         transparent={true}
@@ -652,29 +655,34 @@ const styles = StyleSheet.create({
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 8,
     fontFamily: 'NanumSquareRoundB',
+    flex: 10,
+    // backgroundColor: 'green',
+  },
+  copyButton: {
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
   },
   storeHours: {
     fontSize: 15,
     color: COLOR_TEXT_DARKGRAY,
     marginVertical: 7,
   },
-  storePhoneNum: {
-    fontSize: 13,
-    color: COLOR_TEXT_DARKGRAY,
-    marginVertical: 8,
-    fontFamily: 'NanumSquareRoundB',
-  },
   copyContainer: {
     flexDirection: 'row',
-    width: 315,
+    flex: 1,
+    justifyContent: 'center',
+    alignContent: 'center',
+    // backgroundColor: 'blue',
   },
   copyButtonText: {
+    // backgroundColor: 'red',
     fontSize: 13,
-    marginVertical: 7,
-    marginLeft: 7,
     color: COLOR_GRAY,
     textDecorationLine: 'underline',
     fontFamily: 'NanumSquareRoundB',
+    textAlign: 'center',
   },
   section: {
     width: '92%',

@@ -31,7 +31,7 @@ import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL, IMG_URL} from '@env';
 import axios, {AxiosError} from 'axios';
-import HeaderWhite from '../../components/HeaderWhite';
+import Header from '../../components/Header';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
@@ -143,7 +143,12 @@ export default function ProfileSetScreen(props) {
   //check
   return (
     <>
-      <HeaderWhite title={'프로필 설정'} isBackButton={true} />
+      <Header
+        color={'white'}
+        title={'프로필 설정'}
+        isBackButton={true}
+        noSafe={true}
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <AnimatedButton

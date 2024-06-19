@@ -29,12 +29,12 @@ import AnimatedButton from '../../components/AnimationButton';
 import {useNavigation} from '@react-navigation/native';
 import {API_URL} from '@env';
 import axios, {AxiosError} from 'axios';
-import HeaderWhite from '../../components/HeaderWhite';
 import {SvgXml} from 'react-native-svg';
 import {svgXml} from '../../assets/svg';
 import LongPrimaryButton from '../../components/LongPrimaryButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from '../../components/AppContext';
+import Header from '../../components/Header';
 
 export default function CheckEmailScreen(props) {
   const navigation = useNavigation();
@@ -88,7 +88,12 @@ export default function CheckEmailScreen(props) {
 
   return (
     <>
-      <HeaderWhite title={'인증번호 확인'} isBackButton={true} />
+      <Header
+        title={'인증번호 확인'}
+        isBackButton={true}
+        color={'white'}
+        noSafe={true}
+      />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <View style={styles.entire}>
           <View style={styles.container}>
